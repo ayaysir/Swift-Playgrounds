@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Timeline
+   version = "3.0">
+   <TimelineItems>
+      <LoggerValueHistoryTimelineItem
+         documentLocation = "file:///Users/yoonbumtae/Desktop/Xcode%20Practice/URLSession.playground#CharacterRangeLen=24&amp;CharacterRangeLoc=1067&amp;EndingColumnNumber=0&amp;EndingLineNumber=34&amp;StartingColumnNumber=1&amp;StartingLineNumber=33&amp;Timestamp=632493993.1049221"
+         lockedSize = "{504, 128}"
+         selectedRepresentationIndex = "0"
+         shouldTrackSuperviewWidth = "NO">
+      </LoggerValueHistoryTimelineItem>
+      <LoggerValueHistoryTimelineItem
+         documentLocation = "file:///Users/yoonbumtae/Desktop/Xcode%20Practice/URLSession.playground#CharacterRangeLen=6&amp;CharacterRangeLoc=2559&amp;EndingColumnNumber=19&amp;EndingLineNumber=87&amp;StartingColumnNumber=13&amp;StartingLineNumber=87&amp;Timestamp=632493993.10508"
+         selectedRepresentationIndex = "0"
+         shouldTrackSuperviewWidth = "NO">
+      </LoggerValueHistoryTimelineItem>
+      <LoggerValueHistoryTimelineItem
+         documentLocation = "file:///Users/yoonbumtae/Desktop/Xcode%20Practice/URLSession.playground#CharacterRangeLen=12&amp;CharacterRangeLoc=2592&amp;EndingColumnNumber=0&amp;EndingLineNumber=89&amp;StartingColumnNumber=9&amp;StartingLineNumber=88&amp;Timestamp=632493993.105171"
+         selectedRepresentationIndex = "0"
+         shouldTrackSuperviewWidth = "NO">
+      </LoggerValueHistoryTimelineItem>
+      <LoggerValueHistoryTimelineItem
+         documentLocation = "file:///Users/yoonbumtae/Desktop/Xcode%20Practice/URLSession.playground#CharacterRangeLen=19&amp;CharacterRangeLoc=2613&amp;EndingColumnNumber=0&amp;EndingLineNumber=90&amp;StartingColumnNumber=9&amp;StartingLineNumber=89&amp;Timestamp=632493993.105253"
+         selectedRepresentationIndex = "0"
+         shouldTrackSuperviewWidth = "NO">
+      </LoggerValueHistoryTimelineItem>
+   </TimelineItems>
+</Timeline>
