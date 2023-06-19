@@ -71,3 +71,21 @@ Int8(-70).binaryDescription // "1011 1010"
 ~70
 // 결과 : -71
 
+// Left shift operator
+70 << 2
+// 결과: 280
+
+// Right shift operator
+70 >> 2
+// 결과: 17
+
+// 0000 0001
+print("=============================")
+var bitFlag = 1
+let checkNumber = 0b11001010
+
+for _ in 1...8 {
+    print(bitFlag, (bitFlag & checkNumber) != 0)
+    // bitFlag = bitFlag << 1
+    bitFlag <<= 1
+}
