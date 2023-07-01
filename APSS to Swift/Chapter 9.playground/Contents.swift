@@ -655,5 +655,254 @@ func Chapter_9_4() {
 
 Chapter_9_4()
 
+// ====================================================================== //
 
+func Chapter_9_6() {
+    /* ************ C++ 코드 ************
+     #include <iostream>
+     #include <cstring>
+     using namespace std;
 
+     // s: 지금까지 만든 신호
+     // n: 더 필요한 -의 개수
+     // m: 더 필요한 o의 개수
+
+     void generate(int n, int m, string s) {
+         // 기저 사례 n = m = 0
+         if(n == 0 && m == 0) {
+             cout << s << endl;
+             return;
+         }
+         
+         if(n > 0)   generate(n - 1, m, s + "-");
+         if(m > 0)   generate(n, m - 1, s + "o");
+     }
+
+     int skip;
+     // skip 개를 건너뛰고 출력한다
+     void generate2(int n, int m, string s) {
+         // 기저사례: skip < 0
+         if(skip < 0)    return;
+         
+         // 기저사례: n = m = 0
+         if(n == 0 && m == 0) {
+             // 더 건너뛸 신호가 없는 경우
+             if(skip == 0)   cout << s << endl;
+             
+             --skip;
+             return;
+         }
+         
+         if(n > 0)   generate2(n - 1, m, s + "-");
+         if(m > 0)   generate2(n, m - 1, s + "o");
+     }
+
+     // 좀 더 똑똑하게 건너뛰기
+
+     // K의 최대값 +100, 오버플로를 막기 위해 이보다 큰 값은 구하지 않는다.
+     // 입력 가능 개수 k가 10억 이하인 점을 이용
+     const int M = 1000000000 + 100;
+     int bino[201][201];
+
+     // 필요한 모든 이항계수를 미리 계산해둔다.
+     void calcBino() {
+         memset(bino, 0, sizeof(bino));
+         for(int i = 0; i <= 200; ++i) {
+             // 다중 할당: bino[i][0] = 1 AND bino[i][i] = 1
+             bino[i][0] = bino[i][i] = 1;
+             for(int j = 1; j < i; j++) {
+                 bino[i][j] = min(M, bino[i - 1][j - 1] + bino[i - 1][j]);
+                 // cout << i << ","<< j << " " << bino[i][j] << endl;
+             }
+         }
+     }
+
+     // skip개를 건너뛰고 출력한다
+     void generate3(int n, int m, string s) {
+         // 기저사례: skip < 0
+         if(skip < 0)    return;
+         
+         // 기저사례: n = m = 0
+         if(n == 0 && m == 0) {
+             // 더 건너뛸 신호가 없는 경우
+             if(skip == 0)   cout << s << endl;
+             
+             --skip;
+             return;
+         }
+         
+         if(bino[n + m][n] <= skip) {
+             skip -= bino[n + m][n];
+             return;
+         }
+         
+         if(n > 0)   generate3(n - 1, m, s + "-");
+         if(m > 0)   generate3(n, m - 1, s + "o");
+     }
+
+     // n개의 -, m개의 o 신호로 구성 된 신호 중 skip 개를 건너뛰고
+     // 만들어지는 신호를 반환
+     string kth(int n, int m, int skip) {
+         // n == 0 인 경우, 나머지 부분은 전부 o일 수 밖에 없다.
+         if(n == 0)  return string(m, 'o');
+         
+         if(skip < bino[n + m - 1][n - 1]) {
+             return "-" + kth(n - 1, m, skip);
+         }
+         
+         return "o" + kth(n, m - 1, skip - bino[n + m - 1][n - 1]);
+     }
+
+     int main() {
+         generate(2, 2, "");
+         cout << "========" << endl;
+         skip = 3;   // zero-based
+         generate2(2, 2, "");
+         
+         calcBino();
+         skip = 3;
+         generate3(2, 2, "");
+         
+         cout << kth(2, 2, 3);
+         cout << kth(15, 15, 792);
+
+         return 0;
+     }
+     */
+    
+    func generate(_ n: Int, _ m: Int, _ s: String = "") {
+        // 기저 사례 n = m = 0
+        if n == 0 && m == 0 {
+            print(s)
+            return
+        }
+        
+        if n > 0 {
+            generate(n - 1, m, s + "-")
+        }
+        
+        if m > 0 {
+            generate(n, m - 1, s + "o")
+        }
+    }
+    
+    var skip: Int
+    func generate2(_ n: Int, _ m: Int, _ s: String = "") {
+        // 기저사례: skip < 0
+        if skip < 0 {
+            return
+        }
+        
+        // 기저사례: n = m = 0
+        if n == 0 && m == 0 {
+            // 더 건너뛸 신호가 없는 경우
+            if skip == 0 {
+                print(s)
+            }
+            
+            skip -= 1
+            return
+        }
+        
+        if n > 0 {
+            generate2(n - 1, m, s + "-")
+        }
+        
+        if m > 0 {
+            generate2(n, m - 1, s + "o")
+        }
+        
+    }
+    
+    // 필요한 모든 이항계수를 미리 계산해둔다.
+    // void calcBino() {
+    //     memset(bino, 0, sizeof(bino));
+    //     for(int i = 0; i <= 200; ++i) {
+    //         bino[i][0] = bino[i][i] = 1;
+    //         for(int j = 1; j < i; j++) {
+    //             bino[i][j] = min(M, bino[i - 1][j - 1] + bino[i - 1][j]);
+    //             // cout << i << ","<< j << " " << bino[i][j] << endl;
+    //         }
+    //     }
+    // }
+    
+    // K의 최대값 +100, 오버플로를 막기 위해 이보다 큰 값은 구하지 않는다.
+    // 입력 가능 개수 k가 10억 이하인 점을 이용
+    let M = 1_000_000_000 + 100
+    var bino: [[Int]] {
+        var twoDimArray = [[Int]](repeating: [Int](repeating: 0, count: 201), count: 201)
+        
+        for i in 0...200 {
+            twoDimArray[i][0] = 1
+            twoDimArray[i][i] = 1
+            if i == 0 { continue }
+            for j in 1..<i {
+                twoDimArray[i][j] = min(M, twoDimArray[i - 1][j - 1] + twoDimArray[i - 1][j])
+            }
+        }
+        
+        return twoDimArray
+    }
+    
+    func generate3(_ n: Int, _ m: Int, _ s: String = "") {
+        // 기저사례: skip < 0
+        if skip < 0 {
+            return
+        }
+        
+        // 기저사례: n = m = 0
+        if n == 0 && m == 0 {
+            // 더 건너뛸 신호가 없는 경우
+            if skip == 0 {
+                print(s)
+            }
+            
+            skip -= 1
+            return
+        }
+        
+        if bino[n + m][n] <= skip {
+            skip -= bino[n + m][n]
+            return
+        }
+    
+        if n > 0 {
+            generate3(n - 1, m, s + "-")
+        }
+        
+        if m > 0 {
+            generate3(n, m - 1, s + "o")
+        }
+    }
+    
+    func kth(_ n: Int, _ m: Int, _ skip: Int) -> String {
+        // n == 0 인 경우 나머지 부분은 전부 o 일수 밖에 없다
+        // print(n, m, skip)
+        if n == 0 {
+            return String(repeating: "o", count: m)
+        }
+        // print(" -> ", bino[n + m - 1][n - 1], n + m - 1, n - 1)
+        
+        if skip < bino[n + m - 1][n - 1] {
+            // print(skip, bino[n + m + 1][n - 1])
+            return "-\(kth(n - 1, m, skip))"
+        }
+        
+        return "o\(kth(n, m - 1, skip - bino[n + m - 1][n - 1]))"
+    }
+    
+    generate(2, 2)
+    
+    print("===================")
+    
+    skip = 3
+    generate2(2, 2)
+    
+    skip = 3
+    generate3(2, 2)
+    
+    print(kth(2, 2, 3))
+    let kth2 = kth(15, 15, 792)
+    print(kth2, kth2 == "------------ooooooooooo-oo-oo-")
+}
+Chapter_9_6()
