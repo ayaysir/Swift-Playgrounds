@@ -89,3 +89,77 @@ for _ in 1...8 {
     // bitFlag = bitFlag << 1
     bitFlag <<= 1
 }
+
+extension Dictionary {
+    func valuesForKeys(_ keys: [Key]) -> [Value?] {
+        return keys.map { self[$0] }
+    }
+}
+
+let dict = [
+    "A": "Amir",
+    "B": "Bertha",
+    "C": "Ching",
+]
+
+print(
+    dict.valuesForKeys(["A", "C"]),
+    // [Optional("Amir"), Optional("Ching")]
+    
+    dict.valuesForKeys(["B", "D"]),
+    // [Optional("Bertha"), nil]
+    
+    dict.valuesForKeys([])
+    // []
+)
+
+print(
+    dict.valuesForKeys(["A", "C"]).last,
+    // Optional(Optional("Ching"))
+
+    dict.valuesForKeys(["B", "D"]).last,
+    // Optional(nil)
+
+    dict.valuesForKeys([]).last
+    // nil
+)
+
+dict.valuesForKeys(["A", "C"])
+// [Optional("Amir"), Optional("Ching")]
+
+dict.valuesForKeys(["B", "D"])
+// [Optional("Bertha"), nil]
+
+dict.valuesForKeys([])
+// []
+
+dict.valuesForKeys(["A", "C"]).last
+// Optional(Optional("Ching"))
+
+dict.valuesForKeys(["B", "D"]).last
+// Optional(nil)
+
+dict.valuesForKeys([]).last
+// nil
+
+let a: String?? = "effaewf"
+print(a!!)
+
+if let value = a.flatMap({
+    print("flatMap:", $0)
+    return $0
+}) {
+    print(value)
+}
+
+let b: String??????? = "bye"
+
+if let value = a as? String {
+    print(value)  // "hello\n"
+}
+
+print(b as Any)  // "Optional(Optional(Optional(Optional(Optional(Optional(Optional("bye")))))))\n"
+
+if let value = b as? String {
+    print(value)  // "bye\n"
+}

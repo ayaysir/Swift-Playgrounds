@@ -2,5 +2,9 @@
 <Timeline
    version = "3.0">
    <TimelineItems>
+      <LoggerValueHistoryTimelineItem
+         documentLocation = "file:///Users/yoonbumtae/Desktop/Xcode%20Project/Xcode%20Practice/Playgrounds/Multuple%20Array%20Initialization.playground#CharacterRangeLen=1&amp;CharacterRangeLoc=646&amp;EndingColumnNumber=5&amp;EndingLineNumber=32&amp;StartingColumnNumber=4&amp;StartingLineNumber=32&amp;Timestamp=709892347.4625911"
+         selectedRepresentationIndex = "0">
+      </LoggerValueHistoryTimelineItem>
    </TimelineItems>
 </Timeline>
