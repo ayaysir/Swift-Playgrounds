@@ -11,9 +11,11 @@ struct ContentView: View {
             guard displayBrightness <= 1 && displayBrightness >= 0 else {
                 return
             }
+    
             setBrightness(displayBrightness)
         }
     }
+    
     @State var torchBrightness: Float = 1.0 {
         didSet {
             guard torchBrightness <= 1.0  else {
@@ -25,6 +27,7 @@ struct ContentView: View {
                 torchBrightness = 0.01 // 0.0은 에러발생
                 return
             }
+            
             setTorch(torchBrightness)
         }
     }
@@ -35,15 +38,14 @@ struct ContentView: View {
     
     private func setTorch(_ torchBrightness: Float) {
         guard let device = AVCaptureDevice.default(for: .video), device.hasTorch else {
-
             return
         }
         
         do {
             try device.lockForConfiguration()
-            
             try device.setTorchModeOn(level: torchBrightness)
-            
+            // 참고: 플래시 끄기
+            // device.torchMode = .off
             device.unlockForConfiguration()
         } catch {
             print(#function, error.localizedDescription)
