@@ -675,7 +675,7 @@ tryMapPublisher
         print("TryMapPublisher:", $0)
     }
 
-// Scan: 배열의 Reduce와 비슷한 것
+// Scan: 배열의 Reduce와 비슷한(???)
 pandaPublisher
     .scan(0) { accumulatedResult, currentSubscriber in
         print("accumulatedResult: \(accumulatedResult), currentSubscriber: \(currentSubscriber)")
@@ -872,3 +872,893 @@ Empty<[String], Never>()
 
 
 // ==================== 1, 2일차 끝 =======================
+
+extension String {
+    func printWithResult(_ object: Any) {
+        print("[\(self)] \(object)")
+    }
+}
+
+/*
+ // Reducing Elements로 분류된 Publisher
+ 
+ - Collect
+ - CollectByCount
+ - CollectByTime
+ - IgnoreOutput
+ - Reduce
+ - TryReduce
+ 
+ 이를 활용한 Operator
+ - collect()
+ - collect(_:)
+ - collect(_:options:)
+ - TimeGroupingStrategy
+ - ignoreOutput()
+ - reduce(_:_:)
+ - tryReduce(_:_:)
+ */
+
+// 1. collect: Upstream에서 받은 값을 모두 모아서 하나의 배열을 만들어 Downstream으로 보내주는 역할
+[1, 2, 3, 4, 5].publisher
+    .collect()
+    .sink { "Collect".printWithResult($0) }
+
+// CollectByCount
+[1, 2, 3, 4, 5, 6, 7].publisher
+    .collect(3)
+    .sink { "CollectByCount".printWithResult($0) }
+/*
+ [CollectByCount] [1, 2, 3]
+ [CollectByCount] [4, 5, 6]
+ [CollectByCount] [7]
+ */
+
+// CollectByTime
+var cbtSubscription = Set<AnyCancellable>()
+let timerPublisher = Timer.publish(every: 100, on: .main, in: .default)
+timerPublisher
+    // Automates the process of connecting or disconnecting from this connectable publisher.
+    .autoconnect()
+    // byTime: A grouping that collects and periodically publishes items.
+    // case: byTime(Context, Context.SchedulerTimeType.Stride)
+    .collect(.byTime(DispatchQueue.main, .seconds(400)))
+    // .collect(.byTimeOrCount(DispatchQueue.main, .seconds(12), 3))
+    .sink { "CollectByTime".printWithResult($0) }
+    .store(in: &cbtSubscription)
+/*
+ 출판을 1초마다 하고 콜렉트를 4초로 설정하면 1초 단위로 4개씩 모이고 방출
+ [CollectByTime] [2023-08-18 05:58:05 +0000, 2023-08-18 05:58:06 +0000, 2023-08-18 05:58:07 +0000, 2023-08-18 05:58:08 +0000]
+ [CollectByTime] [2023-08-18 05:58:09 +0000, 2023-08-18 05:58:10 +0000, 2023-08-18 05:58:11 +0000, 2023-08-18 05:58:12 +0000]
+ [CollectByTime] [2023-08-18 05:58:13 +0000, 2023-08-18 05:58:14 +0000, 2023-08-18 05:58:15 +0000, 2023-08-18 05:58:16 +0000]
+ [CollectByTime] [2023-08-18 05:58:17 +0000, 2023-08-18 05:58:18 +0000, 2023-08-18 05:58:19 +0000, 2023-08-18 05:58:20 +0000]
+ ...
+ */
+
+// IgnoreOutput
+[1, 2, 3, 4, 5].publisher
+    .ignoreOutput()
+    .sink(receiveCompletion: { "IgnoreOutput".printWithResult($0) },
+          receiveValue: { print($0) })
+
+[1, 2, 3, 4, 5].publisher
+    .reduce(0, { $0 + $1 })
+    .sink { "Reduce1".printWithResult($0) }
+/*
+ [Reduce1] 15
+ */
+
+/*
+ [참고] Scan과 비교: scan은 값을 매번 방출하는 반면, reduce는 누적된 값을 한번에 방출한다.
+ 
+ pandaPublisher
+     .scan(0) { accumulatedResult, currentSubscriber in
+         print("accumulatedResult: \(accumulatedResult), currentSubscriber: \(currentSubscriber)")
+         return accumulatedResult + currentSubscriber.age
+     }
+     .sink(receiveValue: { print("AgeSum:", $0) })
+ 
+ accumulatedResult: 0, currentSubscriber: YoutubeSubscriber(name: "FuBao", age: 3)
+ AgeSum: 3
+ accumulatedResult: 3, currentSubscriber: YoutubeSubscriber(name: "AiBao", age: 10)
+ AgeSum: 13
+ accumulatedResult: 13, currentSubscriber: YoutubeSubscriber(name: "LeBao", age: 11)
+ AgeSum: 24
+ */
+
+[1, 2, 3, -10, 4].publisher
+    .tryReduce(0) { reduceValue, newValue in
+        if reduceValue + newValue < 0 {
+            throw PinguError.pinguIsBaboo
+        }
+        return reduceValue + newValue
+    }
+    .sink(receiveCompletion: { "TryReduce Comp".printWithResult($0) },
+          receiveValue: { "TryReduce Val".printWithResult($0) })
+
+/*
+ =======================================
+ */
+
+/*
+ Applying Mathematical Operations on Elements
+ - Count
+ - Comparison
+ - TryComparison
+ 
+ Operators
+ - count()
+ - max()
+ - max(by:)
+ - tryMax(by:)
+ - min()
+ - min(by:)
+ - tryMin(by:)
+ */
+
+
+// Count
+[Int](repeating: 0, count: 123).publisher
+    .count()
+    .sink { "Count".printWithResult($0) }
+
+// Max
+[5, 4, 107, 2, 1].publisher
+    .max()
+    .sink { "Max".printWithResult($0) }
+
+protocol Ikimono {}
+
+struct Person: Ikimono {
+    let name: String
+    let age: Int
+}
+struct Panda: Ikimono {
+    let name: String
+    let age: Int
+}
+
+[
+    Person(name: "FuBao", age: 3),
+    Person(name: "AiBao", age: 10),
+    Person(name: "LeBao", age: 11),
+].publisher
+    .max { $0.age < $1.age }
+    .sink { "Max".printWithResult($0) }
+
+([
+    Panda(name: "FuBao", age: 3),
+    Person(name: "AiBao", age: 10),
+    Person(name: "LeBao", age: 11),
+] as [Ikimono]).publisher
+    .tryMax { first, second in
+        if first is Panda {
+            return true
+        } else {
+            throw PandaError.thisIsBlackBear
+        }
+    }
+    .sink(receiveCompletion: { "TryMax".printWithResult($0) },
+              receiveValue: { "TryMax".printWithResult($0) })
+    
+// Min
+[5, 4, 107, 2, 1].publisher
+    .min()
+    .sink { "Min".printWithResult($0) }
+
+[
+    Person(name: "FuBao", age: 3),
+    Person(name: "AiBao", age: 10),
+    Person(name: "LeBao", age: 11),
+].publisher
+    // 오름차순이라 가정할 때 true가 나와야 min을 찾을 수 있다.
+    .min { $0.age < $1.age }
+    .sink { "Min".printWithResult($0) }
+
+([
+    Panda(name: "FuBao", age: 3),
+    Person(name: "AiBao", age: 10),
+    Person(name: "LeBao", age: 11),
+] as [Ikimono]).publisher
+    .tryMax { first, second in
+        if first is Panda {
+            return true
+        } else {
+            throw PandaError.thisIsBlackBear
+        }
+    }
+    .sink(receiveCompletion: { "TryMin".printWithResult($0) },
+              receiveValue: { "TryMin".printWithResult($0) })
+
+/*
+ Applying Matching Criteria to Elements
+ 
+ - Contains
+ - ContainsWhere
+ - TryContainsWhere
+ - AllStatisfy
+ - TryAllSatisfy
+ 
+ Operators
+ - contains(_:)
+ - contains(where:)
+ - tryContains(where:)
+ - allSatisfy(_:)
+ - tryAllSatisfy(_:)
+ */
+
+// Contains
+[192, 199, 196, 100, 104].publisher
+    .contains(196)
+    .sink { "Contains".printWithResult($0) }
+
+[192, 199, 196, 100, 104].publisher
+    .contains(-348)
+    .sink { "Contains".printWithResult($0) }
+
+// Contains Where
+["murmur", "twins", "another"].publisher
+    .contains(where: { $0.count == 5 })
+    .sink { "Contains".printWithResult($0) }
+
+// TryContainsWhere: 값 탐색 중 true가 나오면 이후 과정은 무시, 값 탐생 중 true가 나오지 않은 상태에서 에러 발생시 throw
+[2, 4, 8, 12, -105, 3, 6, 8].publisher
+    .tryContains {
+        if $0 >= 0 && $0 % 2 == 0 {
+            return true
+        } else {
+            throw PinguError.pinguIsBaboo
+        }
+    }
+    .sink {
+        "TryContains Comp 1".printWithResult($0)
+    } receiveValue: {
+        "TryContains Val 1".printWithResult($0)
+    }
+
+[2, 4, 8, 12, -105, 3, 6, 8].publisher
+    .tryContains {
+        if $0 >= 0 && $0 % 2 == 1 {
+            return true
+        } else {
+            throw PinguError.pinguIsBaboo
+        }
+    }
+    .sink {
+        "TryContains Comp 2".printWithResult($0)
+    } receiveValue: {
+        "TryContains Val 2".printWithResult($0)
+    }
+
+// AllSatisfy
+[2, 4, 6, 8, 10].publisher
+    .allSatisfy { $0 % 2 == 0 }
+    .sink { "AllSatisfy".printWithResult($0) }
+
+[2, 4, 6, 8, 9, 10].publisher
+    .allSatisfy { $0 % 2 == 0 }
+    .sink { "AllSatisfy".printWithResult($0) }
+
+[2, 4, 6, 8, 9, -9, 10].publisher
+    .tryAllSatisfy {
+        if $0 % 2 == 0 {
+            return true
+        } else if $0 >= 0 {
+            return false
+        } else {
+            throw PinguError.pinguIsBaboo
+        }
+    }
+    .sink {
+        "TryAllSatisfy 1 Comp".printWithResult($0)
+    } receiveValue: {
+        "TryAllSatisfy 1 Val".printWithResult($0)
+    }
+
+[2, 4, 6, 8, 222, -9, 10].publisher
+    .tryAllSatisfy {
+        if $0 % 2 == 0 {
+            return true
+        } else if $0 >= 0 {
+            return false
+        } else {
+            throw PinguError.pinguIsBaboo
+        }
+    }
+    .sink {
+        "TryAllSatisfy 2 Comp".printWithResult($0)
+    } receiveValue: {
+        "TryAllSatisfy 2 Val".printWithResult($0)
+    }
+
+/*
+ Applying Sequence Operations to Elements
+ 
+ Publisher
+ - DropUntilOutput
+ - Drop
+ - DropWhile
+ - TryDropWhile
+ - Concatenate
+ - PrefixWhile
+ - TryPrefixWhile
+ - PrefixUntilOutput
+ 
+ Operators
+ - drop(untilOutputFrom:)
+ - dropFirst(_:)
+ - drop(while:)
+ - append(_:)
+ - prepend(_:)
+ - prefix(_:)
+ - prefix(while:)
+ - tryPrefix(while:)
+ - prefix(untilOutputFrom:)
+
+ */
+
+// DropUntilOutput
+// Upstream
+let synthPublisher = PassthroughSubject<Int, Never>()
+// Downstream
+let bassPublisher = PassthroughSubject<String, Never>()
+
+synthPublisher
+    .drop(untilOutputFrom: bassPublisher)
+    .sink { "DropUntilOutput".printWithResult($0) }
+
+bassPublisher
+    .sink { "DropUntilOutput".printWithResult($0) }
+
+for i in 1...8 {
+    if i == 5 {
+        bassPublisher.send("VERY BIG BASS DROP!!!")
+        continue
+    }
+    
+    synthPublisher.send(i)
+}
+
+/*
+ [DropUntilOutput] VERY BIG BASS DROP!!!
+ [DropUntilOutput] 6
+ [DropUntilOutput] 7
+ [DropUntilOutput] 8
+ */
+
+// Drop First
+["A", "B", "C", "D", "E"].publisher
+    // Zero-based, 3을 지정하면 인덱스 3'부터' 표시
+    .dropFirst(3)
+    .sink { "DropFirst".printWithResult($0) }
+
+/*
+ [DropFirst] D
+ [DropFirst] E
+ */
+
+// Drop While: 매개변수로 받은 클로저가 ⭐️false를 반환할 때까지⭐️ Upstream publisher에서 받은 값을 무시 (true이면 무시)
+["3", "4", "Crunchy", "Nuts", "5"].publisher
+    .drop { Int($0) != nil }
+    .sink { "DropWhile".printWithResult($0) }
+
+/*
+ [DropWhile] Crunchy
+ [DropWhile] Nuts
+ [DropWhile] 5
+ */
+
+// Try Drop While
+["3", "4", "G", "Crunchy", "Nuts", "5"].publisher
+    .tryDrop {
+        if $0 == "G" {
+            throw PinguError.pinguIsBaboo
+        } else {
+            return Int($0) != nil
+        }
+    }
+    .sink {
+        "TryDropWhile Comp".printWithResult($0)
+    } receiveValue: {
+        "TryDropWhile Val".printWithResult($0)
+    }
+
+// Append
+[1, 2, 3, 4].publisher
+    .append(5, 6)
+    .append([7, 8, 9])
+    .sink { _ in
+        print()
+    } receiveValue: {
+        print($0, terminator: " ")
+    }
+
+/*
+ 1 2 3 4 5 6 7 8 9
+ */
+
+let appendPublisher = ["Dead", "or", "Alive"]
+["Y&Co.", "is"].publisher
+    .append(appendPublisher)
+    .sink { _ in
+        print()
+    } receiveValue: {
+        print($0, terminator: " ")
+    }
+/*
+ Y&Co. is Dead or Alive
+ */
+
+// Prepend: Append는 뒤에 붙이고, Pretend는 앞에 붙임
+[1, 2, 3, 4].publisher
+    .prepend(5, 6)
+    .prepend([7, 8, 9])
+    .sink { _ in
+        print()
+    } receiveValue: {
+        print($0, terminator: " ")
+    }
+/*
+ 7 8 9 5 6 1 2 3 4
+ */
+
+let prependPublisher = ["Who", "Cares"]
+["About", "You"].publisher
+    .prepend(prependPublisher)
+    .sink { _ in
+        print()
+    } receiveValue: {
+        print($0, terminator: " ")
+    }
+/*
+ Who Cares About You
+ */
+
+// Prefix
+[1, 2, 3, 4, 3, 2, 1].publisher
+    .prefix(3)
+    .sink { "Prefix".printWithResult($0) }
+/*
+ [Prefix] 1
+ [Prefix] 2
+ [Prefix] 3
+ */
+
+// PrefixWhile: ⭐️false를 반환할 때까지⭐️ 값을 방출 (DropWhile과 반대)
+"FLYANDFLY".split(separator: "").publisher
+    .prefix { $0 != "A" }
+    .sink { "Prefix".printWithResult($0) }
+/*
+ [Prefix] F
+ [Prefix] L
+ [Prefix] Y
+ */
+
+// TryPrefixWhile
+"FLY_ANDFLY".split(separator: "").publisher
+    .tryPrefix {
+        if $0.rangeOfCharacter(from: .alphanumerics) != nil {
+            throw PinguError.pinguIsBaboo
+        }
+        
+        return $0 != "A"
+    }
+    .sink { "TryPrefix Comp".printWithResult($0) } receiveValue: { "TryPrefix Val".printWithResult($0)  }
+
+// Prefix UntilOutputFrom: 물줄기 틀어막기
+// Upstream Publisher
+let flowWaterPublisher = PassthroughSubject<Int, Never>()
+// Blocking Publisher
+let twistBlockingPublisher = PassthroughSubject<String, Never>()
+
+flowWaterPublisher
+    .prefix(untilOutputFrom: twistBlockingPublisher)
+    .sink {
+        print()
+        "PrefixUntilOutputFrom Comp".printWithResult($0)
+    } receiveValue: { print($0, terminator: " ")  }
+
+for i in 1...15 {
+    if i == 7 {
+        twistBlockingPublisher.send("응안돼 돌아가")
+        continue
+    }
+    
+    flowWaterPublisher.send(i)
+}
+
+/*
+ 1 2 3 4 5 6
+ [PrefixUntilOutputFrom Comp] finished
+ */
+
+/*
+ =========================================
+ */
+
+/*
+ Selecting Specific Elements
+ 
+ Publishers
+ - First
+ - FirstWhere
+ - TryFirstWhere
+ - Last
+ - LastWhere
+ - TryLastWhere
+ - Output
+ 
+ Operators
+ - first()
+ - first(where:)
+ - tryFirst(where:)
+ - last()
+ - last(where:)
+ - tryLast(where:)
+ - output(at:)
+ - output(in:)
+ */
+
+// First
+"FIRST".split(separator: "").publisher
+    .first()
+    .sink { "First".printWithResult($0) } // F
+
+// FirstWhere
+[1, 3, 5, 2, 4, 5, 7, 8].publisher
+    .first { $0 % 2 == 0 }
+    .sink { "First".printWithResult($0) } // 2
+
+// TryFirstWhere
+"FIRST".split(separator: "").publisher
+    .tryFirst {
+        if $0 == "S" {
+            throw PinguError.pinguIsBaboo
+        }
+        
+        return $0 == "T"
+    }
+    .sink { "TryFirstWhere Comp".printWithResult($0) } receiveValue: { "TryFirstWhere Val".printWithResult($0) }
+
+// Last
+let lastArrayPublisher = "LAST".split(separator: "").publisher
+lastArrayPublisher
+    .last()
+    .sink { "Last".printWithResult($0) } // T
+
+[1, 3, 5, 2, 4, 5, 7, 8].publisher
+    .last { $0 % 2 == 1}
+    .sink { "Last".printWithResult($0) } // 7
+
+lastArrayPublisher
+    .tryLast {
+        if $0 == "T" // L을 입력하더라도 마찬가지로 에러 발생. 첫 요소부터 횡단??
+        {
+            throw PinguError.pinguIsBaboo
+        }
+        
+        return $0 == "S"
+    }
+    .sink { "TryLastWhere Comp".printWithResult($0) } receiveValue: { "TryLastWhere Val".printWithResult($0) }
+
+// Output: 특정 인덱스, 범위의 요소를 방출
+[0, 2, 163, 4, 8].publisher
+    .output(at: 2) // 인덱스
+    .sink { "Last at".printWithResult($0) } // 163
+
+[0, 2, 163, 4, 8, 66, 71727485, 49, 3, 5, 3468].publisher
+    .print()
+    .output(in: 2...6) // Zero-based
+    .sink {
+        "Last in".printWithResult($0)
+    } receiveValue: {
+        print($0)
+    }
+/*
+ receive subscription: ([0, 2, 163, 4, 8, 66, 71727485, 49, 3, 5, 3468])
+ request unlimited
+ receive value: (0)
+ request max: (1) (synchronous)
+ receive value: (2)
+ request max: (1) (synchronous)
+ receive value: (163)
+ 163
+ receive value: (4)
+ 4
+ receive value: (8)
+ 8
+ receive value: (66)
+ 66
+ receive value: (71727485)
+ 71727485
+ receive cancel
+ [Last in] finished
+ */
+
+/*
+ ===========================================
+ */
+
+/*
+ Combining Elements from Multiple Publishers
+ - CombineLatest: 여러 퍼블리셔로부터 마지막 요소를 모으고 재퍼블리싱
+ - Merge: 여러 퍼블리셔를 재조립된 스트림으로 취급하여 재퍼블리싱
+ - Zip: 여러 퍼블리셔로부터 가장 오래된 비방출 요소를 모아 재퍼블리싱
+ 
+ Operators
+ - combineLatest(_ other:, _ transform:)
+ - combineLatest(_ other:)
+ - combineLatest(_ publisher1:, _ publisher2:, _ transform:)
+ - combineLatest(_ publisher1:, _ publisher2:)
+ - combineLatest(_ publisher1:, _ publisher2:, _ publisher3:, _ transform:)
+ - combineLatest(_ publisher1:, _ publisher 2:, _ publisher3:)
+ */
+
+// combineLatest(_ other:, _ transform:)
+var firstCombinePublisher = PassthroughSubject<String, Never>()
+var secondCombinePublisher = PassthroughSubject<String, Never>()
+
+firstCombinePublisher
+    .combineLatest(secondCombinePublisher) { firstPubValue, secondPubValue in
+        return firstPubValue + ":" + secondPubValue
+    }
+    .sink { "Combine2 Comp".printWithResult($0) } receiveValue: { "Combine2 Val".printWithResult($0) }
+
+
+firstCombinePublisher.send("E")
+secondCombinePublisher.send("F")
+
+secondCombinePublisher.send("G")
+firstCombinePublisher.send("H")
+
+// 두 개의 퍼블리셔를 모두 마감시켜야 finished 처리됨
+firstCombinePublisher.send(completion: .finished)
+secondCombinePublisher.send(completion: .finished)
+/*
+     E            H    |
+ -------------------------------
+           F    G      |
+ 
+ [Combine2] E:F
+ [Combine2] E:G
+ [Combine2] H:G
+ [Combine2 Comp] finished
+ */
+
+firstCombinePublisher = PassthroughSubject<String, Never>()
+secondCombinePublisher = PassthroughSubject<String, Never>()
+
+// combineLatest(_ other:) -> 튜플 형태로만 내보낼 수 있음
+firstCombinePublisher
+    .combineLatest(secondCombinePublisher)
+    .sink { "CombineO Comp".printWithResult($0) } receiveValue: { "CombineO Val".printWithResult($0) }
+
+firstCombinePublisher.send("E")
+secondCombinePublisher.send("F")
+
+secondCombinePublisher.send("G")
+firstCombinePublisher.send("H")
+
+firstCombinePublisher.send(completion: .finished)
+secondCombinePublisher.send(completion: .finished)
+/*
+     E            H    |
+ -------------------------------
+           F    G      |
+ 
+ [CombineO Val] ("E", "F")
+ [CombineO Val] ("E", "G")
+ [CombineO Val] ("H", "G")
+ [CombineO Comp] finished
+ */
+
+firstCombinePublisher = PassthroughSubject<String, Never>()
+secondCombinePublisher = PassthroughSubject<String, Never>()
+
+// combineLatest(_ publisher1:, _ publisher2:, _ transform:)
+var thirdCombinePublisher = PassthroughSubject<String, Never>()
+/*
+ B   O   U   N      C        Y
+ ---------------------------------------------
+       O       H        M   Y   G   O
+ ---------------------------------------------
+   F       A      S   H   I       O
+ */
+
+firstCombinePublisher
+    .combineLatest(secondCombinePublisher, thirdCombinePublisher) { first, second, third in
+        return first + ":" + second + ":" + third
+    }
+    .sink { "Combine3 Comp".printWithResult($0) } receiveValue: { "Combine3 Val".printWithResult($0) }
+
+let firstCombineString = "BOUNCY"
+let secondCombineString = "OHMYGO"
+let thirdCombineString = "FASHIO"
+let combine3Order = [1, 3, 1, 2, 1, 3, 1, 2, 3, 1, 3, 2, 3, 2, 1, 2, 3, 2]
+
+var firstQueue = firstCombineString.split(separator: "")
+var secondQueue = secondCombineString.split(separator: "")
+var thirdQueue = thirdCombineString.split(separator: "")
+
+combine3Order.forEach { combineIndex in
+    switch combineIndex {
+    case 1:
+        firstCombinePublisher.send(String(firstQueue.removeFirst()))
+    case 2:
+        secondCombinePublisher.send(String(secondQueue.removeFirst()))
+    case 3:
+        thirdCombinePublisher.send(String(thirdQueue.removeFirst()))
+    default:
+        break
+    }
+}
+
+firstCombinePublisher.send(completion: .finished)
+secondCombinePublisher.send(completion: .finished)
+thirdCombinePublisher.send(completion: .finished)
+
+// emit Tuple
+firstCombinePublisher = PassthroughSubject<String, Never>()
+secondCombinePublisher = PassthroughSubject<String, Never>()
+thirdCombinePublisher = PassthroughSubject<String, Never>()
+
+firstCombinePublisher
+    .combineLatest(secondCombinePublisher, thirdCombinePublisher)
+    .sink { "Combine3o Comp".printWithResult($0) } receiveValue: { "Combine3o Val".printWithResult($0) }
+
+firstQueue = firstCombineString.split(separator: "")
+secondQueue = secondCombineString.split(separator: "")
+thirdQueue = thirdCombineString.split(separator: "")
+
+combine3Order.forEach { combineIndex in
+    switch combineIndex {
+    case 1:
+        firstCombinePublisher.send(String(firstQueue.removeFirst()))
+    case 2:
+        secondCombinePublisher.send(String(secondQueue.removeFirst()))
+    case 3:
+        thirdCombinePublisher.send(String(thirdQueue.removeFirst()))
+    default:
+        break
+    }
+}
+
+firstCombinePublisher.send(completion: .finished)
+secondCombinePublisher.send(completion: .finished)
+thirdCombinePublisher.send(completion: .finished)
+
+/*
+ B   O   U   N      C        Y
+ ---------------------------------------------
+       O       H        M   Y   G   O
+ ---------------------------------------------
+   F       A      S   H   I       O
+ 
+ [Combine3 Val] O:O:F
+ [Combine3 Val] U:O:F
+ [Combine3 Val] U:O:A
+ [Combine3 Val] N:O:A
+ [Combine3 Val] N:H:A
+ [Combine3 Val] N:H:S
+ [Combine3 Val] C:H:S
+ [Combine3 Val] C:H:H
+ [Combine3 Val] C:M:H
+ [Combine3 Val] C:M:I
+ [Combine3 Val] C:Y:I
+ [Combine3 Val] Y:Y:I
+ [Combine3 Val] Y:G:I
+ [Combine3 Val] Y:G:O
+ [Combine3 Val] Y:O:O
+ [Combine3 Comp] finished
+ 
+ [Combine3o Val] ("O", "O", "F")
+ [Combine3o Val] ("U", "O", "F")
+ [Combine3o Val] ("U", "O", "A")
+ [Combine3o Val] ("N", "O", "A")
+ [Combine3o Val] ("N", "H", "A")
+ [Combine3o Val] ("N", "H", "S")
+ [Combine3o Val] ("C", "H", "S")
+ [Combine3o Val] ("C", "H", "H")
+ [Combine3o Val] ("C", "M", "H")
+ [Combine3o Val] ("C", "M", "I")
+ [Combine3o Val] ("C", "Y", "I")
+ [Combine3o Val] ("Y", "Y", "I")
+ [Combine3o Val] ("Y", "G", "I")
+ [Combine3o Val] ("Y", "G", "O")
+ [Combine3o Val] ("Y", "O", "O")
+ [Combine3o Comp] finished
+ */
+
+// Combine4: combineLatest(_ publisher1:, _ publisher2:, _ publisher3:, _ transform:)
+firstCombinePublisher = PassthroughSubject<String, Never>()
+secondCombinePublisher = PassthroughSubject<String, Never>()
+thirdCombinePublisher = PassthroughSubject<String, Never>()
+var fourthCombinePublisher = PassthroughSubject<String, Never>()
+
+/*
+ B    O   U    N         C         Y
+ ---------------------------------------------
+        O          H         M   Y      G   O
+ ---------------------------------------------
+   F         A        S    H   I          O
+ ---------------------------------------------
+     f           l                   y
+ */
+
+let fourthString = "fly"
+let combine4Order = [1, 3, 4, 1, 2, 1, 3, 1, 4, 2, 3, 1, 3, 2, 3, 2, 1, 4, 2, 3, 2]
+
+firstQueue = firstCombineString.split(separator: "")
+secondQueue = secondCombineString.split(separator: "")
+thirdQueue = thirdCombineString.split(separator: "")
+var fourthQueue = fourthString.split(separator: "")
+
+firstCombinePublisher
+    .combineLatest(secondCombinePublisher, thirdCombinePublisher, fourthCombinePublisher)
+    .sink { "Combine3o Comp".printWithResult($0) } receiveValue: { "Combine3o Val".printWithResult($0) }
+    
+
+combine4Order.forEach { combineIndex in
+    switch combineIndex {
+    case 1:
+        firstCombinePublisher.send(String(firstQueue.removeFirst()))
+    case 2:
+        secondCombinePublisher.send(String(secondQueue.removeFirst()))
+    case 3:
+        thirdCombinePublisher.send(String(thirdQueue.removeFirst()))
+    case 4:
+        fourthCombinePublisher.send(String(fourthQueue.removeFirst()))
+    default:
+        break
+    }
+}
+
+[
+    firstCombinePublisher,
+    secondCombinePublisher,
+    thirdCombinePublisher,
+    fourthCombinePublisher,
+].forEach {
+    $0.send(completion: .finished)
+}
+
+/*
+ B    O   U    N         C         Y
+ ---------------------------------------------
+        O          H         M   Y      G   O
+ ---------------------------------------------
+   F         A        S    H   I          O
+ ---------------------------------------------
+     f           l                   y
+ 
+ [Combine3o Val] ("O", "O", "F", "f")
+ [Combine3o Val] ("U", "O", "F", "f")
+ [Combine3o Val] ("U", "O", "A", "f")
+ [Combine3o Val] ("N", "O", "A", "f")
+ [Combine3o Val] ("N", "O", "A", "l")
+ [Combine3o Val] ("N", "H", "A", "l")
+ [Combine3o Val] ("N", "H", "S", "l")
+ [Combine3o Val] ("C", "H", "S", "l")
+ [Combine3o Val] ("C", "H", "H", "l")
+ [Combine3o Val] ("C", "M", "H", "l")
+ [Combine3o Val] ("C", "M", "I", "l")
+ [Combine3o Val] ("C", "Y", "I", "l")
+ [Combine3o Val] ("Y", "Y", "I", "l")
+ [Combine3o Val] ("Y", "Y", "I", "y")
+ [Combine3o Val] ("Y", "G", "I", "y")
+ [Combine3o Val] ("Y", "G", "O", "y")
+ [Combine3o Val] ("Y", "O", "O", "y")
+ [Combine3o Comp] finished
+ */
+
+/*
+ =======================================
+ */
+
+// MERGE
+// merge(with other: P)
+var firstMergePublisher = PassthroughSubject<Int, Never>()
+var secondMergePublisher = PassthroughSubject<Int, Never>()
+
+firstMergePublisher
+    .merge(with: secondMergePublisher)
