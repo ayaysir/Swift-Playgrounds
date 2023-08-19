@@ -1755,10 +1755,675 @@ combine4Order.forEach { combineIndex in
  =======================================
  */
 
-// MERGE
+// MERGE: 8개까지 가능
 // merge(with other: P)
 var firstMergePublisher = PassthroughSubject<Int, Never>()
 var secondMergePublisher = PassthroughSubject<Int, Never>()
+// 퍼블리셔간 방출하는 값의 타입이 같아야 함
 
 firstMergePublisher
     .merge(with: secondMergePublisher)
+    .sink { "MergeO Comp".printWithResult($0) } receiveValue: { "MergeO Val".printWithResult($0) }
+
+firstMergePublisher.send(1)
+secondMergePublisher.send(38729857)
+firstMergePublisher.send(2)
+secondMergePublisher.send(19433338)
+/*
+ [MergeO Val] 1
+ [MergeO Val] 38729857
+ [MergeO Val] 2
+ [MergeO Val] 19433338
+ */
+
+// MergeMany
+var mergePublishers: [PassthroughSubject<Int, Never>] = (0..<20).map { index in
+    PassthroughSubject<Int, Never>()
+}
+// Repeating, count로 반복 어레이를 생성하지 않아야 함 -> class 이므로 동일한 주소의 인스턴스가 들어감
+
+Publishers.MergeMany(mergePublishers)
+    .sink { print($0, terminator: " ") }
+
+for (index, publisher) in mergePublishers.enumerated() {
+    publisher.send(index)
+}
+print()
+/*
+ 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19
+ */
+
+/*
+ ZIP
+ - 여러 개의 Publisher에서 가장 오래 사용되지 않은 값들을 모아서 처리
+ - Zip4까지 있음
+ 
+ Operators
+ - zip(_ other:)
+ - zip(_ other: _ transform:)
+ - zip(_ publisher1, _ publisher2)
+ - zip(_ publisher1, _ publisher2, _ transform:)
+ - zip(_ publisher1, _ publisher2, _ publisher3)
+ - zip(_ publisher1, _ publisher2, _ publisher3, _ transform:)
+ */
+
+// zip(_ other:)
+// zip은 (Zip2의 경우) 페어가 이루어져야만 방출됨
+var firstZipPub = PassthroughSubject<Int, Never>()
+var secondZipPub = PassthroughSubject<Int, Never>()
+
+firstZipPub
+    .zip(secondZipPub)
+    .sink { "Zip2 Comp".printWithResult($0) } receiveValue: { "Zip2 Val".printWithResult($0) }
+
+firstZipPub.send(1)
+secondZipPub.send(11)
+
+firstZipPub.send(2)
+secondZipPub.send(12)
+
+for i in 3...9 {
+    firstZipPub.send(i)
+}
+
+// 페어가 완성되어야만 finished 될 수 있음
+firstZipPub.send(completion: .finished)
+
+// 아래 부분이 실행되지 않은 경우 (3, 13) ~ (9, 19)는 방출되지 않는다
+for i in 3...9 {
+    secondZipPub.send(i + 10)
+}
+/*
+ [Zip2 Val] (1, 11)
+ [Zip2 Val] (2, 12)
+ [Zip2 Val] (3, 13)
+ [Zip2 Val] (4, 14)
+ [Zip2 Val] (5, 15)
+ [Zip2 Val] (6, 16)
+ [Zip2 Val] (7, 17)
+ [Zip2 Val] (8, 18)
+ [Zip2 Val] (9, 19)
+ [Zip2 Comp] finished
+ */
+
+// zip(_ other:, _ transform:)
+firstZipPub = PassthroughSubject<Int, Never>()
+secondZipPub = PassthroughSubject<Int, Never>()
+var thirdZipPub = PassthroughSubject<Int, Never>()
+
+firstZipPub
+    .zip(secondZipPub, thirdZipPub)
+    .sink { "Zip3 Comp".printWithResult($0) } receiveValue: { "Zip3 Val".printWithResult($0) }
+
+for i in 1...3 {
+    firstZipPub.send(i)
+}
+
+for i in 1...3 {
+    thirdZipPub.send(i * 100)
+}
+
+thirdZipPub.send(completion: .finished)
+
+for i in 1...3 {
+    secondZipPub.send(i * 10)
+}
+
+/*
+ [Zip3 Val] (1, 10, 100)
+ [Zip3 Val] (2, 20, 200)
+ [Zip3 Val] (3, 30, 300)
+ [Zip3 Comp] finished
+ */
+
+/*
+ ===============================
+ */
+
+/*
+ Republishing Elements by Subscribing to New Publishers
+
+ Publishers
+ - FlatMap
+ - SwitchToLatest
+ 
+ Operators
+ - flatMap(maxPublishers:,_:)
+ - switchToLatest()
+ */
+
+// FlatMap
+typealias PassThruSubjString = PassthroughSubject<String, Never>
+
+let fmPub1 = PassThruSubjString()
+let fmPub2 = PassThruSubjString()
+let fmPubs = PassthroughSubject<PassThruSubjString, Never>()
+
+fmPubs
+    // 최대 퍼블리셔 처리 개수
+    .flatMap(maxPublishers: .max(2)) { publisher in
+        publisher
+    }
+    .sink { "FlatMap Comp".printWithResult($0) } receiveValue: { "FlatMap Val".printWithResult($0) }
+
+fmPubs.send(fmPub2)
+fmPubs.send(fmPub1)
+
+fmPub1.send("Hell")
+fmPub1.send("World")
+
+fmPub2.send("Kwangya")
+fmPub2.send("ZZZZ")
+
+/*
+ max 1:
+ [FlatMap Val] Kwangya
+ [FlatMap Val] ZZZZ
+ 
+ max 2:
+ [FlatMap Val] Hell
+ [FlatMap Val] World
+ [FlatMap Val] Kwangya
+ [FlatMap Val] ZZZZ
+ */
+
+// 아스키코드 정수 배열을 받아서 문자열로 변환
+let decodeOnlyAlphabet: ([Int]) -> AnyPublisher<String, Never> = { codes in
+    Just(
+        codes
+            .compactMap { code in
+                guard (65...90).contains(code) || (97...122).contains(code) else { return nil }
+                return String(UnicodeScalar(code) ?? " ")
+            }
+            .joined()
+    )
+    .eraseToAnyPublisher()
+}
+
+let intArrayFMPublisher = PassthroughSubject<[Int], Never>()
+intArrayFMPublisher
+    .flatMap(decodeOnlyAlphabet)
+    .sink { "FlatMap Comp".printWithResult($0) } receiveValue: { "FlatMap Val".printWithResult($0) }
+
+intArrayFMPublisher.send([1, 80, 105, 110, 103, 117])
+intArrayFMPublisher.send([1, 80, 105, 110, 103, 97])
+intArrayFMPublisher.send(completion: .finished)
+/*
+ [FlatMap Val] Pingu
+ [FlatMap Val] Pinga
+ [FlatMap Comp] finished
+ */
+
+// switchToLatest()
+typealias PssthrusbjInt = PassthroughSubject<Int, Never>
+let slPub1 = PssthrusbjInt()
+let slPub2 = PssthrusbjInt()
+let slPub3 = PssthrusbjInt()
+let slPubs = PassthroughSubject<PssthrusbjInt, Never>()
+
+slPubs
+    .switchToLatest()
+    .sink { "SwitchToLatest Comp".printWithResult($0) } receiveValue: { "SwitchToLatest Val".printWithResult($0) }
+
+slPubs.send(slPub1)
+slPub1.send(99)
+slPub1.send(18)
+
+slPubs.send(slPub2)
+slPub1.send(73939)
+slPub2.send(-999)
+
+slPubs.send(slPub3)
+slPub1.send(245243939)
+slPub2.send(182435)
+slPub3.send(111111)
+
+slPub3.send(completion: .finished)
+slPubs.send(completion: .finished)
+/*
+ [SwitchToLatest Val] 99
+ [SwitchToLatest Val] 18
+ [SwitchToLatest Val] -999
+ [SwitchToLatest Val] 111111
+ [SwitchToLatest Comp] finished
+ */
+
+
+var utSubsc = Set<AnyCancellable>()
+func userTapMockUp() {
+    let url = URL(string: "https://source.unsplash.com/random")!
+    
+    func getImage() -> AnyPublisher<UIImage?, Never> {
+        URLSession.shared
+            .dataTaskPublisher(for: url)
+            .map { data, _ in UIImage(data: data) }
+            .replaceError(with: nil)
+            .eraseToAnyPublisher()
+    }
+    
+    let userTap = PassthroughSubject<Void, Never>()
+    userTap
+        .map { _ in getImage() }
+        .switchToLatest()
+        .sink { "UserTap Comp".printWithResult($0 as Any) } receiveValue: { "UserTap Val".printWithResult($0 as Any) }
+        // Stores this type-erasing cancellable instance in the specified set.
+        .store(in: &utSubsc)
+    
+    userTap.send()
+    
+    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+        userTap.send()
+    }
+    
+    DispatchQueue.main.asyncAfter(deadline: .now() + 2.1) {
+        userTap.send()
+    }
+}
+userTapMockUp()
+/*
+ [UserTap Val] Optional(<UIImage:0x600001d187e0 anonymous {1080, 1441} renderingMode=automatic(original)>)
+ [UserTap Val] Optional(<UIImage:0x600001d18990 anonymous {1080, 1620} renderingMode=automatic(original)>)
+ */
+
+/*
+ ===========================================
+ */
+
+/*
+ Handling Errors
+ 
+ Publishers
+ - AssertNoFailure
+ - Catch
+ - TryCatch
+ - Retry
+ 
+ Operators
+ - assertNoFailure(_:file:line:)
+ - catch(_:)
+ - tryCatch(_:)
+ - retry(_:)
+ */
+
+// assertNoFailure(_:file:line:)
+let intPub1 = PassthroughSubject<Int, PinguError>()
+
+intPub1
+    .assertNoFailure()
+    .sink { "assertNoFailure Comp".printWithResult($0) } receiveValue: { "assertNoFailure Val".printWithResult($0) }
+
+intPub1.send(1)
+intPub1.send(2)
+// intPub1.send(completion: .failure(.pinguIsBaboo)) // FatalError 발생
+
+
+[4, 6, 0, 1, 3, 7].publisher
+    .tryMap {
+        guard $0 != 0 else { throw PinguError.pinguIsBaboo }
+        return $0 * 2
+    }
+    .catch { _ in Just(-999) }
+    .sink { "catch Comp".printWithResult($0) } receiveValue: { "catch Val".printWithResult($0) }
+
+/*
+ [catch Val] 8
+ [catch Val] 12
+ [catch Val] -999
+ [catch Comp] finished
+ */
+
+let intPub2 = [4, 6, 0, 1, 3, 7].publisher
+let anotherIntPub2 = [99, 999, 9999].publisher
+
+intPub2
+    .tryMap {
+        guard $0 != 0 else { throw PinguError.pinguIsBaboo }
+        return $0 * 2
+    }
+    .tryCatch { error -> AnyPublisher<Int, Never> in
+        if error is PinguError { throw PandaError.thisIsBlackBear }
+        return anotherIntPub2.eraseToAnyPublisher()
+    }
+    .sink { "tryCatch Comp".printWithResult($0) } receiveValue: { "tryCatch Val".printWithResult($0) }
+    
+/*
+ * tryCatch에 에러 변환을 지정하지 않았을 경우
+ [tryCatch Val] 8
+ [tryCatch Val] 12
+ [tryCatch Val] 99
+ [tryCatch Val] 999
+ [tryCatch Val] 9999
+ [tryCatch Comp] finished
+ 
+ * tryCatch에 에러 변환을 지정한 경우
+ [tryCatch Val] 8
+ [tryCatch Val] 12
+ [tryCatch Comp] failure(__lldb_expr_85.PandaError.thisIsBlackBear)
+ */
+
+// Retry
+var retryCount: Int = 0
+func retryTest() throws {
+    if retryCount < 2 {
+        retryCount += 1
+        print("\(retryCount) 번째 재시도")
+        throw PandaError.thisIsBlackBear
+    }
+}
+
+[1, 2, 3, 4].publisher
+    .tryMap { value in
+        try retryTest()
+        return value
+    }
+    .retry(3)
+    .sink { "retry Comp".printWithResult($0) } receiveValue: { "retry Val".printWithResult($0) }
+
+/*
+ retryCount < 2
+ 1 번째 재시도
+ 2 번째 재시도
+ [retry Val] 1
+ [retry Val] 2
+ [retry Val] 3
+ [retry Val] 4
+ [retry Comp] finished
+ 
+ retryCount < 4
+ 1 번째 재시도
+ 2 번째 재시도
+ 3 번째 재시도
+ 4 번째 재시도
+ [retry Comp] failure(__lldb_expr_91.PandaError.thisIsBlackBear)
+ */
+
+/*
+ ==================================
+ */
+
+/*
+ Controlling Timing
+ Publishers
+ - MeasureInterval
+ - Debounce
+ - Delay
+ - Throttle
+ - Timeout
+ 
+ Operators
+ - measureInterval(using:options:)
+ - debounce(for:scheduler:options:)
+ - delay(for:tolerance:scheduler:options:)
+ - throttle(for:scheduler:latest:)
+ - timeout(_:,scheduler:options:customError:)
+ */
+
+// measureInterval(using:options:)
+var miSubsc = Set<AnyCancellable>()
+let miPub = PssthrusbjInt()
+miPub
+    .measureInterval(using: DispatchQueue.main)
+    .sink {
+        "MeasureInterval".printWithResult($0)
+    } receiveValue: { nanosecond in
+        print("Measure Time:", Double(nanosecond.magnitude) / 1000000000.0)
+    }
+    .store(in: &miSubsc)
+
+miPub.send(1)
+sleep(1)
+miPub.send(3584)
+sleep(3)
+miPub.send(56245)
+
+/*
+ Measure Time: 0.000358334
+ Measure Time: 1.002780583
+ Measure Time: 3.001439042
+ */
+
+// Debounce: debounce(for:scheduler:options:)
+var dbcSubsc = Set<AnyCancellable>()
+let operationQueue: OperationQueue = {
+    let operaionQueue = OperationQueue()
+    operaionQueue.maxConcurrentOperationCount = 1
+    return operaionQueue
+}()
+
+let textField = PassThruSubjString()
+let bounces: [(String, TimeInterval)] = [ // 입력값, 입력 후 기다리는 시간
+    ("www", 0.5),
+    (".", 0.5),
+    ("p", 1),
+    ("ing", 0.5),
+    ("u", 0.5),
+    (".", 1.2),
+    ("co", 0.5),
+    ("m", 5),
+]
+
+var requestString = ""
+textField
+    .debounce(for: .seconds(1.0), scheduler: DispatchQueue.main)
+    .sink { print("이번에 받은 값: \($0) , Network Request with: \(requestString)") }
+    .store(in: &dbcSubsc)
+
+for bounce in bounces {
+    operationQueue.addOperation {
+        requestString += bounce.0
+        textField.send(bounce.0)
+        
+        usleep(UInt32(bounce.1 * 1000000))
+    }
+}
+/*
+ 이번에 받은 값: p , Network Request with: www.p
+ 이번에 받은 값: . , Network Request with: www.pingu.
+ 이번에 받은 값: m , Network Request with: www.pingu.com
+ */
+
+// Delay
+// delay(for:tolerance:scheduler:options:)
+var delaySubsc = Set<AnyCancellable>()
+let dateFormatter: DateFormatter = {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateStyle = .none
+    dateFormatter.timeStyle = .long
+    return dateFormatter
+}()
+
+Timer.publish(every: 1, on: .main, in: .default)
+// Automates the process of connecting or disconnecting from this connectable publisher.
+    .autoconnect()
+    .handleEvents(receiveOutput:  { date in
+        print("[Delay HE] Downstream으로 보낸값(현재시간): \(dateFormatter.string(from: date))")
+    })
+    .delay(for: .seconds(3), scheduler: RunLoop.main, options: .none)
+    .sink {
+        "Delay Comp".printWithResult($0)
+    } receiveValue: {
+        let now = Date()
+        print("[Delay Val] 받은 값: \(dateFormatter.string(from: $0)) | 보낸시간: \(String(format: "%2.f", now.timeIntervalSince($0)))초 전")
+    }
+    .cancel()
+    // .store(in: &delaySubsc)
+
+/*
+ [Delay HE] Downstream으로 보낸값(현재시간): 1:40:47 PM GMT+9 (A)
+ [Delay HE] Downstream으로 보낸값(현재시간): 1:40:48 PM GMT+9 (B)
+ [Delay HE] Downstream으로 보낸값(현재시간): 1:40:49 PM GMT+9 (C)
+ [Delay HE] Downstream으로 보낸값(현재시간): 1:40:50 PM GMT+9 (D)
+ [Delay Val] 받은 값: 1:40:47 PM GMT+9 | 보낸시간:  3초 전    (A)
+ [Delay HE] Downstream으로 보낸값(현재시간): 1:40:51 PM GMT+9
+ [Delay Val] 받은 값: 1:40:48 PM GMT+9 | 보낸시간:  3초 전    (B)
+ [Delay HE] Downstream으로 보낸값(현재시간): 1:40:52 PM GMT+9
+ [Delay Val] 받은 값: 1:40:49 PM GMT+9 | 보낸시간:  3초 전    (C)
+ [Delay HE] Downstream으로 보낸값(현재시간): 1:40:53 PM GMT+9
+ [Delay Val] 받은 값: 1:40:50 PM GMT+9 | 보낸시간:  3초 전    (D)
+ [Delay HE] Downstream으로 보낸값(현재시간): 1:40:54 PM GMT+9
+ 
+ 즉 Upstream Publisher에서 내려보낸 값이 3초 뒤에야 Downstream에 전달되는 것이죠.
+ Downstream에서 받은 값은 현재 시간보다 3초 전의 값인 것을 볼 수 있어요.
+ */
+
+// Throttle: 지정된 시간 간격마다 Upstream Publisher가 보낸 가장 최근 값 혹은 가장 첫 번째 값을 Downstream으로 전달
+/*
+ Debounce: 값의 수신이 멈추면 일정 시간을 기다린 후 가장 최신 값을 Downstream으로 전달합니다.
+ Throttle: 일정 시간을 기다린 뒤 해당 시간 동안 수신한 값 중 가장 첫 번째 값이나 최신 값을 Downstream으로 전달합니다.
+ */
+
+// throttle(for:scheduler:latest:)
+// - interval: 값을 내려보내기 전 Upstream 퍼블리셔에게 값을 받는 시간 간격
+// - latest: 받은 값 중 최신 값을 내려보낼지(true) 첫 번째 값을 내보낼지(false) 결정하는 Bool
+
+var thrSubsc = Set<AnyCancellable>()
+let thrOpQue: OperationQueue = {
+    let operationQueue = OperationQueue()
+    operationQueue.maxConcurrentOperationCount = 1
+    return operationQueue
+}()
+
+let textField2 = PassthroughSubject<String, Never>()
+let throttles: [(String, TimeInterval)] = bounces
+var requestString2 = ""
+
+textField2
+    .throttle(for: .seconds(2), scheduler: DispatchQueue.main, latest: true)
+    .sink {
+        "Throttle Comp".printWithResult($0)
+    } receiveValue: {
+        print("[Throttle] 이번시간동안 받은 값중 최신값: \($0), 현재시간: \(Date().description), Network Request with: \(requestString)")
+    }
+    .cancel()
+    // .store(in: &thrSubsc)
+
+textField2
+    .sink(receiveCompletion: { print($0) },
+          receiveValue: { string in
+        print("[Throttle] 현재시간: \(Date().description), 이번에 내려보낸 값: \(string)")
+    })
+    .cancel()
+    // .store(in: &thrSubsc)
+
+for throttle in throttles {
+    thrOpQue.addOperation {
+        requestString2 += throttle.0
+        textField2.send(throttle.0)
+        
+        usleep(UInt32(throttle.1 * 1_000_000))
+    }
+}
+
+
+
+/*
+ Network Request를 2초마다 보냄
+ 
+ [Throttle] 현재시간: 2023-08-19 04:57:23 +0000, 이번에 내려보낸 값: www
+ [Throttle] 이번시간동안 받은 값중 최신값: www, 현재시간: 2023-08-19 04:57:24 +0000, Network Request with: www
+ [Throttle] 현재시간: 2023-08-19 04:57:24 +0000, 이번에 내려보낸 값: .
+ [Throttle] 현재시간: 2023-08-19 04:57:25 +0000, 이번에 내려보낸 값: p
+ [Throttle] 현재시간: 2023-08-19 04:57:26 +0000, 이번에 내려보낸 값: ing
+ [Throttle] 이번시간동안 받은 값중 최신값: ing, 현재시간: 2023-08-19 04:57:26 +0000, Network Request with: www.ping
+ [Throttle] 현재시간: 2023-08-19 04:57:26 +0000, 이번에 내려보낸 값: u
+ [Throttle] 현재시간: 2023-08-19 04:57:27 +0000, 이번에 내려보낸 값: .
+ [Throttle] 이번시간동안 받은 값중 최신값: ., 현재시간: 2023-08-19 04:57:28 +0000, Network Request with: www.pingu.co
+ [Throttle] 현재시간: 2023-08-19 04:57:28 +0000, 이번에 내려보낸 값: co
+ [Throttle] 현재시간: 2023-08-19 04:57:28 +0000, 이번에 내려보낸 값: m
+ [Throttle] 이번시간동안 받은 값중 최신값: m, 현재시간: 2023-08-19 04:57:30 +0000, Network Request with: www.pingu.com
+ */
+
+// Timeout
+// timeout(_:scheduler:options:customError:)
+/*
+ - interval: 값을 전달받지 않아도 되는 최대 시간
+ - customError: 일정 시간동안 값을 받지 못했을 때 실행되는 클로저, 또는 Failure 타입 방출 가능
+ */
+
+struct TimeoutError: Error {}
+let ttIntPublisher = PassthroughSubject<Int, TimeoutError>()
+ttIntPublisher
+    .timeout(.seconds(2), scheduler: DispatchQueue.main) {
+        return TimeoutError()
+    }
+    .sink { "Timeout Comp".printWithResult($0) } receiveValue: { "Timeout Val".printWithResult($0) }
+    .store(in: &thrSubsc)
+
+ttIntPublisher.send(1)
+ttIntPublisher.send(2)
+// timeout 최대 시간이 2초 설정인데 2.5초뒤에 send되도록 함
+DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+    ttIntPublisher.send(3)
+}
+
+/*
+ [Timeout Val] 1
+ [Timeout Val] 2
+ [Timeout Comp] failure(__lldb_expr_120.TimeoutError())
+ 
+ customError 클로저에서 에러를 반환하지 않으면 그냥 finished 됩니다!
+ */
+
+/*
+ =============================================
+ */
+
+/*
+ Encoding and Deconding
+ 
+ Publishers
+ - Encode
+ - Decode
+ 
+ Operators
+ - encode(encoder:)
+ - decode(type:decoder:)
+ 
+ encode는 어떤 정보를 컴퓨터에서 사용하는 형태(코드)로 바꾸는 것이고,
+ decode는 반대로 컴퓨터에서 사용하는 형태(코드)로 바꿔진 값을 원래대로 되돌리는 것입니다.
+ */
+
+// encode(encoder:)
+struct GiantPanda: Codable {
+    let name: String
+    let age: Int
+    let address: String
+}
+
+let gPandaPub = PassthroughSubject<GiantPanda, Never>()
+gPandaPub
+    .encode(encoder: JSONEncoder())
+    .sink {
+        "Encode Comp".printWithResult($0)
+    } receiveValue: { data in
+        print("[Encode Val] 인코딩된 값: \(data)")
+        guard let string = String(data: data, encoding: .utf8) else {
+            return
+        }
+        print("[Encode Val] 인코딩 값의 문자열 표현: \(string)")
+    }
+
+gPandaPub.send(.init(name: "FuBao", age: 3, address: "용인시"))
+/*
+ [Encode Val] 인코딩된 값: 46 bytes
+ [Encode Val] 인코딩 값의 문자열 표현: {"name":"FuBao","age":3,"address":"용인시"}
+ */
+
+// decode(type:decoder:)
+let gPandaDataPub = PassthroughSubject<Data, Never>()
+gPandaDataPub
+    .decode(type: GiantPanda.self, decoder: JSONDecoder())
+    .sink{
+        "Decode Comp".printWithResult($0)
+    } receiveValue: { decoded in
+        "Decode Val".printWithResult(decoded)
+    }
+
+let jsonString = """
+    {"name":"LeBao","age":11,"address":"용인시"}
+"""
+let lebaoData = Data(jsonString.utf8)
+gPandaDataPub.send(lebaoData)
+/*
+ [Decode Val] GiantPanda(name: "LeBao", age: 11, address: "용인시")
+ */
