@@ -3,20 +3,36 @@
    version = "3.0">
    <TimelineItems>
       <LoggerValueHistoryTimelineItem
-         documentLocation = "file:///Users/yoonbumtae/Desktop/Xcode%20Project/Xcode%20Practice/Playgrounds/CodingTest1.playground#CharacterRangeLen=225&amp;CharacterRangeLoc=14598&amp;EndingColumnNumber=0&amp;EndingLineNumber=604&amp;StartingColumnNumber=0&amp;StartingLineNumber=600&amp;Timestamp=715961832.044006"
+         documentLocation = "file:///Users/yoonbumtae/Desktop/Xcode%20Project/Xcode%20Practice/Playgrounds/CodingTest1.playground#CharacterRangeLen=82&amp;CharacterRangeLoc=25258&amp;EndingColumnNumber=82&amp;EndingLineNumber=940&amp;StartingColumnNumber=0&amp;StartingLineNumber=940&amp;Timestamp=716134687.563313"
          selectedRepresentationIndex = "0">
       </LoggerValueHistoryTimelineItem>
       <LoggerValueHistoryTimelineItem
-         documentLocation = "file:///Users/yoonbumtae/Desktop/Xcode%20Project/Xcode%20Practice/Playgrounds/CodingTest1.playground#CharacterRangeLen=148&amp;CharacterRangeLoc=14675&amp;EndingColumnNumber=0&amp;EndingLineNumber=604&amp;StartingColumnNumber=0&amp;StartingLineNumber=602&amp;Timestamp=715961832.044118"
+         documentLocation = "file:///Users/yoonbumtae/Desktop/Xcode%20Project/Xcode%20Practice/Playgrounds/CodingTest1.playground#CharacterRangeLen=54&amp;CharacterRangeLoc=29499&amp;EndingColumnNumber=54&amp;EndingLineNumber=1064&amp;StartingColumnNumber=0&amp;StartingLineNumber=1064&amp;Timestamp=716134687.563406"
          selectedRepresentationIndex = "0">
       </LoggerValueHistoryTimelineItem>
       <LoggerValueHistoryTimelineItem
-         documentLocation = "file:///Users/yoonbumtae/Desktop/Xcode%20Project/Xcode%20Practice/Playgrounds/CodingTest1.playground#CharacterRangeLen=222&amp;CharacterRangeLoc=14601&amp;EndingColumnNumber=0&amp;EndingLineNumber=604&amp;StartingColumnNumber=0&amp;StartingLineNumber=601&amp;Timestamp=715961832.044172"
-         selectedRepresentationIndex = "0">
+         documentLocation = "file:///Users/yoonbumtae/Desktop/Xcode%20Project/Xcode%20Practice/Playgrounds/CodingTest1.playground#CharacterRangeLen=5&amp;CharacterRangeLoc=27366&amp;EndingColumnNumber=17&amp;EndingLineNumber=997&amp;StartingColumnNumber=12&amp;StartingLineNumber=997&amp;Timestamp=716134687.563452"
+         lockedSize = "{212, 58}"
+         selectedRepresentationIndex = "0"
+         shouldTrackSuperviewWidth = "NO">
+      </LoggerValueHistoryTimelineItem>
+   </TimelineItems>
+   <TimelineItems>
+      <LoggerValueHistoryTimelineItem
+         documentLocation = "documentLocation"
+         selectedRepresentationIndex = "selectedRepresentationIndex">
       </LoggerValueHistoryTimelineItem>
       <LoggerValueHistoryTimelineItem
-         documentLocation = "file:///Users/yoonbumtae/Desktop/Xcode%20Project/Xcode%20Practice/Playgrounds/CodingTest1.playground#CharacterRangeLen=73&amp;CharacterRangeLoc=14376&amp;EndingColumnNumber=73&amp;EndingLineNumber=595&amp;StartingColumnNumber=0&amp;StartingLineNumber=595&amp;Timestamp=715961832.04422"
-         selectedRepresentationIndex = "0">
+         documentLocation = "documentLocation"
+         selectedRepresentationIndex = "selectedRepresentationIndex">
+      </LoggerValueHistoryTimelineItem>
+      <LoggerValueHistoryTimelineItem
+         documentLocation = "documentLocation"
+         selectedRepresentationIndex = "selectedRepresentationIndex">
+      </LoggerValueHistoryTimelineItem>
+      <LoggerValueHistoryTimelineItem
+         documentLocation = "documentLocation"
+         selectedRepresentationIndex = "selectedRepresentationIndex">
       </LoggerValueHistoryTimelineItem>
    </TimelineItems>
    <TimelineItems>

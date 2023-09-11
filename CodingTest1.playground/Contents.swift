@@ -911,3 +911,156 @@ func pressKeypad(_ numbers: [Int], _ hand: String) -> String {
 pressKeypad([1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5], "right") // LRLLLRLLRRL
 pressKeypad([7, 0, 8, 2, 8, 3, 1, 5, 7, 6, 2], "left") // LRLLRRLLLRR
 pressKeypad([1, 2, 3, 4, 5, 6, 7, 8, 9, 0], "right") // LLRLLRLLRL
+
+func runningRace(_ players: [String], _ callings: [String]) -> [String] {
+    // 해설진이 부르면 추월 소환
+    // 50000 * 1000000 = 500억으로 이중반복 불가능해 보임
+    
+    var players = players
+    /// 플레이어 현재 인덱스 저장한 딕셔너리(해셔블)
+    var playersCurrentIndexDict: [String: Int] = [:]
+    
+    for (index, player) in players.enumerated() {
+        playersCurrentIndexDict[player] = index
+    }
+    
+    // 호명한 순서대로 추월 처리: O(1+x)
+    for calling in callings {
+        let overtakePlayerIndex = playersCurrentIndexDict[calling]!
+        let beOvertakedPlayer = players[overtakePlayerIndex - 1]
+        
+        // swapAt: O(1)
+        players.swapAt(overtakePlayerIndex, overtakePlayerIndex - 1)
+        playersCurrentIndexDict[calling]! -= 1
+        playersCurrentIndexDict[beOvertakedPlayer]! += 1
+    }
+    
+    return players
+}
+
+runningRace(["mumu", "soe", "poe", "kai", "mine"], ["kai", "kai", "mine", "mine"])
+
+func receiveReport(_ id_list: [String], _ report: [String], _ k: Int) -> [Int] {
+    var reporterDict: [String: [String]] = [:]
+    var reporteeDict: [String: Int] = [:]
+    
+    for reportPair in report {
+        let splitted = reportPair.split(separator: " ")
+        let reporter = String(splitted[0])
+        let reportee = String(splitted[1])
+        
+        // 신고 한 리스트: 한 유저가 같은 유저를 여러 번 신고한 경우는 신고 횟수 1회로 처리
+        if reporterDict[reporter] == nil {
+            reporterDict[reporter, default: []].append(reportee)
+            reporteeDict[reportee, default: 0] += 1
+        } else if let reportees = reporterDict[reporter], !reportees.contains(reportee) {
+            reporterDict[reporter, default: []].append(reportee)
+            reporteeDict[reportee, default: 0] += 1
+        } // 신고 당한 리스트: 한 사람이 여러번 신고하였다면 카운트하지 않음
+    }
+    
+    // 메일 전송 횟수
+    var result: [Int] = [Int](repeating: 0, count: id_list.count)
+    for (index, id) in id_list.enumerated() {
+        guard let reportees = reporterDict[id] else {
+            continue
+        }
+        
+        for reportee in reportees {
+            if reporteeDict[reportee]! >= k {
+                result[index] += 1
+            }
+        }
+    }
+    
+    return result
+}
+
+receiveReport(["muzi", "frodo", "apeach", "neo"], ["muzi frodo","apeach frodo","frodo neo","muzi neo","apeach muzi"], 2)
+receiveReport(["con", "ryan"], ["ryan con", "ryan con", "ryan con", "ryan con"], 3)
+
+func lottoWinningGrade(_ unpollutedLottos: [Int], _ win_nums: [Int]) -> Int {
+    let wonCount = unpollutedLottos.compactMap { number in
+        win_nums.contains(number) ? true : nil
+    }.count
+    
+    return 7 - wonCount
+}
+
+func lottoMinMax(_ lottos: [Int], _ win_nums: [Int]) -> [Int] {
+    // 예외 케이스 처리
+    // 1. 전부 0인 경우 => [1, 6]
+    // 2. 전부 꽉 찬 경우 => 숫자가 변할 수 없으므로 [등수, 등수]
+    if lottos == [0, 0, 0, 0, 0, 0] {
+        return [1, 6]
+    } else if !lottos.contains(0) {
+        let winCount = win_nums.compactMap { lottos.contains($0) ? true : nil }.count
+        let grade = winCount > 0 ? 7 - winCount : 6
+        return [grade, grade]
+    }
+    
+    /*
+     0이 1개인 경우
+     당첨: 0 | ㅇ: 1 | oxxxxx [5(6), 5(7)] = 13
+     당첨: 1 | ㅇ: 1 | *oxxxx [5, 5(6)] = 11
+     당첨: 2 | ㅇ: 1 | **oxxx [4, 5] = 9
+     당첨: 3 | ㅇ: 1 | ***oxx [3, 4] = 7
+     당첨: 4 | ㅇ: 1 | ****ox [2, 3] = 5
+     당첨: 5 | ㅇ: 1 | *****o [1, 2] = 3
+     
+     o = 1 일때 당첨 0이면 (합의) 최대값 13
+     o = 2 일때 당첨 0이면 최대값 12
+     o = 3 일때 당첨 0이면 최대값 11
+     o = 4 일때 당첨 0이면 최대값 10
+     o = 5 일때 당첨 0이면 최대값 9
+     => 당첨 증가마다 합의 최대값으로부터 2 깎임
+     
+     최저값은 무조건 7(=>5로 대체)부터 시작, 당첨 증가시마다 1 감소
+     */
+    
+    let zeroCount = lottos.filter { $0 == 0 }.count
+    let winCount = win_nums.compactMap { lottos.contains($0) ? true : nil }.count
+    print(lottos, win_nums, zeroCount, winCount)
+    
+    let sumOfMinMax = (14 - zeroCount) - (winCount * 2)
+    let lowestGrade = 7 - winCount
+    let highestGrade = sumOfMinMax - lowestGrade
+    
+    return [highestGrade, lowestGrade].map { $0 >= 6 ? 6 : $0 }
+}
+
+lottoMinMax([44, 1, 0, 0, 31, 25], [31, 10, 45, 1, 6, 19])
+lottoMinMax([0, 0, 0, 0, 0, 0], [38, 19, 20, 40, 15, 25])
+lottoMinMax([45, 4, 35, 20, 3, 9], [20, 9, 3, 45, 4, 35])
+
+lottoMinMax([15, 27, 30, 0, 0, 0], [15, 27, 31, 12, 13, 14]) // [2, 5]
+lottoMinMax([1, 2, 3, 4, 5, 6], [7, 8, 9, 10, 11, 12]) // [6, 6]
+
+/*
+ --------------------------------------
+ */
+
+func convertToBinaryArray(from decimal: Int, maxDigit: Int) -> [String] {
+    let binaryString = String(decimal, radix: 2)
+    return [String](repeating: "0", count: maxDigit - binaryString.count) + binaryString.map(String.init)
+}
+
+func secretMap(_ n: Int, _ arr1: [Int], _ arr2: [Int]) -> [String] {
+    var mergedMap: [[String]] = [[String]](repeating: [String](repeating: " ", count: n), count: n)
+    
+    for i in 0..<n {
+        let binaryOne = convertToBinaryArray(from: arr1[i], maxDigit: n)
+        let binaryTwo = convertToBinaryArray(from: arr2[i], maxDigit: n)
+        
+        for j in 0..<n {
+            if binaryOne[j] == "1" || binaryTwo[j] == "1" {
+                mergedMap[i][j] = "#"
+            }
+        }
+    }
+    
+    return mergedMap.map { $0.joined() }
+}
+
+secretMap(5, [9, 20, 28, 18, 11], [30, 1, 21, 17, 28])
+secretMap(6, [46, 33, 33 ,22, 31, 50], [27 ,56, 19, 14, 14, 10])
