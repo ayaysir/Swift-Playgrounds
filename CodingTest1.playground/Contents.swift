@@ -912,6 +912,10 @@ pressKeypad([1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5], "right") // LRLLLRLLRRL
 pressKeypad([7, 0, 8, 2, 8, 3, 1, 5, 7, 6, 2], "left") // LRLLRRLLLRR
 pressKeypad([1, 2, 3, 4, 5, 6, 7, 8, 9, 0], "right") // LLRLLRLLRL
 
+/*
+ ====================================================================
+ */
+
 func runningRace(_ players: [String], _ callings: [String]) -> [String] {
     // 해설진이 부르면 추월 소환
     // 50000 * 1000000 = 500억으로 이중반복 불가능해 보임
@@ -923,7 +927,7 @@ func runningRace(_ players: [String], _ callings: [String]) -> [String] {
     for (index, player) in players.enumerated() {
         playersCurrentIndexDict[player] = index
     }
-    
+    playersCurrentIndexDict
     // 호명한 순서대로 추월 처리: O(1+x)
     for calling in callings {
         let overtakePlayerIndex = playersCurrentIndexDict[calling]!

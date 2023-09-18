@@ -3,18 +3,12 @@
    version = "3.0">
    <TimelineItems>
       <LoggerValueHistoryTimelineItem
-         documentLocation = "file:///Users/yoonbumtae/Desktop/Xcode%20Project/Xcode%20Practice/Playgrounds/CodingTest1.playground#CharacterRangeLen=82&amp;CharacterRangeLoc=25258&amp;EndingColumnNumber=82&amp;EndingLineNumber=940&amp;StartingColumnNumber=0&amp;StartingLineNumber=940&amp;Timestamp=716134687.563313"
+         documentLocation = "file:///Users/yoonbumtae/Desktop/Xcode%20Project/Xcode%20Practice/Playgrounds/CodingTest1.playground#CharacterRangeLen=54&amp;CharacterRangeLoc=29600&amp;EndingColumnNumber=54&amp;EndingLineNumber=1068&amp;StartingColumnNumber=0&amp;StartingLineNumber=1068&amp;Timestamp=716357183.493679"
          selectedRepresentationIndex = "0">
       </LoggerValueHistoryTimelineItem>
       <LoggerValueHistoryTimelineItem
-         documentLocation = "file:///Users/yoonbumtae/Desktop/Xcode%20Project/Xcode%20Practice/Playgrounds/CodingTest1.playground#CharacterRangeLen=54&amp;CharacterRangeLoc=29499&amp;EndingColumnNumber=54&amp;EndingLineNumber=1064&amp;StartingColumnNumber=0&amp;StartingLineNumber=1064&amp;Timestamp=716134687.563406"
+         documentLocation = "file:///Users/yoonbumtae/Desktop/Xcode%20Project/Xcode%20Practice/Playgrounds/CodingTest1.playground#CharacterRangeLen=82&amp;CharacterRangeLoc=25359&amp;EndingColumnNumber=82&amp;EndingLineNumber=944&amp;StartingColumnNumber=0&amp;StartingLineNumber=944&amp;Timestamp=716357183.493776"
          selectedRepresentationIndex = "0">
-      </LoggerValueHistoryTimelineItem>
-      <LoggerValueHistoryTimelineItem
-         documentLocation = "file:///Users/yoonbumtae/Desktop/Xcode%20Project/Xcode%20Practice/Playgrounds/CodingTest1.playground#CharacterRangeLen=5&amp;CharacterRangeLoc=27366&amp;EndingColumnNumber=17&amp;EndingLineNumber=997&amp;StartingColumnNumber=12&amp;StartingLineNumber=997&amp;Timestamp=716134687.563452"
-         lockedSize = "{212, 58}"
-         selectedRepresentationIndex = "0"
-         shouldTrackSuperviewWidth = "NO">
       </LoggerValueHistoryTimelineItem>
    </TimelineItems>
    <TimelineItems>
