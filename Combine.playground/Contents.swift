@@ -2427,3 +2427,4 @@ gPandaDataPub.send(lebaoData)
 /*
  [Decode Val] GiantPanda(name: "LeBao", age: 11, address: "용인시")
  */
+

@@ -229,56 +229,56 @@ correctBracket("())(()")
 correctBracket("()()()()")
 
 
-func developFeature(_ progresses: [Int], _ speeds: [Int]) -> [Int] {
-    if progresses.count <= 1 {
-        return [progresses.count]
-    }
-    
-    var remainDays: [Int] = []
-    
-    for i in 0..<progresses.count {
-        let remainDay = Int(ceil(Double(100 - progresses[i]) / Double(speeds[i])))
-        remainDays.append(remainDay)
-    }
-    
-    var result: [Int] = []
-    var distNum = 1
-    var baseValue = 0
-    
-    for i in 0..<remainDays.count {
-        if i == 0 {
-            baseValue = remainDays[i]
-            continue
+    func developFeature(_ progresses: [Int], _ speeds: [Int]) -> [Int] {
+        if progresses.count <= 1 {
+            return [progresses.count]
         }
         
-        if baseValue >= remainDays[i] {
-            distNum += 1
-            
-            if i >= remainDays.count - 1 {
-                result.append(distNum)
-                // 더 이상 진행되지 않음
-            }
-        } else {
-            result.append(distNum)
-            
-            if i < remainDays.count - 1 {
-                distNum = 1
+        var remainDays: [Int] = []
+        
+        for i in 0..<progresses.count {
+            let remainDay = Int(ceil(Double(100 - progresses[i]) / Double(speeds[i])))
+            remainDays.append(remainDay)
+        }
+        
+        var result: [Int] = []
+        var distNum = 1
+        var baseValue = 0
+        
+        for i in 0..<remainDays.count {
+            if i == 0 {
                 baseValue = remainDays[i]
+                continue
+            }
+            
+            if baseValue >= remainDays[i] {
+                distNum += 1
+                
+                if i >= remainDays.count - 1 {
+                    result.append(distNum)
+                    // 더 이상 진행되지 않음
+                }
             } else {
-                result.append(1)
+                result.append(distNum)
+                
+                if i < remainDays.count - 1 {
+                    distNum = 1
+                    baseValue = remainDays[i]
+                } else {
+                    result.append(1)
+                }
             }
         }
+        
+        return result
     }
-    
-    return result
-}
 
-developFeature([93, 30, 55], [1, 30, 5])
-developFeature([95, 90, 99, 99, 80, 99], [1, 1, 1, 1, 1, 1])
-developFeature([96, 99, 98, 97], [1, 1, 1, 1]) // [4]
-developFeature([0, 3, 0, 0, 10], [5, 96, 20, 50, 1]) // [4, 1]
-developFeature([93], [1]) // [1]
-developFeature([93, 30, 55, 30], [1, 30, 5, 30]) // [2, 2]
+    developFeature([93, 30, 55], [1, 30, 5])
+    developFeature([95, 90, 99, 99, 80, 99], [1, 1, 1, 1, 1, 1])
+    developFeature([96, 99, 98, 97], [1, 1, 1, 1]) // [4]
+    developFeature([0, 3, 0, 0, 10], [5, 96, 20, 50, 1]) // [4, 1]
+    developFeature([93], [1]) // [1]
+    developFeature([93, 30, 55, 30], [1, 30, 5, 30]) // [2, 2]
 
 struct Priority {
     var isLocation: Bool
@@ -1068,3 +1068,192 @@ func secretMap(_ n: Int, _ arr1: [Int], _ arr2: [Int]) -> [String] {
 
 secretMap(5, [9, 20, 28, 18, 11], [30, 1, 21, 17, 28])
 secretMap(6, [46, 33, 33 ,22, 31, 50], [27 ,56, 19, 14, 14, 10])
+
+/*
+ =============================================================
+ */
+
+/*
+ 리뷰
+ - 1차 수정: 테스트케이스 반례를 직접 추가해서 정확도 25% -> 83%로 올림
+ */
+func gymSuit(_ n: Int, _ lost: [Int], _ reserve: [Int]) -> Int {
+    // 여벌 체육복을 가져온 학생이 체육복을 도난당했을 수 있습니다.
+    // 이때 이 학생은 체육복을 하나만 도난당했다고 가정하며,
+    // 남은 체육복이 하나이기에 다른 학생에게는 체육복을 빌려줄 수 없습니다.
+    var realLost = lost.filter { !reserve.contains($0) }
+    var realReserve = reserve.filter { !lost.contains($0) }
+    let confirmedStudentCount = n - realLost.count
+
+    var additionalStudent = 0.0
+
+    for loser in realLost {
+        let leftStudent = loser - 1
+        let rightStudent = loser + 1
+        
+        var probability = 0.0
+        
+        // 전체 학생수 30명이므로 O(n) 사용
+        if leftStudent > 0 && realReserve.contains(leftStudent) {
+            probability += 0.5
+        }
+        
+        if rightStudent <= n && realReserve.contains(rightStudent) {
+            probability += 0.5
+        }
+        
+        additionalStudent += probability
+    }
+    
+    // 1차: Int() => Int(ceil())
+    return confirmedStudentCount + Int(ceil(additionalStudent))
+}
+
+func gymSuit2(_ n: Int, _ lost: [Int], _ reserve: [Int]) -> Int {
+    // 여벌 체육복을 가져온 학생이 체육복을 도난당했을 수 있습니다.
+    // 이때 이 학생은 체육복을 하나만 도난당했다고 가정하며,
+    // 남은 체육복이 하나이기에 다른 학생에게는 체육복을 빌려줄 수 없습니다.
+    var realLost = lost.filter { !reserve.contains($0) }
+    var realReserve = reserve.filter { !lost.contains($0) }
+    let confirmedStudentCount = n - realLost.count
+    var borrowedList: Set<Int> = []
+    
+    for lender in realReserve {
+        var leftStudent = lender - 1
+        var rightStudent = lender + 1
+        
+        // 왼쪽에 옷 빌려주기
+        if leftStudent > 0 && realLost.contains(leftStudent) {
+            borrowedList.insert(leftStudent)
+        } else if rightStudent <= n && realLost.contains(rightStudent) {
+            borrowedList.insert(rightStudent)
+        }
+    }
+    
+    return confirmedStudentCount + borrowedList.count
+}
+
+gymSuit(5, [2, 4], [1, 3, 5]) // 5
+gymSuit(5, [2, 4], [3]) // 4
+gymSuit(3, [3], [1]) // 2
+
+gymSuit(4, [3], [2, 4]) // 4
+gymSuit(6, [2, 4, 6], [5]) // 4
+gymSuit(5, [5], [2, 3]) // 4
+gymSuit(5, [1], [4, 5]) // 4
+gymSuit(2, [1], [2]) // 2 인데 1 나옴 -> 고침
+gymSuit(2, [2], [1]) // 2
+
+gymSuit(3, [1], [3]) // 2
+gymSuit(3, [2], [3]) // 3
+gymSuit(3, [1, 2], [3]) // 2
+gymSuit(3, [1, 3], [2]) // 2
+gymSuit(3, [2, 3], [1]) // 2
+
+gymSuit(4, [2, 3, 4], [1]) // 2
+gymSuit(4, [1, 4], [2, 3]) // 4 인데 3 나옴 -> 고침
+gymSuit(4, [2, 3], [1, 4]) // 4 인데 3 나옴 -> 고침
+gymSuit(4, [2, 4], [3]) // 3
+
+gymSuit(5, [1, 3], [2, 5]) // 4
+gymSuit(5, [2, 4], [1, 3, 4, 5]) // 5
+gymSuit(5, [3, 4], [4, 3]) // 5
+gymSuit(5, [4, 5], [3, 4]) // 4
+
+/*
+ ==================================================================
+ */
+
+/*
+ 핵심은 스택의 마지막 값이 push 할 값보다 작다면 크거나 같은 값이 나올 때까지 값들에 대해서 pop을 하는 것입니다.
+ 이렇게 풀이하면 O(n)의 시간 복잡도로 문제를 해결할 수 있습니다.
+ 
+ 앞자리에 큰 숫자가 오는 것이 전체 수를 크게 만들 수 있습니다.
+ 
+ number = "4177252841", k=4일 경우,
+
+ (k=4) []
+ (k=4) [4]
+ (k=4) [4, 1]
+ (k=3) [4]
+ (k=2) []
+ (k=2) [7]
+ (k=2) [7, 7]
+ (k=2) [7, 7, 2]
+ (k=1) [7, 7]
+ (k=1) [7, 7, 5]
+ (k=1) [7, 7, 5, 2]
+ (k=0) [7, 7, 5]
+ (k=0) [7, 7, 5, 8]
+ (k=0) [7, 7, 5, 8, 4]
+ (k=0) [7, 7, 5, 8, 4, 1]
+ retrun "775841"
+ 
+ number = "999", k=2일 경우,
+
+ (k=2) []
+ (k=2) [9]
+ (k=2) [9, 9]
+ (k=2) [9, 9, 9]
+ return "9"
+
+ */
+func makeBigNumber(_ number: String, _ k: Int) -> String {
+    if number.allSatisfy({ $0 == number.first }) {
+        return [String](repeating: String(number.first!), count: number.count - k).joined()
+    }
+    
+    var k = k
+    var numberArray = number.compactMap { Int(String($0)) }
+    
+    if numberArray == numberArray.sorted(by: >) {
+        return numberArray[0..<number.count - k].map(String.init).joined()
+    }
+    
+    var stack: [Int] = []
+    {
+        didSet {
+            print(k, stack)
+        }
+    }
+    
+    for eachNumber in numberArray {
+        if eachNumber < (stack.last ?? .max) || k == 0 {
+            stack.append(eachNumber)
+        } else {
+            while eachNumber > (stack.last ?? .max) && k >= 1 {
+                stack.popLast()
+                k -= 1
+            }
+            
+            stack.append(eachNumber)
+        }
+    }
+    
+    return stack.map(String.init).joined()
+}
+
+makeBigNumber("1924", 2) // 94
+makeBigNumber("1231234", 3) // 3234
+makeBigNumber("4177252841", 4) // 775841
+makeBigNumber("999", 2) // 9
+
+makeBigNumber("99", 1) // 9
+makeBigNumber("9999999", 4) // 999
+makeBigNumber("1000000000", 8) // 10
+
+// 테스트케이스 12
+makeBigNumber("4321", 1) // 432
+makeBigNumber("4321", 2) // 43
+makeBigNumber("4324", 2) // 44
+
+let replacingRegex = "([ .,])"
+" ,,,, ..... 가나다라.마바.ㅅ,사사사sfkkds, SDFfienfn,,...   d md d d d ".replacingOccurrences(of: "([ .,])", with: "", options: .regularExpression)
+
+let currentWordValue = " b U... .,.,.,.,....,.,.,.,.,.,.   s   ,......Y.......  . . ,, ,. ."
+    .lowercased()
+    .replacingOccurrences(of: replacingRegex, with: "", options: .regularExpression)
+let targetWordValue = "busy"
+    .lowercased()
+    .replacingOccurrences(of: replacingRegex, with: "", options: .regularExpression)
+currentWordValue == targetWordValue

@@ -59,5 +59,3 @@ hofWithTrailing(message: "message1", closure: {
 hofWithTrailing(message: "message2") {
     print("omitted")
 }
-
-

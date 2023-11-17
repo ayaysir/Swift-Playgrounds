@@ -2,5 +2,53 @@
 <Timeline
    version = "3.0">
    <TimelineItems>
+      <LoggerValueHistoryTimelineItem
+         documentLocation = "file:///Users/yoonbumtae/Desktop/Xcode%20Project/Xcode%20Practice/Playgrounds/BFS_DFS.playground#CharacterRangeLen=7&amp;CharacterRangeLoc=8769&amp;EndingColumnNumber=11&amp;EndingLineNumber=308&amp;StartingColumnNumber=4&amp;StartingLineNumber=308&amp;Timestamp=718786677.44204"
+         lockedSize = "{1191, 154}"
+         selectedRepresentationIndex = "0"
+         shouldTrackSuperviewWidth = "NO">
+      </LoggerValueHistoryTimelineItem>
+      <LoggerValueHistoryTimelineItem
+         documentLocation = "file:///Users/yoonbumtae/Desktop/Xcode%20Project/Xcode%20Practice/Playgrounds/BFS_DFS.playground#CharacterRangeLen=133&amp;CharacterRangeLoc=8626&amp;EndingColumnNumber=0&amp;EndingLineNumber=307&amp;StartingColumnNumber=50&amp;StartingLineNumber=303&amp;Timestamp=718786677.442129"
+         selectedRepresentationIndex = "0">
+      </LoggerValueHistoryTimelineItem>
+      <LoggerValueHistoryTimelineItem
+         documentLocation = "file:///Users/yoonbumtae/Desktop/Xcode%20Project/Xcode%20Practice/Playgrounds/BFS_DFS.playground#CharacterRangeLen=135&amp;CharacterRangeLoc=8624&amp;EndingColumnNumber=0&amp;EndingLineNumber=307&amp;StartingColumnNumber=48&amp;StartingLineNumber=303&amp;Timestamp=718786677.442168"
+         selectedRepresentationIndex = "0">
+      </LoggerValueHistoryTimelineItem>
+      <LoggerValueHistoryTimelineItem
+         documentLocation = "file:///Users/yoonbumtae/Desktop/Xcode%20Project/Xcode%20Practice/Playgrounds/BFS_DFS.playground#CharacterRangeLen=79&amp;CharacterRangeLoc=11286&amp;EndingColumnNumber=3&amp;EndingLineNumber=396&amp;StartingColumnNumber=0&amp;StartingLineNumber=392&amp;Timestamp=718786677.442215"
+         selectedRepresentationIndex = "0">
+      </LoggerValueHistoryTimelineItem>
+      <LoggerValueHistoryTimelineItem
+         documentLocation = "file:///Users/yoonbumtae/Desktop/Xcode%20Project/Xcode%20Practice/Playgrounds/BFS_DFS.playground#CharacterRangeLen=119&amp;CharacterRangeLoc=11400&amp;EndingColumnNumber=3&amp;EndingLineNumber=404&amp;StartingColumnNumber=0&amp;StartingLineNumber=398&amp;Timestamp=718786677.442253"
+         selectedRepresentationIndex = "0">
+      </LoggerValueHistoryTimelineItem>
+      <LoggerValueHistoryTimelineItem
+         documentLocation = "file:///Users/yoonbumtae/Desktop/Xcode%20Project/Xcode%20Practice/Playgrounds/BFS_DFS.playground#CharacterRangeLen=77&amp;CharacterRangeLoc=11722&amp;EndingColumnNumber=2&amp;EndingLineNumber=421&amp;StartingColumnNumber=0&amp;StartingLineNumber=417&amp;Timestamp=718786677.442291"
+         selectedRepresentationIndex = "0">
+      </LoggerValueHistoryTimelineItem>
+      <LoggerValueHistoryTimelineItem
+         documentLocation = "file:///Users/yoonbumtae/Desktop/Xcode%20Project/Xcode%20Practice/Playgrounds/BFS_DFS.playground#CharacterRangeLen=0&amp;CharacterRangeLoc=8871&amp;EndingColumnNumber=41&amp;EndingLineNumber=311&amp;StartingColumnNumber=41&amp;StartingLineNumber=311&amp;Timestamp=718786677.442325"
+         lockedSize = "{257, 162}"
+         selectedRepresentationIndex = "0"
+         shouldTrackSuperviewWidth = "NO">
+      </LoggerValueHistoryTimelineItem>
+      <LoggerValueHistoryTimelineItem
+         documentLocation = "file:///Users/yoonbumtae/Desktop/Xcode%20Project/Xcode%20Practice/Playgrounds/BFS_DFS.playground#CharacterRangeLen=147&amp;CharacterRangeLoc=11567&amp;EndingColumnNumber=1&amp;EndingLineNumber=414&amp;StartingColumnNumber=0&amp;StartingLineNumber=406&amp;Timestamp=718786677.442367"
+         selectedRepresentationIndex = "0">
+      </LoggerValueHistoryTimelineItem>
+      <LoggerValueHistoryTimelineItem
+         documentLocation = "file:///Users/yoonbumtae/Desktop/Xcode%20Project/Xcode%20Practice/Playgrounds/BFS_DFS.playground#CharacterRangeLen=18&amp;CharacterRangeLoc=8413&amp;EndingColumnNumber=0&amp;EndingLineNumber=299&amp;StartingColumnNumber=0&amp;StartingLineNumber=298&amp;Timestamp=718786677.4424"
+         selectedRepresentationIndex = "0">
+      </LoggerValueHistoryTimelineItem>
+      <LoggerValueHistoryTimelineItem
+         documentLocation = "file:///Users/yoonbumtae/Desktop/Xcode%20Project/Xcode%20Practice/Playgrounds/BFS_DFS.playground#CharacterRangeLen=177&amp;CharacterRangeLoc=11833&amp;EndingColumnNumber=2&amp;EndingLineNumber=432&amp;StartingColumnNumber=0&amp;StartingLineNumber=423&amp;Timestamp=718786677.44244"
+         selectedRepresentationIndex = "0">
+      </LoggerValueHistoryTimelineItem>
+      <LoggerValueHistoryTimelineItem
+         documentLocation = "file:///Users/yoonbumtae/Desktop/Xcode%20Project/Xcode%20Practice/Playgrounds/BFS_DFS.playground#CharacterRangeLen=5&amp;CharacterRangeLoc=9931&amp;EndingColumnNumber=4&amp;EndingLineNumber=343&amp;StartingColumnNumber=5&amp;StartingLineNumber=342&amp;Timestamp=718786677.4424829"
+         selectedRepresentationIndex = "0">
+      </LoggerValueHistoryTimelineItem>
    </TimelineItems>
 </Timeline>

@@ -1,0 +1,21 @@
+{
+  "images" : [
+    {
+      "filename" : "View-of-the-Rocks-District-from-George-Street-Sydney-New-South-Wales-Australia_186130760.jpg",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
