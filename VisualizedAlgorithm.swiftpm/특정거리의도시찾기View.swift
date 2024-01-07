@@ -7,6 +7,39 @@
 
 import SwiftUI
 
+struct TraverseHistory {
+    /// Now (Dequeued)
+    var now: Int
+    var graph: [Int]
+    var nexts: [Next] = []
+    
+    struct Next {
+        enum State {
+            case before, after
+        }
+        
+        var state: State
+        
+        /// Next (Enqueued)
+        var next: Int
+        var now: Int
+        var visited: [Bool]
+        var distance: [Int]
+        
+        var vistedNext: Bool {
+            visited[next]
+        }
+        
+        var distancePrev: Int {
+            distance[now]
+        }
+        
+        var distanceNext: Int {
+            distance[next]
+        }
+    }
+}
+
 struct MapInfo {
     /// 도시의 개수 N
     var cityCount: Int
@@ -20,9 +53,9 @@ struct MapInfo {
     /// 출발 도시의 번호 X
     var startCity: Int
     
-    var graph: [[Int]] = .init()
-    var distance: [Int] = .init()
-    var visited: [Bool] = .init()
+    private(set) var graph: [[Int]] = .init()
+    private var distance: [Int] = .init()
+    private var visited: [Bool] = .init()
     
     var q = Queue<Int>()
     
@@ -49,6 +82,40 @@ struct MapInfo {
         q.enqueue(startCity)
         visited[startCity] = true
         distance[startCity] = 0
+    }
+    
+    mutating func traverse() -> (result: [Int], histories: [TraverseHistory]) {
+        var histories: [TraverseHistory] = []
+        
+        while !q.isEmpty {
+            let now = q.dequeue()!
+            // print("=========")
+            // print("now:", now, graph[now])
+            
+            var history = TraverseHistory(now: now, graph: graph[now])
+            
+            for next in graph[now] {
+                // print("next:", next)
+                // print("visited[next]:", visited[next], visited)
+                history.nexts.append(.init(state: .before, next: next, now: now, visited: visited, distance: distance))
+                if !visited[next] {
+                    visited[next] = true
+                    q.enqueue(next)
+                    distance[next] = distance[now] + 1
+                    // print("distance:", distance[now], distance)
+                }
+                
+                history.nexts.append(.init(state: .after, next: next, now: now, visited: visited, distance: distance))
+            }
+            
+            histories.append(history)
+        }
+        
+        let result = (1...cityCount).filter { city in
+            distance[city] == shortestDistance
+        }
+        
+        return (result, histories)
     }
 }
 
@@ -154,6 +221,7 @@ struct 특정거리의도시찾기View: View
         }
         .onAppear {
             drawMap(currentExample)
+            print(viewModel.map1.traverse())
         }
         .onChange(of: currentExample) { _ in
             print("onchange")
