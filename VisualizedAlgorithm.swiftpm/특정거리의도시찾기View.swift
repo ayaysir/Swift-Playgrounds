@@ -7,86 +7,90 @@
 
 import SwiftUI
 
-struct ArrowShape: Shape {
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-
-        // 화살표 머리, 꼬리의 비율 정하기
-        let arrowWidth = rect.width * 0.4
-        let arrowHeight = rect.height * 0.6
-
-        // 화살표 꼬리 그리기
-        path.move(to: CGPoint(x: rect.midX - arrowWidth / 2, y: rect.maxY))
-        path.addLine(to: CGPoint(x: rect.midX + arrowWidth / 2, y: rect.maxY))
-        path.addLine(to: CGPoint(x: rect.midX + arrowWidth / 2, y: rect.maxY - arrowHeight))
-        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY - arrowHeight))
-
-        // 화살표 머리 그리기
-        path.addLine(to: CGPoint(x: rect.midX, y: rect.minY))
-        path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY - arrowHeight))
-        path.addLine(to: CGPoint(x: rect.midX - arrowWidth / 2, y: rect.maxY - arrowHeight))
-
-        // 패스 닫기
-        path.closeSubpath()
-
-        return path
+struct MapInfo {
+    /// 도시의 개수 N
+    var cityCount: Int
+    
+    /// 도로의 개수 M
+    var roadCount: Int
+    
+    /// 목표 최단 거리 정보 K
+    var shortestDistance: Int
+    
+    /// 출발 도시의 번호 X
+    var startCity: Int
+    
+    var graph: [[Int]] = .init()
+    var distance: [Int] = .init()
+    var visited: [Bool] = .init()
+    
+    var q = Queue<Int>()
+    
+    init(rawText: String) {
+        let splitted = rawText.split(separator: "\n")
+        let firstLine = splitted[0].split(separator: " ").map { Int(String($0))! }
+        
+        self.cityCount = firstLine[0]
+        self.roadCount = firstLine[1]
+        self.shortestDistance = firstLine[2]
+        self.startCity = firstLine[3]
+        
+        self.graph = .init(repeating: [], count: cityCount + 1)
+        self.distance = .init(repeating: -1, count: cityCount + 1)
+        self.visited = .init(repeating: false, count: cityCount + 1)
+        
+        splitted[1...].forEach {
+            let roads = String($0).split(separator: " ").map { Int($0)! }
+            let (a, b) = (roads[0], roads[1])
+            
+            self.graph[a].append(b)
+        }
+        
+        q.enqueue(startCity)
+        visited[startCity] = true
+        distance[startCity] = 0
     }
 }
 
-struct ArrowSet: View {
-    enum Direction {
-        case left, right, up, down, diagonal
-        
-        var degrees: Double {
-            return switch self {
-            case .left:
-                270
-            case .right:
-                90
-            case .up:
-                0
-            case .down:
-                180
-            case .diagonal:
-                45
-            }
+final class 특정거리의도시찾기ViewModel: ObservableObject {
+    // 입력값
+    @Published var map1: MapInfo = .init(rawText: 
+    """
+    4 4 2 1
+    1 2
+    1 3
+    2 3
+    2 4
+    """)
+    
+    @Published var map2: MapInfo = .init(rawText:
+    """
+    4 3 2 1
+    1 2
+    1 3
+    1 4
+    """)
+    
+    @Published var map3: MapInfo = .init(rawText:
+    """
+    4 4 1 1
+    1 2
+    1 3
+    2 3
+    2 4    
+    """)
+    
+    func mapInfo(of number: Int) -> MapInfo {
+        switch number {
+        case 1:
+            map1
+        case 2:
+            map2
+        case 3:
+            map3
+        default:
+            map1
         }
-    }
-    
-    var direction: Direction = .up
-    @State var isOneOn: Bool = false
-    @State var isTwoOn: Bool = false
-    
-    private var arrow1: some View {
-        ArrowShape()
-            .fill(isOneOn ? .blue : .gray)
-            .frame(width: 30, height: 50)
-            .rotationEffect(.degrees(direction.degrees))
-    }
-    
-    private var arrow2: some View {
-        ArrowShape()
-            .fill(isTwoOn ? .blue : .gray)
-            .frame(width: 30, height: 50)
-            .rotationEffect(.degrees(direction.degrees + 180))
-    }
-    
-    var body: some View {
-        switch direction {
-        case .up, .down:
-            HStack(spacing: 0) {
-                arrow1
-                arrow2
-            }
-            .frame(width: 100, height: 100)
-        case .left, .right, .diagonal:
-            VStack(spacing: -20) {
-                arrow1
-                arrow2
-            }
-            .frame(width: 100, height: 100)
-        }
-        
     }
 }
 
@@ -95,10 +99,73 @@ struct 특정거리의도시찾기View: View
         case city, road
     }
     
+    @StateObject var viewModel = 특정거리의도시찾기ViewModel()
+    @State private var connect: [Int: [Bool]] = [
+        1: .init(repeating: false, count: 5),
+        2: .init(repeating: false, count: 5),
+        3: .init(repeating: false, count: 5),
+        4: .init(repeating: false, count: 5),
+    ]
+    @State private var currentExample = 1
+    
+    private func connectPath(_ key: Int, _ destination: Int) -> Binding<Bool> {
+        .init {
+            self.connect[key]![destination]
+        } set: {
+            self.connect[key]![destination] = $0
+        }
+    }
+    
+    var body: some View {
+        VStack {
+            Picker("", selection: $currentExample) {
+                Text("예제 1").tag(1)
+                Text("예제 2").tag(2)
+                Text("예제 3").tag(3)
+            }
+            .pickerStyle(.segmented)
+            
+            Divider()
+            
+            HStack {
+                cityView(cityViewMode: .city, cityNumber: 1)
+                // 1-2, 2-1
+                ArrowSet(direction: .right, isOneOn: connectPath(1, 2), isTwoOn: connectPath(2, 1))
+                cityView(cityViewMode: .city, cityNumber: 2)
+            }
+            HStack {
+                // 1-3, 3-1
+                ArrowSet(direction: .down, isOneOn: connectPath(1, 3), isTwoOn: connectPath(3, 1))
+                ZStack {
+                    // 3-2, 2-3
+                    ArrowSet(direction: .diagonal, isOneOn: connectPath(3, 2), isTwoOn: connectPath(2, 3))
+                    // 1-4, 4-1
+                    ArrowSet(direction: .diagonalReverse, isOneOn: connectPath(1, 4), isTwoOn: connectPath(4, 1))
+                }
+                // 2-4, 4-2
+                ArrowSet(direction: .down, isOneOn: connectPath(2, 4), isTwoOn: connectPath(4, 2))
+            }
+            HStack {
+                cityView(cityViewMode: .city, cityNumber: 3)
+                // 3-4, 4-3
+                ArrowSet(direction: .right, isOneOn: connectPath(3, 4), isTwoOn: connectPath(4, 3))
+                cityView(cityViewMode: .city, cityNumber: 4)
+            }
+        }
+        .onAppear {
+            drawMap(currentExample)
+        }
+        .onChange(of: currentExample) { _ in
+            print("onchange")
+            drawMap(currentExample)
+        }
+    }
+    
     @ViewBuilder func cityView(cityViewMode: CityViewMode, cityNumber: Int = 0) -> some View {
         switch cityViewMode {
         case .city:
             Rectangle()
+                
                 .frame(width: 100, height: 100)
                 .overlay {
                     Text("\(cityNumber)")
@@ -113,24 +180,35 @@ struct 특정거리의도시찾기View: View
         
     }
     
-    var body: some View {
-        VStack {
-            HStack {
-                cityView(cityViewMode: .city, cityNumber: 1)
-                ArrowSet(direction: .right, isOneOn: true, isTwoOn: false)
-                cityView(cityViewMode: .city, cityNumber: 2)
-            }
-            HStack {
-                ArrowSet(direction: .down, isOneOn: true, isTwoOn: false)
-                ArrowSet(direction: .diagonal, isOneOn: true, isTwoOn: false)
-                ArrowSet(direction: .down, isOneOn: true, isTwoOn: false)
-            }
-            HStack {
-                cityView(cityViewMode: .city, cityNumber: 3)
-                ArrowSet(direction: .right, isOneOn: true, isTwoOn: false)
-                cityView(cityViewMode: .city, cityNumber: 4)
+    func drawMap(_ mapNumber: Int) {
+        connect = [
+            1: .init(repeating: false, count: 5),
+            2: .init(repeating: false, count: 5),
+            3: .init(repeating: false, count: 5),
+            4: .init(repeating: false, count: 5),
+        ]
+        
+        let targetGraph = switch mapNumber {
+        case 1:
+            viewModel.map1.graph
+        case 2:
+            viewModel.map2.graph
+        case 3:
+            viewModel.map3.graph
+        default:
+            viewModel.map1.graph
+        }
+        
+        // 연결 그리기
+        for (index, cities) in targetGraph.enumerated() {
+            if index == 0 {
+                continue
             }
             
+            for city in cities {
+                connect[index]![city] = true
+                print(index, city, connect[1]![2])
+            }
         }
     }
 }
