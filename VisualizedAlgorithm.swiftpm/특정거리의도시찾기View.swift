@@ -53,7 +53,7 @@ struct MapInfo {
     /// 출발 도시의 번호 X
     var startCity: Int
     
-    private(set) var graph: [[Int]] = .init()
+    private(set) var matrix: [[Int]] = .init()
     private var distance: [Int] = .init()
     private var visited: [Bool] = .init()
     
@@ -68,7 +68,7 @@ struct MapInfo {
         self.shortestDistance = firstLine[2]
         self.startCity = firstLine[3]
         
-        self.graph = .init(repeating: [], count: cityCount + 1)
+        self.matrix = .init(repeating: [], count: cityCount + 1)
         self.distance = .init(repeating: -1, count: cityCount + 1)
         self.visited = .init(repeating: false, count: cityCount + 1)
         
@@ -76,7 +76,7 @@ struct MapInfo {
             let roads = String($0).split(separator: " ").map { Int($0)! }
             let (a, b) = (roads[0], roads[1])
             
-            self.graph[a].append(b)
+            self.matrix[a].append(b)
         }
         
         q.enqueue(startCity)
@@ -92,9 +92,9 @@ struct MapInfo {
             // print("=========")
             // print("now:", now, graph[now])
             
-            var history = TraverseHistory(now: now, graph: graph[now])
+            var history = TraverseHistory(now: now, graph: matrix[now])
             
-            for next in graph[now] {
+            for next in matrix[now] {
                 // print("next:", next)
                 // print("visited[next]:", visited[next], visited)
                 history.nexts.append(.init(state: .before, next: next, now: now, visited: visited, distance: distance))
@@ -120,45 +120,32 @@ struct MapInfo {
 }
 
 final class 특정거리의도시찾기ViewModel: ObservableObject {
-    // 입력값
-    @Published var map1: MapInfo = .init(rawText: 
-    """
-    4 4 2 1
-    1 2
-    1 3
-    2 3
-    2 4
-    """)
-    
-    @Published var map2: MapInfo = .init(rawText:
-    """
-    4 3 2 1
-    1 2
-    1 3
-    1 4
-    """)
-    
-    @Published var map3: MapInfo = .init(rawText:
-    """
-    4 4 1 1
-    1 2
-    1 3
-    2 3
-    2 4    
-    """)
-    
-    func mapInfo(of number: Int) -> MapInfo {
-        switch number {
-        case 1:
-            map1
-        case 2:
-            map2
-        case 3:
-            map3
-        default:
-            map1
-        }
-    }
+    @Published var mapInfos: [MapInfo?] = [
+        nil,
+        .init(rawText:
+        """
+        4 4 2 1
+        1 2
+        1 3
+        2 3
+        2 4
+        """),
+        .init(rawText:
+        """
+        4 3 2 1
+        1 2
+        1 3
+        1 4
+        """),
+        .init(rawText:
+        """
+        4 4 1 1
+        1 2
+        1 3
+        2 3
+        2 4
+        """)
+    ]
 }
 
 struct 특정거리의도시찾기View: View {
@@ -186,9 +173,12 @@ struct 특정거리의도시찾기View: View
     var body: some View {
         VStack {
             Picker("", selection: $currentExample) {
-                Text("예제 1").tag(1)
-                Text("예제 2").tag(2)
-                Text("예제 3").tag(3)
+                ForEach(viewModel.mapInfos.indices, id: \.self) { index in
+                    if index != 0 {
+                        Text("예제 \(index)")
+                            .tag(index)
+                    }
+                }
             }
             .pickerStyle(.segmented)
             
@@ -221,7 +211,7 @@ struct 특정거리의도시찾기View: View
         }
         .onAppear {
             drawMap(currentExample)
-            print(viewModel.map1.traverse())
+            print(viewModel.mapInfos[currentExample]!.traverse())
         }
         .onChange(of: currentExample) { _ in
             print("onchange")
@@ -256,16 +246,7 @@ struct 특정거리의도시찾기View: View
             4: .init(repeating: false, count: 5),
         ]
         
-        let targetGraph = switch mapNumber {
-        case 1:
-            viewModel.map1.graph
-        case 2:
-            viewModel.map2.graph
-        case 3:
-            viewModel.map3.graph
-        default:
-            viewModel.map1.graph
-        }
+        let targetGraph = viewModel.mapInfos[currentExample]!.matrix
         
         // 연결 그리기
         for (index, cities) in targetGraph.enumerated() {
