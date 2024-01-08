@@ -24,7 +24,7 @@ struct ArrowSet: View {
             case .diagonal:
                 45
             case .diagonalReverse:
-                315
+                135
             }
         }
     }
