@@ -31,7 +31,7 @@ final class 열려있는문은모두ᄆ�
         previousStates.append(doorStates)
         
         for i in 0..<totalCount where (i + 1) % sceneNumber == 0  {
-            doorStates[i] = !doorStates[i]
+            doorStates[i].toggle()
         }
     }
     
@@ -58,20 +58,6 @@ struct 열려있는문은모두몇�
     
     var body: some View {
         VStack {
-            LazyVGrid(columns: columns, spacing: MARGIN) {
-                ForEach(viewModel.doorStates.indices, id: \.self) { index in
-                    Rectangle()
-                        .fill(.clear)
-                        .aspectRatio(1, contentMode: .fit)
-                        .overlay {
-                            Image(
-                                systemName: "door.left.hand." + (viewModel.doorStates[index] ? "open" : "closed")
-                            )
-                            .resizable()
-                            .foregroundStyle(viewModel.doorStates[index] ? .red : .gray)
-                        }
-                }
-            }
             HStack {
                 Stepper("[answer: \(viewModel.answer)] Scene \(sceneNumber)") {
                     guard sceneNumber < totalCount else {
@@ -109,6 +95,20 @@ struct 열려있는문은모두몇�
                             playButtonText = "play.fill"
                         }
                     }
+                }
+            }
+            LazyVGrid(columns: columns, spacing: MARGIN) {
+                ForEach(viewModel.doorStates.indices, id: \.self) { index in
+                    Rectangle()
+                        .fill(.clear)
+                        .aspectRatio(1, contentMode: .fit)
+                        .overlay {
+                            Image(
+                                systemName: "door.left.hand." + (viewModel.doorStates[index] ? "open" : "closed")
+                            )
+                            .resizable()
+                            .foregroundStyle(viewModel.doorStates[index] ? .red : .gray)
+                        }
                 }
             }
         }
