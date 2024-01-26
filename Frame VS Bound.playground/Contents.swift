@@ -30,7 +30,7 @@ class MyViewController : UIViewController {
         label.textColor = .white
         view.addSubview(label)
         
-        // (1)
+        // (1) Frame 애니메이션
         // moveFrame(subview1, descriptionLabel: label)
         
         let grandChildView = UIView()
@@ -38,13 +38,13 @@ class MyViewController : UIViewController {
         grandChildView.frame = .init(x: 50, y: 100, width: 30, height: 30)
         subview1.addSubview(grandChildView)
         
-        // (3)
+        // (3) subview 변형 후 frame, bounds 비교
         subview1.transform = .init(rotationAngle: 80)
         
         print(view.frame, view.bounds)
         print(subview1.frame, subview1.bounds)
         
-        // (2)
+        // (2) Bounds 애니메이션
         subview1.frame.origin = .init(x: 100, y: 100)
         moveBounds(subview1, descriptionLabel: label)
         
