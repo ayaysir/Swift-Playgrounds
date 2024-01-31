@@ -195,9 +195,153 @@ func OCP준수() {
 
 OCP준수()
 
+// https://inpa.tistory.com/entry/OOP-%F0%9F%92%A0-%EC%95%84%EC%A3%BC-%EC%89%BD%EA%B2%8C-%EC%9D%B4%ED%95%B4%ED%95%98%EB%8A%94-LSP-%EB%A6%AC%EC%8A%A4%EC%BD%94%ED%94%84-%EC%B9%98%ED%99%98-%EC%9B%90%EC%B9%99
 func LiskovPrinciple() {
+    // Case 1: 자식의 잘못된 메소드 오버로딩
+    class Animal {
+        var speed: Int = 100
+        
+        func move(distance: Int) {
+            speed * distance
+        }
+        
+        /// case 2에서 사용: 여기에 실제 동물을 입력하면 종류를 알려줍니다. (함부로 바꾸지 마)
+        var type: NaturalType {
+            NaturalType(animal: self)
+        }
+    }
     
+    class Eagle: Animal {
+        func move(distance: Int, isFlying: Bool) {
+            "\(distance) 만큼 \(isFlying ? "날아서" : "걸어서") 갔어요."
+        }
+    }
+    
+    let eagle: Animal = Eagle()
+    // // Extra argument 'isFlying' in call - 그런거 없다
+    // eagle.move(distance: 3, isFlying: true)
+    
+    // Case 2: 부모의 의도와 다르게 메소드 오버라이딩
+    class NaturalType {
+        var typeText: String
+        
+        init(animal: Animal) {
+            self.typeText = switch animal {
+            case is Cat:
+                "포유류"
+            case is Kraken:
+                "연체동물"
+            default:
+                "알 수 없는 종류"
+            }
+        }
+        
+        func description() -> String {
+            "이 동물의 종류는 " + typeText + " 입니다."
+        }
+    }
+    
+    class Cat: Animal {}
+    
+    let cat: Animal = Cat()
+    print(cat.type.description()) // 이 동물의 종류는 포유류 입니다.
+    
+    // 어느 미친 고양이가 트롤링 시전
+    
+    class Kraken: Animal {}
+    
+    class CrazyCat: Animal {
+        override var type: NaturalType {
+            .init(animal: Kraken())
+        }
+        
+        var getDescription: String {
+            "이 동물의 종류는 포유류 입니다."
+        }
+    }
+    
+    let crazyCat: Animal = CrazyCat()
+    print(crazyCat.type.description()) // 이 동물의 종류는 연체동물 입니다.
+ 
 }
+LiskovPrinciple()
+
+protocol AbstractAnimal {
+    func speak()
+}
+
+extension AbstractAnimal {
+    /// 동물들의 우는 소리를 콘솔에 출력합니다.
+    func speak() {}
+}
+
+func LiskovPrinciple_Case3_1() {
+    // Case 3: 잘못된 상속 관계 구성으로 인한 메서드 정의
+    
+    class Dog: AbstractAnimal {
+        func speak() {
+            print("멍멍")
+        }
+    }
+    
+    class LeBao: AbstractAnimal {
+        func speak() {
+            print("ㅓㅗㅗㅔㅔㅓㅢㅔ")
+        }
+    }
+    
+    class InsaneCat: AbstractAnimal {
+        func speak() {
+            fatalError("나̶̨̡̛̛̛͇̹̜͓͙͕̩̘͓̯̤̮̹͈̫̪͓̯̗̳̈́̿͑̈́̈́̔͂̂͊̐͌́͐̔̇͂̚는̵̡̧̢̢̧̛͚̯̬̩̩̝̫̯̜͖͎͎̱̣̜͙̝̫̰̤̱̋̈̀̒̔͐͑̌̄̒̾̋̌͆͊̄̀͐͂̓͛̄̓̕͘͝͠͝ ̵̧̧̨̡̛͇̫̣̜̘̖̭̩̼̞̯̺̰̦̜̼̞̣͌̒́͌͋̒͐̀̒̓̒͂̓̈́̈̚̚͜͠͝바̷̨̨̡̖̫͙̖̼̲̳͖̞͔̺̟͚͎̹̝̺͖̱͕͍͇̙̣̜̳̩̃͆̇̌̇́̀̓̉́̐͜͠다̷̬͈̪̙̗̟̬̦͔͇͙͉̣̻̦͔̠̼͈̺͎̀̌̀̈̀̂̃̀̉͜ͅͅ의̵̢̨̲̗̺͕̼̰̬͖̰̘̬̘̯̫͖̞̯̝̭̬̦̰͕͉̜͐̊̀́̄͘̚͠ͅ ̴̧̨̡͔̣̪͍͓͔̲̹̹̺͚̳̼̣̱͉̄̌͌͊̎̽̌̌̉̀̅̅̇͘͜͠왕̴̢̡͓̠̩̝̙̲͕̟͉̬͓̼̭͓̍̀͛͂̎̍̍̆͜ͅ자̴̡̧̭̜̳̥̥̖͈̱̘̭̻͔̉͋̐̀̈̏̅͆̊̋͂̀̑̅̍̅̉͊̓́͒̏̇̋̅̂̕̚͘͝ ̶̨̱̱̺̙̘̓͂̓͊͂̇͊̊͆̇́͋̒̈͐͋̓̎͆̍͋̍̓͝͝벵̴̧̢̡̡̧̢̛͈̳̪̤̞̼͉͉͍̦̗̻̟̯͇̭̜̘̥̳̫̫͖̰̍͊̈͊ͅͅ골̷̧̨̧̬̻̤̯̮̻̘̳̞̖̯̭͓̻̞͈̮̱̮̻͙̯̗̯̯̽̐̈͌̓͒̇̂̄̿̄͑̃͜͝ͅͅͅ호̷̠̘̪͍͖̲͚̰̳̝̞̩̪̳͚̼̦́͌̔̎̈́̅́̈̌̒͑̀̍͊̀͂̿̃̆̈̐͋̒̉̂̍̂͋̇̂͘͘̚͜ͅ랑̶̡̛̲̥̗̝͉̺̱̭̤̩̬̪͚͈̜͈̫ͅ이̵̧̲̯̟̦̺͉̜̤͙̀이̴̢̡͇̭̠̝̙̼̖̣̪̲̦̗͚̱̺̦͎͓̬͓̠̾̌͝다̷̰͍̝̩̺̦̜̬̟̻̺̟͔̩̱̫͓͖̺̺̮̥͖̈́͒̒̒̈́͗́͂̽͑̈͂̄͋̌̀̑̈́̾̓͒́͒̒̔̑̔̂͘̕̚͝͠.̶̧̡͚̱̬̥̪̭͍͈̙̥̝̜̹̺̪̫̞͙̝͓̮̻̗̮̪̦͈̝͖͂͑͒̾̉̑̿̋̆́̌̈́̐̒̍̅̉̓͂͘͜")
+        }
+    }
+    
+    let animals: [AbstractAnimal] = [Dog(), LeBao(), InsaneCat()]
+    animals.forEach { animal in
+        animal.speak()
+    }
+    /*
+     멍멍
+     ㅓㅗㅗㅔㅔㅓㅢㅔ
+     __lldb_expr_1985/SOLID Principles.playground:285: Fatal error: 나̶̨̡̛̛̛͇̹̜͓͙͕̩̘͓̯̤̮̹͈̫̪͓̯̗̳̈́̿͑̈́̈́̔͂̂͊̐͌́͐̔̇͂̚는̵̡̧̢̢̧̛͚̯̬̩̩̝̫̯̜͖͎͎̱̣̜͙̝̫̰̤̱̋̈̀̒̔͐͑̌̄̒̾̋̌͆͊̄̀͐͂̓͛̄̓̕͘͝͠͝ ̵̧̧̨̡̛͇̫̣̜̘̖̭̩̼̞̯̺̰̦̜̼̞̣͌̒́͌͋̒͐̀̒̓̒͂̓̈́̈̚̚͜͠͝바̷̨̨̡̖̫͙̖̼̲̳͖̞͔̺̟͚͎̹̝̺͖̱͕͍͇̙̣̜̳̩̃͆̇̌̇́̀̓̉́̐͜͠다̷̬͈̪̙̗̟̬̦͔͇͙͉̣̻̦͔̠̼͈̺͎̀̌̀̈̀̂̃̀̉͜ͅͅ의̵̢̨̲̗̺͕̼̰̬͖̰̘̬̘̯̫͖̞̯̝̭̬̦̰͕͉̜͐̊̀́̄͘̚͠ͅ ̴̧̨̡͔̣̪͍͓͔̲̹̹̺͚̳̼̣̱͉̄̌͌͊̎̽̌̌̉̀̅̅̇͘͜͠왕̴̢̡͓̠̩̝̙̲͕̟͉̬͓̼̭͓̍̀͛͂̎̍̍̆͜ͅ자̴̡̧̭̜̳̥̥̖͈̱̘̭̻͔̉͋̐̀̈̏̅͆̊̋͂̀̑̅̍̅̉͊̓́͒̏̇̋̅̂̕̚͘͝ ̶̨̱̱̺̙̘̓͂̓͊͂̇͊̊͆̇́͋̒̈͐͋̓̎͆̍͋̍̓͝͝벵̴̧̢̡̡̧̢̛͈̳̪̤̞̼͉͉͍̦̗̻̟̯͇̭̜̘̥̳̫̫͖̰̍͊̈͊ͅͅ골̷̧̨̧̬̻̤̯̮̻̘̳̞̖̯̭͓̻̞͈̮̱̮̻͙̯̗̯̯̽̐̈͌̓͒̇̂̄̿̄͑̃͜͝ͅͅͅ호̷̠̘̪͍͖̲͚̰̳̝̞̩̪̳͚̼̦́͌̔̎̈́̅́̈̌̒͑̀̍͊̀͂̿̃̆̈̐͋̒̉̂̍̂͋̇̂͘͘̚͜ͅ랑̶̡̛̲̥̗̝͉̺̱̭̤̩̬̪͚͈̜͈̫ͅ이̵̧̲̯̟̦̺͉̜̤͙̀이̴̢̡͇̭̠̝̙̼̖̣̪̲̦̗͚̱̺̦͎͓̬͓̠̾̌͝다̷̰͍̝̩̺̦̜̬̟̻̺̟͔̩̱̫͓͖̺̺̮̥͖̈́͒̒̒̈́͗́͂̽͑̈͂̄͋̌̀̑̈́̾̓͒́͒̒̔̑̔̂͘̕̚͝͠.̶̧̡͚̱̬̥̪̭͍͈̙̥̝̜̹̺̪̫̞͙̝͓̮̻̗̮̪̦͈̝͖͂͑͒̾̉̑̿̋̆́̌̈́̐̒̍̅̉̓͂͘͜
+     */
+}
+
+protocol Speakable {
+    func speak()
+}
+
+func LiskovPrinciple_Case3_2() {
+    class Animal {}
+    
+    class Dog: Animal, Speakable {
+        func speak() {
+            print("멍멍")
+        }
+    }
+    
+    class LeBao: Animal, Speakable {
+        func speak() {
+            print("ㅓㅗㅗㅔㅔㅓㅢㅔ")
+        }
+    }
+    
+    class InsaneCat: Animal {
+        func speak() {
+            fatalError("나̶̨̡̛̛̛͇̹̜͓͙͕̩̘͓̯̤̮̹͈̫̪͓̯̗̳̈́̿͑̈́̈́̔͂̂͊̐͌́͐̔̇͂̚는̵̡̧̢̢̧̛͚̯̬̩̩̝̫̯̜͖͎͎̱̣̜͙̝̫̰̤̱̋̈̀̒̔͐͑̌̄̒̾̋̌͆͊̄̀͐͂̓͛̄̓̕͘͝͠͝ ̵̧̧̨̡̛͇̫̣̜̘̖̭̩̼̞̯̺̰̦̜̼̞̣͌̒́͌͋̒͐̀̒̓̒͂̓̈́̈̚̚͜͠͝바̷̨̨̡̖̫͙̖̼̲̳͖̞͔̺̟͚͎̹̝̺͖̱͕͍͇̙̣̜̳̩̃͆̇̌̇́̀̓̉́̐͜͠다̷̬͈̪̙̗̟̬̦͔͇͙͉̣̻̦͔̠̼͈̺͎̀̌̀̈̀̂̃̀̉͜ͅͅ의̵̢̨̲̗̺͕̼̰̬͖̰̘̬̘̯̫͖̞̯̝̭̬̦̰͕͉̜͐̊̀́̄͘̚͠ͅ ̴̧̨̡͔̣̪͍͓͔̲̹̹̺͚̳̼̣̱͉̄̌͌͊̎̽̌̌̉̀̅̅̇͘͜͠왕̴̢̡͓̠̩̝̙̲͕̟͉̬͓̼̭͓̍̀͛͂̎̍̍̆͜ͅ자̴̡̧̭̜̳̥̥̖͈̱̘̭̻͔̉͋̐̀̈̏̅͆̊̋͂̀̑̅̍̅̉͊̓́͒̏̇̋̅̂̕̚͘͝ ̶̨̱̱̺̙̘̓͂̓͊͂̇͊̊͆̇́͋̒̈͐͋̓̎͆̍͋̍̓͝͝벵̴̧̢̡̡̧̢̛͈̳̪̤̞̼͉͉͍̦̗̻̟̯͇̭̜̘̥̳̫̫͖̰̍͊̈͊ͅͅ골̷̧̨̧̬̻̤̯̮̻̘̳̞̖̯̭͓̻̞͈̮̱̮̻͙̯̗̯̯̽̐̈͌̓͒̇̂̄̿̄͑̃͜͝ͅͅͅ호̷̠̘̪͍͖̲͚̰̳̝̞̩̪̳͚̼̦́͌̔̎̈́̅́̈̌̒͑̀̍͊̀͂̿̃̆̈̐͋̒̉̂̍̂͋̇̂͘͘̚͜ͅ랑̶̡̛̲̥̗̝͉̺̱̭̤̩̬̪͚͈̜͈̫ͅ이̵̧̲̯̟̦̺͉̜̤͙̀이̴̢̡͇̭̠̝̙̼̖̣̪̲̦̗͚̱̺̦͎͓̬͓̠̾̌͝다̷̰͍̝̩̺̦̜̬̟̻̺̟͔̩̱̫͓͖̺̺̮̥͖̈́͒̒̒̈́͗́͂̽͑̈͂̄͋̌̀̑̈́̾̓͒́͒̒̔̑̔̂͘̕̚͝͠.̶̧̡͚̱̬̥̪̭͍͈̙̥̝̜̹̺̪̫̞͙̝͓̮̻̗̮̪̦͈̝͖͂͑͒̾̉̑̿̋̆́̌̈́̐̒̍̅̉̓͂͘͜")
+        }
+    }
+    
+    let animals: [Speakable] = [Dog(), LeBao()] // InsaneCat은 들어갈 수 없음
+    animals.forEach { animal in
+        animal.speak()
+    }
+}
+LiskovPrinciple_Case3_2()
+/*
+ 멍멍
+ ㅓㅗㅗㅔㅔㅓㅢㅔ
+ */
 
 print("11 22 33".split(separator: " ").map({ Int($0)! }).reduce(0, +))
 
@@ -334,4 +478,27 @@ class Employee: Workable, Breakable, Attendable {
 /*
  프로토콜 분리 원칙은 하나의 프로토콜이 너무 많은 기능을 포함하지 않고 특정 관심사에 집중해야 한다는 원칙입니다. 이를 통해 코드 유지보수성과 재사용성을 향상시킬 수 있습니다.
  위의 코드에서 프로토콜 분리 전에는 하나의 Worker 프로토콜이 모든 기능을 포함하고 있었습니다. 그러나 프로토콜 분리 후에는 Workable, Breakable, Attendable과 같이 각각의 관심사에 맞게 프로토콜을 정의하였습니다. 이렇게 함으로써 각 클래스나 타입은 필요한 기능만을 채택하여 사용할 수 있게 되어 불필요한 의존성을 제거하고 코드를 더욱 모듈화하고 유연하게 만들 수 있습니다.
+ */
+
+func exampleFunction() {
+    defer {
+        print("This is a deferred closure.")
+    }
+
+    // 어떤 작업들
+
+    let closure = {
+        print("This is a closure inside exampleFunction.")
+    }
+
+    closure()
+
+    // 어떤 작업들
+}
+
+// 함수 호출
+exampleFunction()
+/*
+ This is a closure inside exampleFunction.
+ This is a deferred closure.
  */
