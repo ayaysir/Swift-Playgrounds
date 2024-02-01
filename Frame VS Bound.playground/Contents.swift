@@ -54,8 +54,42 @@ class MyViewController : UIViewController {
          */
     }
 }
+
+class FrameBoundSizeViewController: UIViewController {
+    override func loadView() {
+        let view = UIView() // superview
+        view.backgroundColor = .black
+        view.frame.size = .init(width: 500, height: 500)
+        self.view = view
+        
+        let subview1 = UIImageView()
+        subview1.backgroundColor = .yellow
+        subview1.frame = .init(x: 100, y: 100, width: 200, height: 300)
+        view.addSubview(subview1)
+        
+        // (1) frame만 설정한 상태에서 bounds 사이즈는?
+        print(subview1.frame, subview1.bounds)
+        // (100.0, 100.0, 200.0, 300.0) (0.0, 0.0, 200.0, 300.0)
+        
+        // (2) bounds 사이즈를 변경하면 frame은 어떻게?
+        subview1.bounds.size = .init(width: 300, height: 400)
+        subview1.bounds.origin = .init(x: -100, y: -100)
+        
+        print(subview1.frame, subview1.bounds)
+        // (50.0, 50.0, 300.0, 400.0) (0.0, 0.0, 300.0, 400.0)
+        
+        let grandChildView = UIView()
+        grandChildView.backgroundColor = .cyan
+        grandChildView.frame = .init(x: 0, y: 0, width: 250, height: 350)
+        subview1.addSubview(grandChildView)
+        grandChildView.transform = .init(rotationAngle: 50)
+        print(grandChildView.frame, grandChildView.bounds)
+    }
+}
+
 // Present the view controller in the Live View window
-PlaygroundPage.current.liveView = MyViewController()
+// PlaygroundPage.current.liveView = MyViewController()
+PlaygroundPage.current.liveView = FrameBoundSizeViewController()
 
 func moveFrame(_ view: UIView, descriptionLabel label: UILabel) {
     var count = 0
