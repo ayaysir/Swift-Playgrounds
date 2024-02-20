@@ -97,6 +97,7 @@ struct 열려있는문은모두몇�
                     }
                 }
             }
+            
             LazyVGrid(columns: columns, spacing: MARGIN) {
                 ForEach(viewModel.doorStates.indices, id: \.self) { index in
                     Rectangle()
