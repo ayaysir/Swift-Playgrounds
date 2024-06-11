@@ -9,6 +9,7 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
+    @Environment(\.deepLinkText) var deepLinkText
     @Environment(\.managedObjectContext) private var viewContext
 
     @FetchRequest(
@@ -19,6 +20,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List {
+                Text(deepLinkText.isEmpty ? "DeepLinkText" : deepLinkText)
                 ForEach(items) { item in
                     NavigationLink {
                         Text("Item at \(item.timestamp!, formatter: itemFormatter)")

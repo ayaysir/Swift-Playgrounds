@@ -9,12 +9,31 @@ import SwiftUI
 
 @main
 struct study_WidgetExampleApp: App {
+    @State private var widgetText = ""
     let persistenceController = PersistenceController.shared
 
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environment(\.deepLinkText, widgetText)
+                .onOpenURL { url in
+                    widgetText = url.absoluteString.removingPercentEncoding ?? "텍스트가 없습니다!"
+                }
+        }
+    }
+}
+
+struct DeepLinkEnv: EnvironmentKey {
+    static let defaultValue = ""
+}
+
+extension EnvironmentValues {
+    var deepLinkText: String {
+        get {
+            self[DeepLinkEnv.self]
+        } set {
+            self[DeepLinkEnv.self] = newValue
         }
     }
 }

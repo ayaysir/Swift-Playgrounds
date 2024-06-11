@@ -19,6 +19,10 @@ struct StaticWidget1EntryView: View {
             blue: .random(in: 0...1)
         )
     }
+    
+    private func percentEcododedString(_ string: String) -> String {
+        string.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+    }
 
     var body: some View {
         ZStack {
@@ -33,6 +37,8 @@ struct StaticWidget1EntryView: View {
                     ForEach(texts, id: \.hashValue) { text in
                         Text(text)
                             .foregroundStyle(.white)
+                        // 딥링크 URL 송신
+                            .widgetURL(.init(string: percentEcododedString("widget://deeplink?text=\(text)")))
                     }
                 }
                 
