@@ -12,6 +12,8 @@
 		443F52542C18891D00FAB22B /* TextModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443F52532C18891D00FAB22B /* TextModel.swift */; };
 		443F52562C18895400FAB22B /* SimpleEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443F52552C18895400FAB22B /* SimpleEntry.swift */; };
 		443F52582C18898600FAB22B /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443F52572C18898600FAB22B /* Provider.swift */; };
+		443F525A2C18A34500FAB22B /* PhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443F52592C18A34500FAB22B /* PhotoModel.swift */; };
+		443F525C2C18A79300FAB22B /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443F525B2C18A79300FAB22B /* ImageCache.swift */; };
 		44E7BDD22C176BA4000AE491 /* study_WidgetExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E7BDD12C176BA4000AE491 /* study_WidgetExampleApp.swift */; };
 		44E7BDD42C176BA4000AE491 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E7BDD32C176BA4000AE491 /* ContentView.swift */; };
 		44E7BDD62C176BA6000AE491 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44E7BDD52C176BA6000AE491 /* Assets.xcassets */; };
@@ -74,6 +76,8 @@
 		443F52532C18891D00FAB22B /* TextModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextModel.swift; sourceTree = "<group>"; };
 		443F52552C18895400FAB22B /* SimpleEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleEntry.swift; sourceTree = "<group>"; };
 		443F52572C18898600FAB22B /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
+		443F52592C18A34500FAB22B /* PhotoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoModel.swift; sourceTree = "<group>"; };
+		443F525B2C18A79300FAB22B /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		44E7BDCE2C176BA4000AE491 /* study-WidgetExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "study-WidgetExample.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		44E7BDD12C176BA4000AE491 /* study_WidgetExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = study_WidgetExampleApp.swift; sourceTree = "<group>"; };
 		44E7BDD32C176BA4000AE491 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -136,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				443F52532C18891D00FAB22B /* TextModel.swift */,
+				443F52592C18A34500FAB22B /* PhotoModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -221,6 +226,7 @@
 				443F524F2C18889900FAB22B /* StaticWidget1EntryView.swift */,
 				443F52572C18898600FAB22B /* Provider.swift */,
 				44E7BE0F2C186E7F000AE491 /* AppIntent.swift */,
+				443F525B2C18A79300FAB22B /* ImageCache.swift */,
 				44E7BE112C186E82000AE491 /* Assets.xcassets */,
 				44E7BE132C186E82000AE491 /* Info.plist */,
 				44E7BE1B2C186EE2000AE491 /* StaticWidget1.intentdefinition */,
@@ -418,6 +424,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				443F525C2C18A79300FAB22B /* ImageCache.swift in Sources */,
+				443F525A2C18A34500FAB22B /* PhotoModel.swift in Sources */,
 				443F52562C18895400FAB22B /* SimpleEntry.swift in Sources */,
 				443F52542C18891D00FAB22B /* TextModel.swift in Sources */,
 				443F524D2C1870CA00FAB22B /* StaticWidget1.intentdefinition in Sources */,

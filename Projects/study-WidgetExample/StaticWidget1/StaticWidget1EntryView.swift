@@ -23,10 +23,18 @@ struct StaticWidget1EntryView: View {
     private func percentEcododedString(_ string: String) -> String {
         string.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
     }
-
+    
     var body: some View {
         ZStack {
-            randomColor.opacity(0.7)
+            if let uiImage = entry.image?.uiImage {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .opacity(0.4)
+            } else {
+                randomColor.opacity(0.7)
+            }
+            
             VStack {
                 Text("EntryDate:")
                     .bold()
@@ -36,11 +44,13 @@ struct StaticWidget1EntryView: View {
                 if let texts = entry.configuration.texts {
                     ForEach(texts, id: \.hashValue) { text in
                         Text(text)
-                            .foregroundStyle(.white)
+                            .font(.system(size: 12))
                         // 딥링크 URL 송신
                             .widgetURL(.init(string: percentEcododedString("widget://deeplink?text=\(text)")))
                     }
                 }
+                
+                Text(entry.image?.urlString ?? "no url")
                 
                 switch family {
                 case .systemSmall:

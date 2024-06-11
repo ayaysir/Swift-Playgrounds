@@ -10,6 +10,8 @@ import SwiftUI
 @main
 struct study_WidgetExampleApp: App {
     @State private var widgetText = ""
+    @State private var isPresented = false
+    
     let persistenceController = PersistenceController.shared
 
     var body: some Scene {
@@ -19,6 +21,13 @@ struct study_WidgetExampleApp: App {
                 .environment(\.deepLinkText, widgetText)
                 .onOpenURL { url in
                     widgetText = url.absoluteString.removingPercentEncoding ?? "텍스트가 없습니다!"
+                    isPresented = true
+                }
+                .sheet(isPresented: $isPresented) {
+                    if !widgetText.isEmpty {
+                        Text(widgetText)
+                            .font(.title)
+                    }
                 }
         }
     }
