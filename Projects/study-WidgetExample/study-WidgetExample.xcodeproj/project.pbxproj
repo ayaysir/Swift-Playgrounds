@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		443F524D2C1870CA00FAB22B /* StaticWidget1.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 44E7BE1B2C186EE2000AE491 /* StaticWidget1.intentdefinition */; };
+		443F52512C18889900FAB22B /* StaticWidget1EntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443F524F2C18889900FAB22B /* StaticWidget1EntryView.swift */; };
+		443F52542C18891D00FAB22B /* TextModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443F52532C18891D00FAB22B /* TextModel.swift */; };
+		443F52562C18895400FAB22B /* SimpleEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443F52552C18895400FAB22B /* SimpleEntry.swift */; };
+		443F52582C18898600FAB22B /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443F52572C18898600FAB22B /* Provider.swift */; };
 		44E7BDD22C176BA4000AE491 /* study_WidgetExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E7BDD12C176BA4000AE491 /* study_WidgetExampleApp.swift */; };
 		44E7BDD42C176BA4000AE491 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E7BDD32C176BA4000AE491 /* ContentView.swift */; };
 		44E7BDD62C176BA6000AE491 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44E7BDD52C176BA6000AE491 /* Assets.xcassets */; };
@@ -66,6 +70,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		443F524F2C18889900FAB22B /* StaticWidget1EntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticWidget1EntryView.swift; sourceTree = "<group>"; };
+		443F52532C18891D00FAB22B /* TextModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextModel.swift; sourceTree = "<group>"; };
+		443F52552C18895400FAB22B /* SimpleEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleEntry.swift; sourceTree = "<group>"; };
+		443F52572C18898600FAB22B /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		44E7BDCE2C176BA4000AE491 /* study-WidgetExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "study-WidgetExample.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		44E7BDD12C176BA4000AE491 /* study_WidgetExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = study_WidgetExampleApp.swift; sourceTree = "<group>"; };
 		44E7BDD32C176BA4000AE491 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -124,6 +132,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		443F52522C18891100FAB22B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				443F52532C18891D00FAB22B /* TextModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		44E7BDC52C176BA4000AE491 = {
 			isa = PBXGroup;
 			children = (
@@ -198,8 +214,12 @@
 		44E7BE0A2C186E7F000AE491 /* StaticWidget1 */ = {
 			isa = PBXGroup;
 			children = (
+				443F52522C18891100FAB22B /* Model */,
+				443F52552C18895400FAB22B /* SimpleEntry.swift */,
 				44E7BE0B2C186E7F000AE491 /* StaticWidget1Bundle.swift */,
 				44E7BE0D2C186E7F000AE491 /* StaticWidget1.swift */,
+				443F524F2C18889900FAB22B /* StaticWidget1EntryView.swift */,
+				443F52572C18898600FAB22B /* Provider.swift */,
 				44E7BE0F2C186E7F000AE491 /* AppIntent.swift */,
 				44E7BE112C186E82000AE491 /* Assets.xcassets */,
 				44E7BE132C186E82000AE491 /* Info.plist */,
@@ -398,9 +418,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				443F52562C18895400FAB22B /* SimpleEntry.swift in Sources */,
+				443F52542C18891D00FAB22B /* TextModel.swift in Sources */,
 				443F524D2C1870CA00FAB22B /* StaticWidget1.intentdefinition in Sources */,
 				44E7BE0C2C186E7F000AE491 /* StaticWidget1Bundle.swift in Sources */,
+				443F52582C18898600FAB22B /* Provider.swift in Sources */,
 				44E7BE0E2C186E7F000AE491 /* StaticWidget1.swift in Sources */,
+				443F52512C18889900FAB22B /* StaticWidget1EntryView.swift in Sources */,
 				44E7BE102C186E7F000AE491 /* AppIntent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
