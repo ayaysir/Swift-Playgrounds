@@ -21,6 +21,7 @@ struct ContentView: View {
         NavigationView {
             List {
                 Text(deepLinkText.isEmpty ? "DeepLinkText" : deepLinkText)
+                Text("SharedCounter: \(Counter.currentCount())")
                 ForEach(items) { item in
                     NavigationLink {
                         Text("Item at \(item.timestamp!, formatter: itemFormatter)")

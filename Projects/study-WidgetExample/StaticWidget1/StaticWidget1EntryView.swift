@@ -7,6 +7,7 @@
 
 import SwiftUI
 import WidgetKit
+import AppIntents
 
 struct StaticWidget1EntryView: View {
     @Environment(\.widgetFamily) var family: WidgetFamily
@@ -51,6 +52,14 @@ struct StaticWidget1EntryView: View {
                 }
                 
                 Text(entry.image?.urlString ?? "no url")
+                    .font(.system(size: 8))
+                
+                if #available(iOS 17.0, *) {
+                    Button(intent: UpdateCounterIntent()) {
+                        Text("새로고침 및 카운터 1 증가")
+                    }
+                    Text("Counter 1: \(Counter.currentCount())")
+                }
                 
                 switch family {
                 case .systemSmall:
@@ -74,13 +83,26 @@ struct StaticWidget1EntryView: View {
                 }
             }
         }
-        .containerBackground(.fill.tertiary, for: .widget)
     }
 }
 
+@available(iOS 16.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
+struct UpdateCounterIntent: WidgetConfigurationIntent {
+    
+    static var title: LocalizedStringResource = "카운터 증가"
+    static var description = IntentDescription("카운터 1 증가")
+    
+    func perform() async throws -> some IntentResult {
+        Counter.incrementCount()
+        return .result()
+    }
+}
+
+@available(iOS 17.0, *)
 struct StaticWidget1EntryView_Previews: PreviewProvider {
     static var previews: some View {
         StaticWidget1EntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent()))
+            .containerBackground(.fill.tertiary, for: .widget)
             .previewContext(WidgetPreviewContext(family: .systemMedium))
     }
 }
