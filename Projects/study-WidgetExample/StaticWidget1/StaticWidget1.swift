@@ -25,6 +25,7 @@ struct StaticWidget1: Widget {
         }
         .configurationDisplayName("** Static Widget 1")
         .description("** 네트워크에서 랜덤으로 텍스트를 불러옵니다.")
+        .supportedFamilies([.systemMedium, .systemLarge])
     }
 }
 

@@ -39,7 +39,7 @@ struct StaticWidget1EntryView: View {
             VStack {
                 Text("EntryDate:")
                     .bold()
-                + Text(entry.date, style: .time)
+                + (entry.configuration.isDisplayTimestampFormat == 1 ? Text(entry.date.timeIntervalSince1970.description) : Text(entry.date, style: .date))
                 Text("Facts:")
                     .bold()
                 if let texts = entry.configuration.texts {
@@ -51,7 +51,7 @@ struct StaticWidget1EntryView: View {
                     }
                 }
                 
-                Text(entry.image?.urlString ?? "no url")
+                Text(entry.configuration.favoriteEmoji ?? "❌") + Text(entry.image?.urlString ?? "no url")
                     .font(.system(size: 8))
                 
                 if #available(iOS 17.0, *) {
