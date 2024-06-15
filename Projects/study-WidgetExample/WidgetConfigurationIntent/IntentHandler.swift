@@ -22,5 +22,5 @@ class IntentHandler: INExtension, ConfigurationIntentHandling {
         
         return self
     }
-    
+        
 }

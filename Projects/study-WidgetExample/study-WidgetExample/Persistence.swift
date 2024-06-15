@@ -29,12 +29,19 @@ struct PersistenceController {
     }()
 
     let container: NSPersistentContainer
+    var appGroupContainerURL: URL {
+       return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.bgsmm.study.widget1")!
+    }
 
     init(inMemory: Bool = false) {
         container = NSPersistentContainer(name: "study_WidgetExample")
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
+        } else if container.persistentStoreDescriptions.first != nil  {
+            // 앱 그룹으로 컨테이너 생성
+            container.persistentStoreDescriptions.first!.url = appGroupContainerURL.appendingPathComponent("study_WidgetExample.sqlite")
         }
+        
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.
@@ -52,5 +59,16 @@ struct PersistenceController {
             }
         })
         container.viewContext.automaticallyMergesChangesFromParent = true
+    }
+    
+    func fetchItems() -> [Item] {
+        let viewContext = container.viewContext
+        let fetchRequest = NSFetchRequest<Item>(entityName: "Item")
+        
+        do {
+            return try viewContext.fetch(fetchRequest)
+        } catch {
+            fatalError(error.localizedDescription)
+        }
     }
 }
