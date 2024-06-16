@@ -23,10 +23,20 @@ struct DynamicWidget1EntryView : View {
             Text(entry.date, style: .time)
 
             Text("Favorite Emoji:")
-            Text(entry.configuration.favoriteEmoji)
+            Button(intent: OpenAppIntent()) {
+                Text(entry.configuration.favoriteEmoji)
+            }
+            Link(destination: URL(string: "https://www.apple.com")!) {
+                Text("go to apple")
+            }
+            Link(destination: URL(string: "https://www.google.com")!) {
+                Image(systemName: "tray.fill")
+            }
             
             ForEach(items, id: \.hash) { item in
-                Text("Item at \(item.timestamp!, formatter: itemFormatter)")
+                Link(destination: URL(string: "widget://deeplink?timestamp=\(item.timestamp!)")!) {
+                    Text("Item at \(item.timestamp!, formatter: itemFormatter)")
+                }
             }
         }
         .onAppear {
