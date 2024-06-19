@@ -16,6 +16,8 @@ struct ContentView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
         animation: .default)
     private var items: FetchedResults<Item>
+    
+    @State private var showUpdateView = false
 
     var body: some View {
         NavigationView {
@@ -36,12 +38,17 @@ struct ContentView: View {
                     EditButton()
                 }
                 ToolbarItem {
-                    Button(action: addItem) {
+                    Button {
+                        showUpdateView.toggle()
+                    } label: {
                         Label("Add Item", systemImage: "plus")
                     }
                 }
             }
             Text("Select an item")
+        }
+        .sheet(isPresented: $showUpdateView) {
+            UpdateMediaView()
         }
     }
 
