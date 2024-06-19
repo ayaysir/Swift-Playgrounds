@@ -7,6 +7,7 @@
 
 import SwiftUI
 import AVKit
+import PhotosUI
 
 struct UpdateMediaView: View {
     @Environment(\.dismiss) var dismiss
@@ -14,10 +15,13 @@ struct UpdateMediaView: View {
     @State private var showFilePicker = false
     @State private var avPlayer = AVPlayer()
     @State private var isNeedAVPlayer = false
+    @State private var imageData: Data?
     
     @State private var fileURL: URL?
     @State private var txfTitle = ""
     @State private var txfComment = ""
+    
+    @State private var imageSelection: PhotosPickerItem?
     
     @FocusState private var focusComment: PostTxfType?
     
@@ -30,20 +34,25 @@ struct UpdateMediaView: View {
             Button("파일 불러오기") {
                 showFilePicker.toggle()
             }
-            Button("사진 라이브러리에서 불러오기") {
-                // TODO: - 사진 라이브러리에서 가져오기
+            
+            PhotosPicker(selection: $imageSelection) {
+                Text("사진 라이브러리에서 가져오기")
             }
             
             ZStack {
                 Color.cyan
-                if let fileURL {
-                    if isNeedAVPlayer {
-                        VideoPlayer(player: avPlayer)
-                    } else if let data = try? Data(contentsOf: fileURL) {
-                        Image(uiImage: .init(data: data) ?? UIImage())
-                            .resizable()
-                            .scaledToFit()
+                if isNeedAVPlayer {
+                    VideoPlayer(player: avPlayer)
+                } else {
+                    let uiImage: UIImage = if let imageData {
+                        .init(data: imageData) ?? .init()
+                    } else {
+                        .init()
                     }
+                    
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .scaledToFit()
                 }
             }
             .frame(width: 300, height: 300)
@@ -80,14 +89,12 @@ struct UpdateMediaView: View {
             if supertypes.contains(.image) {
                 print("“Image file”")
                 isNeedAVPlayer = false
+                imageData = try? Data(contentsOf: fileURL)
             } else if supertypes.contains(.movie) {
                 print("“Video file”")
                 isNeedAVPlayer = true
                 avPlayer.replaceCurrentItem(with: AVPlayerItem(url: fileURL))
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    avPlayer.play()
-                }
+                autoplayVideo()
             } else if supertypes.contains(.audio) {
                 print("Audio file")
                 isNeedAVPlayer = true
@@ -95,6 +102,66 @@ struct UpdateMediaView: View {
                 print("“Something else!”")
                 isNeedAVPlayer = false
             }
+        }
+        .onChange(of: imageSelection) {
+            if let imageSelection {
+                let isVideo = imageSelection.supportedContentTypes.contains { type in
+                    type.description == "public.mpeg-4"
+                }
+                
+                isNeedAVPlayer = false
+                imageSelection.loadTransferable(type: TransferableImage.self) { result in
+                    guard imageSelection == self.imageSelection else {
+                        print("Failed to get the selected item.")
+                                        return
+                    }
+                    
+                    switch result {
+                    case .success(let transferable?):
+                        if isVideo {
+                            let tmpFileURL = URL(fileURLWithPath:NSTemporaryDirectory()).appendingPathComponent("video").appendingPathExtension("mp4")
+                            let isFileWritten = (try? transferable.data.write(to: tmpFileURL, options: [.atomic])) != nil
+                            if isFileWritten {
+                                avPlayer.replaceCurrentItem(with: AVPlayerItem(url: tmpFileURL))
+                                autoplayVideo()
+                                isNeedAVPlayer = true
+                            }
+                        } else {
+                            imageData = transferable.data
+                        }
+                        
+                        print("load success", imageData as Any)
+                    case .success(.none):
+                        print("load success but image is nil")
+                        isNeedAVPlayer = false
+                    case .failure(_):
+                        print("이미지 라이브러리에서 불러오기 실패")                    }
+                }
+            }
+        }
+        .onChange(of: isNeedAVPlayer) {
+            avPlayer.pause()
+        }
+    }
+    
+    private func autoplayVideo() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            avPlayer.play()
+        }
+    }
+}
+
+struct TransferableImage: Transferable {
+    let data: Data
+    
+    static var transferRepresentation: some TransferRepresentation {
+        DataRepresentation(importedContentType: .image) { data in
+            return TransferableImage(data: data)
+            
+        }
+        
+        DataRepresentation(importedContentType: .movie) { data in
+            return TransferableImage(data: data)
         }
     }
 }
