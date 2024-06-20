@@ -6,6 +6,7 @@
     <entity name="Post" representedClassName="Post" syncable="YES" codeGenerationType="class">
         <attribute name="comment" optional="YES" attributeType="String"/>
         <attribute name="createdTimestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="isSavedAppStorage" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="modifiedTimestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="url" optional="YES" attributeType="URI"/>

@@ -11,6 +11,7 @@ import PhotosUI
 
 struct UpdateMediaView: View {
     @Environment(\.dismiss) var dismiss
+    @Environment(\.managedObjectContext) private var viewContext
     
     @State private var showFilePicker = false
     @State private var avPlayer = AVPlayer()
@@ -22,6 +23,7 @@ struct UpdateMediaView: View {
     @State private var txfComment = ""
     
     @State private var imageSelection: PhotosPickerItem?
+    @State private var imageSelectionURL: [String : URL]?
     
     @FocusState private var focusComment: PostTxfType?
     
@@ -62,7 +64,7 @@ struct UpdateMediaView: View {
                 TextField("코멘트", text: $txfComment)
                     .focused($focusComment, equals: .comment)
                 Button("추가") {
-                    // TODO: - 데이터베이스 추가
+                    saveToCoreData()
                     dismiss()
                 }
             }
@@ -77,67 +79,10 @@ struct UpdateMediaView: View {
             }
         }
         .onChange(of: fileURL) {
-            guard let fileURL,
-                  let typeID = try? fileURL.resourceValues(forKeys: [.contentTypeKey]),
-                  let supertypes = typeID.contentType?.supertypes
-            else {
-                return
-            }
-            
-            print(supertypes)
-            
-            if supertypes.contains(.image) {
-                print("“Image file”")
-                isNeedAVPlayer = false
-                imageData = try? Data(contentsOf: fileURL)
-            } else if supertypes.contains(.movie) {
-                print("“Video file”")
-                isNeedAVPlayer = true
-                avPlayer.replaceCurrentItem(with: AVPlayerItem(url: fileURL))
-                autoplayVideo()
-            } else if supertypes.contains(.audio) {
-                print("Audio file")
-                isNeedAVPlayer = true
-            } else {
-                print("“Something else!”")
-                isNeedAVPlayer = false
-            }
+            mediaLoadFromStorage()
         }
         .onChange(of: imageSelection) {
-            if let imageSelection {
-                let isVideo = imageSelection.supportedContentTypes.contains { type in
-                    type.description == "public.mpeg-4"
-                }
-                
-                isNeedAVPlayer = false
-                imageSelection.loadTransferable(type: TransferableImage.self) { result in
-                    guard imageSelection == self.imageSelection else {
-                        print("Failed to get the selected item.")
-                                        return
-                    }
-                    
-                    switch result {
-                    case .success(let transferable?):
-                        if isVideo {
-                            let tmpFileURL = URL(fileURLWithPath:NSTemporaryDirectory()).appendingPathComponent("video").appendingPathExtension("mp4")
-                            let isFileWritten = (try? transferable.data.write(to: tmpFileURL, options: [.atomic])) != nil
-                            if isFileWritten {
-                                avPlayer.replaceCurrentItem(with: AVPlayerItem(url: tmpFileURL))
-                                autoplayVideo()
-                                isNeedAVPlayer = true
-                            }
-                        } else {
-                            imageData = transferable.data
-                        }
-                        
-                        print("load success", imageData as Any)
-                    case .success(.none):
-                        print("load success but image is nil")
-                        isNeedAVPlayer = false
-                    case .failure(_):
-                        print("이미지 라이브러리에서 불러오기 실패")                    }
-                }
-            }
+            mediaLoadFromLibrary()
         }
         .onChange(of: isNeedAVPlayer) {
             avPlayer.pause()
@@ -151,17 +96,134 @@ struct UpdateMediaView: View {
     }
 }
 
-struct TransferableImage: Transferable {
-    let data: Data
-    
-    static var transferRepresentation: some TransferRepresentation {
-        DataRepresentation(importedContentType: .image) { data in
-            return TransferableImage(data: data)
-            
+extension UpdateMediaView {
+    func saveToCoreData() {
+        let newPost = Post(context: viewContext)
+        
+        newPost.comment = txfComment
+        newPost.title = txfTitle
+        newPost.createdTimestamp = Date.now
+        newPost.url = if let fileURL {
+            URL.applicationSupportDirectory.appendingPathComponent(fileURL.lastPathComponent)
+        } else if let imageSelectionURL {
+            URL.applicationSupportDirectory.appendingPathComponent(imageSelectionURL.first!.key)
+        } else {
+            nil
         }
         
-        DataRepresentation(importedContentType: .movie) { data in
-            return TransferableImage(data: data)
+        print("newPost.url:", newPost.url ?? "nil")
+        
+        do {
+            if let toURL = newPost.url {
+                if let fileURL {
+                    try Data(contentsOf: fileURL).write(to: toURL)
+                } else if let imageSelectionURL {
+                    if isNeedAVPlayer {
+                        let tempVideo = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("video").appendingPathExtension("mp4")
+                        try Data(contentsOf: tempVideo).write(to: toURL)
+                    } else if let imageData {
+                        try imageData.write(to: toURL)
+                    }
+                }
+                print("file write success:", toURL)
+            }
+            
+            try viewContext.save()
+            print("Post saved to viewContext.")
+        } catch {
+            print("Unresolved error \(error)")
+        }
+    }
+    
+    func mediaLoadFromStorage() {
+        guard let fileURL,
+              let typeID = try? fileURL.resourceValues(forKeys: [.contentTypeKey]),
+              let supertypes = typeID.contentType?.supertypes
+        else {
+            return
+        }
+        
+        print(supertypes)
+        
+        if supertypes.contains(.image) {
+            print("“Image file”")
+            isNeedAVPlayer = false
+            imageData = try? Data(contentsOf: fileURL)
+        } else if supertypes.contains(.movie) {
+            print("“Video file”")
+            isNeedAVPlayer = true
+            avPlayer.replaceCurrentItem(with: AVPlayerItem(url: fileURL))
+            autoplayVideo()
+        } else if supertypes.contains(.audio) {
+            print("Audio file")
+            isNeedAVPlayer = true
+        } else {
+            print("“Something else!”")
+            isNeedAVPlayer = false
+        }
+    }
+    
+    func mediaLoadFromLibrary() {
+        isNeedAVPlayer = false
+        
+        guard let imageSelection else {
+            print("Failed to get the selected item.")
+            return
+        }
+        
+        let isVideo = imageSelection.supportedContentTypes.contains { type in
+            type.description == "public.mpeg-4"
+        }
+        
+        // get url info
+        Task {
+            imageSelectionURL = try await fetchContentUrls(content: [imageSelection])
+            if let imageSelectionURL {
+                txfTitle = (imageSelectionURL.first!.key as NSString).deletingPathExtension
+            }
+        }
+        
+        imageSelection.loadTransferable(type: TransferableImage.self) { result in
+            switch result {
+            case .success(let transferable?):
+                if isVideo {
+                    let tmpFileURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("video").appendingPathExtension("mp4")
+                    let isFileWritten = (try? transferable.data.write(to: tmpFileURL, options: [.atomic])) != nil
+                    
+                    if isFileWritten {
+                        avPlayer.replaceCurrentItem(with: AVPlayerItem(url: tmpFileURL))
+                        autoplayVideo()
+                        isNeedAVPlayer = true
+                    }
+                } else {
+                    imageData = transferable.data
+                }
+        
+                print("load success", imageData as Any)
+            case .success(.none):
+                print("load success but image is nil")
+                isNeedAVPlayer = false
+            case .failure(_):
+                print("이미지 라이브러리에서 불러오기 실패")
+            }
+        }
+    }
+    
+    func fetchContentUrls(content: [PhotosPickerItem]) async throws -> [String: URL] {
+        try await withThrowingTaskGroup(of: TransferableURL?.self, returning: [String: URL].self) { group in
+            for item in content {
+                group.addTask { try await item.loadTransferable(type: TransferableURL.self) }
+            }
+
+            var contentUrls: [String: URL] = [:]
+
+            for try await result in group {
+                if let result {
+                    contentUrls[result.url.lastPathComponent] = result.url
+                }
+            }
+
+            return contentUrls
         }
     }
 }
