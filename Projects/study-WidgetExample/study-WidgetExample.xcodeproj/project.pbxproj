@@ -40,6 +40,10 @@
 		44533F2C2C22FC9E00552451 /* PostTxfType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44533F2B2C22FC9E00552451 /* PostTxfType.swift */; };
 		44533F2F2C2445E500552451 /* TransferableURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44533F2E2C2445E500552451 /* TransferableURL.swift */; };
 		44533F312C2445EF00552451 /* TransferableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44533F302C2445EF00552451 /* TransferableImage.swift */; };
+		44533F332C2460B800552451 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44533F322C2460B800552451 /* DetailView.swift */; };
+		44533F352C24664E00552451 /* FullScreenVideoPlayerRepresentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44533F342C24664E00552451 /* FullScreenVideoPlayerRepresentedView.swift */; };
+		44533F382C2467F800552451 /* AVPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44533F372C2467F800552451 /* AVPlayerViewController.swift */; };
+		44533F3A2C24712500552451 /* SampleVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 44533F392C24712500552451 /* SampleVideo.mp4 */; };
 		44E7BDD22C176BA4000AE491 /* study_WidgetExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E7BDD12C176BA4000AE491 /* study_WidgetExampleApp.swift */; };
 		44E7BDD42C176BA4000AE491 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E7BDD32C176BA4000AE491 /* ContentView.swift */; };
 		44E7BDD62C176BA6000AE491 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44E7BDD52C176BA6000AE491 /* Assets.xcassets */; };
@@ -152,6 +156,10 @@
 		44533F2B2C22FC9E00552451 /* PostTxfType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTxfType.swift; sourceTree = "<group>"; };
 		44533F2E2C2445E500552451 /* TransferableURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferableURL.swift; sourceTree = "<group>"; };
 		44533F302C2445EF00552451 /* TransferableImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferableImage.swift; sourceTree = "<group>"; };
+		44533F322C2460B800552451 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		44533F342C24664E00552451 /* FullScreenVideoPlayerRepresentedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenVideoPlayerRepresentedView.swift; sourceTree = "<group>"; };
+		44533F372C2467F800552451 /* AVPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerViewController.swift; sourceTree = "<group>"; };
+		44533F392C24712500552451 /* SampleVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = SampleVideo.mp4; sourceTree = "<group>"; };
 		44E7BDCE2C176BA4000AE491 /* study-WidgetExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "study-WidgetExample.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		44E7BDD12C176BA4000AE491 /* study_WidgetExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = study_WidgetExampleApp.swift; sourceTree = "<group>"; };
 		44E7BDD32C176BA4000AE491 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -283,6 +291,8 @@
 			children = (
 				44533F272C22F0A100552451 /* Representable */,
 				44533F252C22EF2400552451 /* UpdateMediaView.swift */,
+				44E7BDD32C176BA4000AE491 /* ContentView.swift */,
+				44533F322C2460B800552451 /* DetailView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -291,6 +301,7 @@
 			isa = PBXGroup;
 			children = (
 				44533F282C22F0C000552451 /* DocumentPickerRepresentedView.swift */,
+				44533F342C24664E00552451 /* FullScreenVideoPlayerRepresentedView.swift */,
 			);
 			path = Representable;
 			sourceTree = "<group>";
@@ -310,6 +321,14 @@
 				44533F302C2445EF00552451 /* TransferableImage.swift */,
 			);
 			path = Transferable;
+			sourceTree = "<group>";
+		};
+		44533F362C2467E900552451 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				44533F372C2467F800552451 /* AVPlayerViewController.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		44E7BDC52C176BA4000AE491 = {
@@ -345,13 +364,14 @@
 		44E7BDD02C176BA4000AE491 /* study-WidgetExample */ = {
 			isa = PBXGroup;
 			children = (
+				44533F392C24712500552451 /* SampleVideo.mp4 */,
+				44533F362C2467E900552451 /* Extension */,
 				44533F2D2C2445D800552451 /* Transferable */,
 				44533F2A2C22FC8100552451 /* Enum */,
 				44533F242C22EF0500552451 /* View */,
 				44533F062C1DAECB00552451 /* study-WidgetExample.entitlements */,
 				44E7BE1D2C186F4E000AE491 /* Info.plist */,
 				44E7BDD12C176BA4000AE491 /* study_WidgetExampleApp.swift */,
-				44E7BDD32C176BA4000AE491 /* ContentView.swift */,
 				44E7BDD52C176BA6000AE491 /* Assets.xcassets */,
 				44E7BDDA2C176BA6000AE491 /* Persistence.swift */,
 				44E7BDDC2C176BA6000AE491 /* study_WidgetExample.xcdatamodeld */,
@@ -632,6 +652,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				44E7BDD92C176BA6000AE491 /* Preview Assets.xcassets in Resources */,
+				44533F3A2C24712500552451 /* SampleVideo.mp4 in Resources */,
 				44E7BDD62C176BA6000AE491 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -697,6 +718,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				44E7BDDE2C176BA6000AE491 /* study_WidgetExample.xcdatamodeld in Sources */,
+				44533F332C2460B800552451 /* DetailView.swift in Sources */,
+				44533F352C24664E00552451 /* FullScreenVideoPlayerRepresentedView.swift in Sources */,
 				44E7BDDB2C176BA6000AE491 /* Persistence.swift in Sources */,
 				44533F2C2C22FC9E00552451 /* PostTxfType.swift in Sources */,
 				443F52782C19C6B700FAB22B /* Counter.swift in Sources */,
@@ -706,6 +729,7 @@
 				44E7BDD22C176BA4000AE491 /* study_WidgetExampleApp.swift in Sources */,
 				44533F262C22EF2400552451 /* UpdateMediaView.swift in Sources */,
 				44533F292C22F0C000552451 /* DocumentPickerRepresentedView.swift in Sources */,
+				44533F382C2467F800552451 /* AVPlayerViewController.swift in Sources */,
 				44533F312C2445EF00552451 /* TransferableImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
