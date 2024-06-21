@@ -13,9 +13,16 @@ struct DetailView: View {
     
     var body: some View {
         if let fileName = post.fileName {
-            let appSupportURL = URL.applicationSupportDirectory.appendingPathComponent(fileName)
-            FullScreenVideoPlayerRepresentedView(url: appSupportURL)
+            let url = URL.applicationSupportDirectory.appendingPathComponent(fileName)
+            
+            if post.isVideo {
+                FullScreenVideoPlayerRepresentedView(url: url)
+            } else if let data = try? Data(contentsOf: url),
+                      let uiImage = UIImage(data: data) {
+                QLPreviewRepresentedView(url: url)
+            }
         } else {
+            // TODO: - alert: 파일이 없습니다.
             FullScreenVideoPlayerRepresentedView(url: Bundle.main.url(forResource: "SampleVideo", withExtension: "mp4")!)
         }
     }
@@ -24,10 +31,10 @@ struct DetailView: View {
 #Preview {
     let viewContext = PersistenceController.preview.container.viewContext
     let post = Post(context: viewContext)
+    post.isVideo = true
     post.title = "Funny video 🤣"
     post.comment = "🤣🤣🤣🤣"
     post.createdTimestamp = Date.now
     post.fileName = nil
-    // post.url = Bundle.main.url(forResource: "SampleVideo", withExtension: "mp4")
     return DetailView(post: post)
 }

@@ -110,6 +110,7 @@ extension UpdateMediaView {
         } else {
             nil
         }
+        newPost.isVideo = isNeedAVPlayer
         
         do {
             let toURL = URL.applicationSupportDirectory.appendingPathComponent(newPost.fileName!)

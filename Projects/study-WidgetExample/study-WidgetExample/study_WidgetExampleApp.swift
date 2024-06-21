@@ -29,6 +29,11 @@ struct study_WidgetExampleApp: App {
                             .font(.title)
                     }
                 }
+                .onAppear {
+                    print("***** System Report *****")
+                    print("appSupport dirpath:", URL.applicationSupportDirectory.absoluteString)
+                    print("*************************")
+                }
         }
     }
 }

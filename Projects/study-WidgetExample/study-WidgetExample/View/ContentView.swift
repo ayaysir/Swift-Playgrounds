@@ -18,7 +18,6 @@ struct ContentView: View {
     private var posts: FetchedResults<Post>
     
     @State private var showUpdateView = false
-    @State private var thumbnail: UIImage?
 
     var body: some View {
         NavigationView {
@@ -30,29 +29,12 @@ struct ContentView: View {
                         DetailView(post: post)
                     } label: {
                         HStack {
-                            if let thumbnail {
-                                Image(uiImage: thumbnail)
-                                    .resizable()
-                                    .frame(width: 50, height: 50)
-                            } else {
-                                Image("sample")
-                                    .resizable()
-                                    .frame(width: 50, height: 50)
-                            }
-                            
+                            // TODO: - thumbnail
+                            Image("sample")
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                                .clipShape(RoundedRectangle(cornerSize: .init(width: 10, height: 10)))
                             Text(post.title ?? "unknown title")
-                        }.onAppear {
-                            if let fileName = post.fileName {
-                                let url = URL.applicationSupportDirectory.appendingPathComponent(fileName)
-                                
-                                thumbnail = if post.isVideo {
-                                    AVUtil.generateVideoThumbnail(videoPath: url)
-                                } else if let data = try? Data(contentsOf: url) {
-                                    .init(data: data)
-                                } else {
-                                    nil
-                                }
-                            }
                         }
                     }
                 }

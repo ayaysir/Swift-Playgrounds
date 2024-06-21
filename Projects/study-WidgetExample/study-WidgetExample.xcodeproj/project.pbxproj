@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4404F28A2C25E4EC00FA228A /* study_WidgetExample.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 44E7BDDC2C176BA6000AE491 /* study_WidgetExample.xcdatamodeld */; };
+		4404F28D2C25EB3700FA228A /* QLPreviewRepresentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4404F28C2C25EB3700FA228A /* QLPreviewRepresentedView.swift */; };
+		4404F2902C25EE9000FA228A /* LeBao.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4404F28F2C25EE9000FA228A /* LeBao.jpg */; };
 		443F524D2C1870CA00FAB22B /* StaticWidget1.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 44E7BE1B2C186EE2000AE491 /* StaticWidget1.intentdefinition */; };
 		443F52512C18889900FAB22B /* StaticWidget1EntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443F524F2C18889900FAB22B /* StaticWidget1EntryView.swift */; };
 		443F52542C18891D00FAB22B /* TextModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443F52532C18891D00FAB22B /* TextModel.swift */; };
@@ -127,6 +129,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4404F28C2C25EB3700FA228A /* QLPreviewRepresentedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QLPreviewRepresentedView.swift; sourceTree = "<group>"; };
+		4404F28F2C25EE9000FA228A /* LeBao.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = LeBao.jpg; sourceTree = "<group>"; };
 		443F524F2C18889900FAB22B /* StaticWidget1EntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticWidget1EntryView.swift; sourceTree = "<group>"; };
 		443F52532C18891D00FAB22B /* TextModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextModel.swift; sourceTree = "<group>"; };
 		443F52552C18895400FAB22B /* SimpleEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleEntry.swift; sourceTree = "<group>"; };
@@ -246,6 +250,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4404F28E2C25EBB800FA228A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				44533F392C24712500552451 /* SampleVideo.mp4 */,
+				4404F28F2C25EE9000FA228A /* LeBao.jpg */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		443F52522C18891100FAB22B /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -304,6 +317,7 @@
 			children = (
 				44533F282C22F0C000552451 /* DocumentPickerRepresentedView.swift */,
 				44533F342C24664E00552451 /* FullScreenVideoPlayerRepresentedView.swift */,
+				4404F28C2C25EB3700FA228A /* QLPreviewRepresentedView.swift */,
 			);
 			path = Representable;
 			sourceTree = "<group>";
@@ -374,8 +388,8 @@
 		44E7BDD02C176BA4000AE491 /* study-WidgetExample */ = {
 			isa = PBXGroup;
 			children = (
+				4404F28E2C25EBB800FA228A /* Resources */,
 				44533F3B2C25DCE700552451 /* Util */,
-				44533F392C24712500552451 /* SampleVideo.mp4 */,
 				44533F362C2467E900552451 /* Extension */,
 				44533F2D2C2445D800552451 /* Transferable */,
 				44533F2A2C22FC8100552451 /* Enum */,
@@ -664,6 +678,7 @@
 			files = (
 				44E7BDD92C176BA6000AE491 /* Preview Assets.xcassets in Resources */,
 				44533F3A2C24712500552451 /* SampleVideo.mp4 in Resources */,
+				4404F2902C25EE9000FA228A /* LeBao.jpg in Resources */,
 				44E7BDD62C176BA6000AE491 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -732,6 +747,7 @@
 				44533F332C2460B800552451 /* DetailView.swift in Sources */,
 				44533F352C24664E00552451 /* FullScreenVideoPlayerRepresentedView.swift in Sources */,
 				44E7BDDB2C176BA6000AE491 /* Persistence.swift in Sources */,
+				4404F28D2C25EB3700FA228A /* QLPreviewRepresentedView.swift in Sources */,
 				44533F2C2C22FC9E00552451 /* PostTxfType.swift in Sources */,
 				443F52782C19C6B700FAB22B /* Counter.swift in Sources */,
 				44E7BE1C2C186EE2000AE491 /* StaticWidget1.intentdefinition in Sources */,
