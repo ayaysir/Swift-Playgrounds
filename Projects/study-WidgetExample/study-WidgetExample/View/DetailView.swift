@@ -16,14 +16,14 @@ struct DetailView: View {
             let url = URL.applicationSupportDirectory.appendingPathComponent(fileName)
             
             if post.isVideo {
-                FullScreenVideoPlayerRepresentedView(url: url)
+                FullScreenVideoPlayerRepresentedView(url: url, viewModel: .init())
             } else if let data = try? Data(contentsOf: url),
                       let uiImage = UIImage(data: data) {
                 QLPreviewRepresentedView(url: url)
             }
         } else {
             // TODO: - alert: 파일이 없습니다.
-            FullScreenVideoPlayerRepresentedView(url: Bundle.main.url(forResource: "SampleVideo", withExtension: "mp4")!)
+            FullScreenVideoPlayerRepresentedView(url: Bundle.main.url(forResource: "SampleVideo", withExtension: "mp4")!, viewModel: .init())
         }
     }
 }
