@@ -20,6 +20,7 @@ struct PersistenceController {
             newPost.comment = "Comment \(i + 1)"
             newPost.createdTimestamp = Date.now
         }
+        
         do {
             try viewContext.save()
         } catch {

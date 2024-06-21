@@ -12,9 +12,11 @@ struct DetailView: View {
     let post: Post
     
     var body: some View {
-        if let url = post.url {
-            let appSupportURL = URL.applicationSupportDirectory.appendingPathComponent(url.lastPathComponent)
+        if let fileName = post.fileName {
+            let appSupportURL = URL.applicationSupportDirectory.appendingPathComponent(fileName)
             FullScreenVideoPlayerRepresentedView(url: appSupportURL)
+        } else {
+            FullScreenVideoPlayerRepresentedView(url: Bundle.main.url(forResource: "SampleVideo", withExtension: "mp4")!)
         }
     }
 }
@@ -25,6 +27,7 @@ struct DetailView: View {
     post.title = "Funny video 🤣"
     post.comment = "🤣🤣🤣🤣"
     post.createdTimestamp = Date.now
-    post.url = Bundle.main.url(forResource: "SampleVideo", withExtension: "mp4")
+    post.fileName = nil
+    // post.url = Bundle.main.url(forResource: "SampleVideo", withExtension: "mp4")
     return DetailView(post: post)
 }

@@ -103,30 +103,27 @@ extension UpdateMediaView {
         newPost.comment = txfComment
         newPost.title = txfTitle
         newPost.createdTimestamp = Date.now
-        newPost.url = if let fileURL {
-            URL.applicationSupportDirectory.appendingPathComponent(fileURL.lastPathComponent)
+        newPost.fileName = if let fileURL {
+            fileURL.lastPathComponent
         } else if let imageSelectionURL {
-            URL.applicationSupportDirectory.appendingPathComponent(imageSelectionURL.first!.key)
+            imageSelectionURL.first!.key
         } else {
             nil
         }
         
-        print("newPost.url:", newPost.url ?? "nil")
-        
         do {
-            if let toURL = newPost.url {
-                if let fileURL {
-                    try Data(contentsOf: fileURL).write(to: toURL)
-                } else if let imageSelectionURL {
-                    if isNeedAVPlayer {
-                        let tempVideo = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("video").appendingPathExtension("mp4")
-                        try Data(contentsOf: tempVideo).write(to: toURL)
-                    } else if let imageData {
-                        try imageData.write(to: toURL)
-                    }
+            let toURL = URL.applicationSupportDirectory.appendingPathComponent(newPost.fileName!)
+            if let fileURL {
+                try Data(contentsOf: fileURL).write(to: toURL)
+            } else if imageSelectionURL != nil {
+                if isNeedAVPlayer {
+                    let tempVideo = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("video").appendingPathExtension("mp4")
+                    try Data(contentsOf: tempVideo).write(to: toURL)
+                } else if let imageData {
+                    try imageData.write(to: toURL)
                 }
-                print("file write success:", toURL)
             }
+            print("file write success:", toURL)
             
             try viewContext.save()
             print("Post saved to viewContext.")

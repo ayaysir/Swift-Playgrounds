@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4404F28A2C25E4EC00FA228A /* study_WidgetExample.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 44E7BDDC2C176BA6000AE491 /* study_WidgetExample.xcdatamodeld */; };
 		443F524D2C1870CA00FAB22B /* StaticWidget1.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 44E7BE1B2C186EE2000AE491 /* StaticWidget1.intentdefinition */; };
 		443F52512C18889900FAB22B /* StaticWidget1EntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443F524F2C18889900FAB22B /* StaticWidget1EntryView.swift */; };
 		443F52542C18891D00FAB22B /* TextModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443F52532C18891D00FAB22B /* TextModel.swift */; };
@@ -32,7 +33,6 @@
 		44533F142C1DAF1600552451 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44533F132C1DAF1600552451 /* AppIntent.swift */; };
 		44533F162C1DAF1700552451 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44533F152C1DAF1700552451 /* Assets.xcassets */; };
 		44533F1A2C1DAF1700552451 /* DynamicWidget1Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 44533F0B2C1DAF1600552451 /* DynamicWidget1Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		44533F1F2C1DAFBC00552451 /* study_WidgetExample.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 44E7BDDC2C176BA6000AE491 /* study_WidgetExample.xcdatamodeld */; };
 		44533F202C1DAFC000552451 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E7BDDA2C176BA6000AE491 /* Persistence.swift */; };
 		44533F232C1DB3AA00552451 /* DynamicWidget1EntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44533F212C1DB39400552451 /* DynamicWidget1EntryView.swift */; };
 		44533F262C22EF2400552451 /* UpdateMediaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44533F252C22EF2400552451 /* UpdateMediaView.swift */; };
@@ -44,6 +44,7 @@
 		44533F352C24664E00552451 /* FullScreenVideoPlayerRepresentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44533F342C24664E00552451 /* FullScreenVideoPlayerRepresentedView.swift */; };
 		44533F382C2467F800552451 /* AVPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44533F372C2467F800552451 /* AVPlayerViewController.swift */; };
 		44533F3A2C24712500552451 /* SampleVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 44533F392C24712500552451 /* SampleVideo.mp4 */; };
+		44533F3D2C25DCF000552451 /* AVUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44533F3C2C25DCF000552451 /* AVUtil.swift */; };
 		44E7BDD22C176BA4000AE491 /* study_WidgetExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E7BDD12C176BA4000AE491 /* study_WidgetExampleApp.swift */; };
 		44E7BDD42C176BA4000AE491 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E7BDD32C176BA4000AE491 /* ContentView.swift */; };
 		44E7BDD62C176BA6000AE491 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44E7BDD52C176BA6000AE491 /* Assets.xcassets */; };
@@ -160,6 +161,7 @@
 		44533F342C24664E00552451 /* FullScreenVideoPlayerRepresentedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenVideoPlayerRepresentedView.swift; sourceTree = "<group>"; };
 		44533F372C2467F800552451 /* AVPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerViewController.swift; sourceTree = "<group>"; };
 		44533F392C24712500552451 /* SampleVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = SampleVideo.mp4; sourceTree = "<group>"; };
+		44533F3C2C25DCF000552451 /* AVUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVUtil.swift; sourceTree = "<group>"; };
 		44E7BDCE2C176BA4000AE491 /* study-WidgetExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "study-WidgetExample.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		44E7BDD12C176BA4000AE491 /* study_WidgetExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = study_WidgetExampleApp.swift; sourceTree = "<group>"; };
 		44E7BDD32C176BA4000AE491 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -331,6 +333,14 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
+		44533F3B2C25DCE700552451 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				44533F3C2C25DCF000552451 /* AVUtil.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
 		44E7BDC52C176BA4000AE491 = {
 			isa = PBXGroup;
 			children = (
@@ -364,6 +374,7 @@
 		44E7BDD02C176BA4000AE491 /* study-WidgetExample */ = {
 			isa = PBXGroup;
 			children = (
+				44533F3B2C25DCE700552451 /* Util */,
 				44533F392C24712500552451 /* SampleVideo.mp4 */,
 				44533F362C2467E900552451 /* Extension */,
 				44533F2D2C2445D800552451 /* Transferable */,
@@ -704,9 +715,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				44533F1F2C1DAFBC00552451 /* study_WidgetExample.xcdatamodeld in Sources */,
 				44533F102C1DAF1600552451 /* DynamicWidget1Bundle.swift in Sources */,
 				44533F122C1DAF1600552451 /* DynamicWidget1.swift in Sources */,
+				4404F28A2C25E4EC00FA228A /* study_WidgetExample.xcdatamodeld in Sources */,
 				44533F232C1DB3AA00552451 /* DynamicWidget1EntryView.swift in Sources */,
 				44533F142C1DAF1600552451 /* AppIntent.swift in Sources */,
 				44533F202C1DAFC000552451 /* Persistence.swift in Sources */,
@@ -730,6 +741,7 @@
 				44533F262C22EF2400552451 /* UpdateMediaView.swift in Sources */,
 				44533F292C22F0C000552451 /* DocumentPickerRepresentedView.swift in Sources */,
 				44533F382C2467F800552451 /* AVPlayerViewController.swift in Sources */,
+				44533F3D2C25DCF000552451 /* AVUtil.swift in Sources */,
 				44533F312C2445EF00552451 /* TransferableImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
