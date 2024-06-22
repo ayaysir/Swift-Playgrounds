@@ -11,14 +11,14 @@ import CoreData
 struct ContentView: View {
     @Environment(\.deepLinkText) var deepLinkText
     @Environment(\.managedObjectContext) private var viewContext
-
+    
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Post.createdTimestamp, ascending: true)],
         animation: .default)
     private var posts: FetchedResults<Post>
     
     @State private var showUpdateView = false
-
+    
     var body: some View {
         NavigationView {
             List {
@@ -61,13 +61,18 @@ struct ContentView: View {
             UpdateMediaView()
         }
     }
-
+    
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
-            offsets.map { posts[$0] }.forEach(viewContext.delete)
-
             do {
-                // TODO: - URL의 파일 삭제
+                try offsets.map {
+                    if let fileName = posts[$0].fileName {
+                        let url = URL.applicationSupportDirectory.appendingPathComponent(fileName)
+                        try FileManager.default.removeItem(at: url)
+                    }
+                    
+                    return posts[$0]
+                }.forEach(viewContext.delete)
                 
                 try viewContext.save()
             } catch {
@@ -87,7 +92,7 @@ struct ContentView: View {
         let url = URL.applicationSupportDirectory.appendingPathComponent(fileName)
         
         if post.isVideo, let uiImage = AVUtil.generateVideoThumbnail(videoPath: url) {
-             return Image(uiImage: uiImage)
+            return Image(uiImage: uiImage)
         } else if let data = try? Data(contentsOf: url),
                   let uiImage = UIImage(data: data) {
             return Image(uiImage: uiImage)
