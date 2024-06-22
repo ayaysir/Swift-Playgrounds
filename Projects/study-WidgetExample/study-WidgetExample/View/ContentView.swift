@@ -29,11 +29,14 @@ struct ContentView: View {
                         DetailView(post: post)
                     } label: {
                         HStack {
-                            // TODO: - thumbnail
-                            Image("sample")
+                            let thumbnail = prepareThumbnail(post: post) ?? Image("sample")
+                            
+                            thumbnail
                                 .resizable()
+                                .scaledToFill()
                                 .frame(width: 50, height: 50)
                                 .clipShape(RoundedRectangle(cornerSize: .init(width: 10, height: 10)))
+                            
                             Text(post.title ?? "unknown title")
                         }
                     }
@@ -74,6 +77,23 @@ struct ContentView: View {
                 fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
             }
         }
+    }
+    
+    private func prepareThumbnail(post: Post) -> Image? {
+        guard let fileName = post.fileName else {
+            return nil
+        }
+        
+        let url = URL.applicationSupportDirectory.appendingPathComponent(fileName)
+        
+        if post.isVideo, let uiImage = AVUtil.generateVideoThumbnail(videoPath: url) {
+             return Image(uiImage: uiImage)
+        } else if let data = try? Data(contentsOf: url),
+                  let uiImage = UIImage(data: data) {
+            return Image(uiImage: uiImage)
+        }
+        
+        return nil
     }
 }
 
