@@ -39,7 +39,7 @@ struct DynamicWidget1EntryView : View {
                 }
                 
                 ForEach(posts, id: \.hash) { post in
-                    Link(destination: URL(string: "widget://deeplink?timestamp=\(post.fileName ?? "unknown")")!) {
+                    Link(destination: URL(string: "widget://deeplink?filename=\(post.fileName ?? "unknown")")!) {
                         let thumbnail = prepareThumbnail(post: post) ?? Image("sample")
                         
                         thumbnail

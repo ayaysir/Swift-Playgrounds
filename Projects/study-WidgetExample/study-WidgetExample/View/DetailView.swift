@@ -10,15 +10,30 @@ import AVKit
 
 struct DetailView: View {
     let post: Post
+    var isOpenFromWidget = false
+    @Environment(\.dismiss) var dismiss
+    @StateObject var fsViewModel = FullScreenVideoRepresentedViewModel()
     
     var body: some View {
+        if isOpenFromWidget {
+            HStack {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "xmark")
+                }
+                
+                Spacer()
+            }
+            .padding()
+        }
+        
         if let fileName = post.fileName {
             let url = FileManager.sharedContainerURL().appendingPathComponent(fileName)
             
             if post.isVideo {
-                FullScreenVideoPlayerRepresentedView(url: url, viewModel: .init())
-            } else if let data = try? Data(contentsOf: url),
-                      let uiImage = UIImage(data: data) {
+                FullScreenVideoPlayerRepresentedView(url: url, viewModel: fsViewModel)
+            } else {
                 QLPreviewRepresentedView(url: url)
             }
         } else {

@@ -75,4 +75,17 @@ struct PersistenceController {
             fatalError(error.localizedDescription)
         }
     }
+    
+    func fetchOnePost(fileName: String) -> Post? {
+        let context = container.viewContext
+        let request = NSFetchRequest<Post>(entityName: "Post")
+        request.predicate = NSPredicate(format: "fileName == %@", fileName)
+        
+        do {
+            return try context.fetch(request).first
+        } catch {
+            print(error)
+            return nil
+        }
+    }
 }

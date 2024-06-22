@@ -64,16 +64,16 @@ struct ContentView: View {
     
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
-            do {
-                try offsets.map {
-                    if let fileName = posts[$0].fileName {
-                        let url = FileManager.sharedContainerURL().appendingPathComponent(fileName)
-                        try FileManager.default.removeItem(at: url)
-                    }
-                    
-                    return posts[$0]
-                }.forEach(viewContext.delete)
+            offsets.map {
+                if let fileName = posts[$0].fileName {
+                    let url = FileManager.sharedContainerURL().appendingPathComponent(fileName)
+                    try? FileManager.default.removeItem(at: url)
+                }
                 
+                return posts[$0]
+            }.forEach(viewContext.delete)
+            
+            do {
                 try viewContext.save()
             } catch {
                 // Replace this implementation with code to handle the error appropriately.

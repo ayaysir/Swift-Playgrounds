@@ -13,7 +13,7 @@ struct study_WidgetExampleApp: App {
     @State private var isPresented = false
     
     let persistenceController = PersistenceController.shared
-
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -23,9 +23,12 @@ struct study_WidgetExampleApp: App {
                     widgetText = url.absoluteString.removingPercentEncoding ?? "텍스트가 없습니다!"
                     isPresented = true
                 }
-                .sheet(isPresented: $isPresented) {
-                    if !widgetText.isEmpty {
-                        Text(widgetText)
+                .fullScreenCover(isPresented: $isPresented) {
+                    let fileName = widgetText.replacingOccurrences(of: "widget://deeplink?filename=", with: "")
+                    if let post = persistenceController.fetchOnePost(fileName: fileName) {
+                        DetailView(post: post, isOpenFromWidget: true)
+                    } else {
+                        Text(fileName)
                             .font(.title)
                     }
                 }
