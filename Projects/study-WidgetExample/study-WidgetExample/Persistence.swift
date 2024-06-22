@@ -34,7 +34,7 @@ struct PersistenceController {
 
     let container: NSPersistentContainer
     var appGroupContainerURL: URL {
-       return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.bgsmm.study.widget1")!
+        FileManager.sharedContainerURL()
     }
 
     init(inMemory: Bool = false) {

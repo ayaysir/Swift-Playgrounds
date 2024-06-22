@@ -32,7 +32,9 @@ struct study_WidgetExampleApp: App {
                 .onAppear {
                     print("***** System Report *****")
                     print("appSupport dirpath:", URL.applicationSupportDirectory.absoluteString)
+                    print("shared container:", FileManager.sharedContainerURL())
                     print("*************************")
+                    
                 }
         }
     }

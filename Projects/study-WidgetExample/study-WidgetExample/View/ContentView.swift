@@ -67,7 +67,7 @@ struct ContentView: View {
             do {
                 try offsets.map {
                     if let fileName = posts[$0].fileName {
-                        let url = URL.applicationSupportDirectory.appendingPathComponent(fileName)
+                        let url = FileManager.sharedContainerURL().appendingPathComponent(fileName)
                         try FileManager.default.removeItem(at: url)
                     }
                     
@@ -89,7 +89,7 @@ struct ContentView: View {
             return nil
         }
         
-        let url = URL.applicationSupportDirectory.appendingPathComponent(fileName)
+        let url = FileManager.sharedContainerURL().appendingPathComponent(fileName)
         
         if post.isVideo, let uiImage = AVUtil.generateVideoThumbnail(videoPath: url) {
             return Image(uiImage: uiImage)

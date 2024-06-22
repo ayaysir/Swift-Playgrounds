@@ -113,7 +113,7 @@ extension UpdateMediaView {
         newPost.isVideo = isNeedAVPlayer
         
         do {
-            let toURL = URL.applicationSupportDirectory.appendingPathComponent(newPost.fileName!)
+            let toURL = FileManager.sharedContainerURL().appendingPathComponent(newPost.fileName!)
             if let fileURL {
                 try Data(contentsOf: fileURL).write(to: toURL)
             } else if imageSelectionURL != nil {

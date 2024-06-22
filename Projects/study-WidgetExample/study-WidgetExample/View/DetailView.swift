@@ -13,7 +13,7 @@ struct DetailView: View {
     
     var body: some View {
         if let fileName = post.fileName {
-            let url = URL.applicationSupportDirectory.appendingPathComponent(fileName)
+            let url = FileManager.sharedContainerURL().appendingPathComponent(fileName)
             
             if post.isVideo {
                 FullScreenVideoPlayerRepresentedView(url: url, viewModel: .init())
