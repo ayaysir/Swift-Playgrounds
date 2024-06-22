@@ -72,7 +72,6 @@ struct UpdateMediaView: View {
         .padding()
         .sheet(isPresented: $showFilePicker) {
             DocumentPickerReperesentedView { url in
-                print(url)
                 fileURL = url
                 txfTitle = (url.lastPathComponent as NSString).deletingPathExtension
                 focusComment = .comment
@@ -115,7 +114,12 @@ extension UpdateMediaView {
         do {
             let toURL = FileManager.sharedContainerURL().appendingPathComponent(newPost.fileName!)
             if let fileURL {
-                try Data(contentsOf: fileURL).write(to: toURL)
+                if fileURL.startAccessingSecurityScopedResource() {
+                    try Data(contentsOf: fileURL).write(to: toURL)
+                    fileURL.stopAccessingSecurityScopedResource()
+                } else {
+                    print("권한 획득 실패")
+                }
             } else if imageSelectionURL != nil {
                 if isNeedAVPlayer {
                     let tempVideo = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("video").appendingPathExtension("mp4")
@@ -134,10 +138,16 @@ extension UpdateMediaView {
     }
     
     func mediaLoadFromStorage() {
-        guard let fileURL,
-              let typeID = try? fileURL.resourceValues(forKeys: [.contentTypeKey]),
-              let supertypes = typeID.contentType?.supertypes
-        else {
+        guard let fileURL else {
+            return
+        }
+        
+        let authorized = fileURL.startAccessingSecurityScopedResource()
+        print("authorized:", authorized)
+        
+        guard let typeID = try? fileURL.resourceValues(forKeys: [.contentTypeKey]),
+              let supertypes = typeID.contentType?.supertypes else {
+            print("typeID and spertypes maybe nil")
             return
         }
         
@@ -159,6 +169,8 @@ extension UpdateMediaView {
             print("“Something else!”")
             isNeedAVPlayer = false
         }
+        
+        fileURL.stopAccessingSecurityScopedResource()
     }
     
     func mediaLoadFromLibrary() {

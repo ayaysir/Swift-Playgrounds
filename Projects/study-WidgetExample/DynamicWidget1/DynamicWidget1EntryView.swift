@@ -62,13 +62,17 @@ struct DynamicWidget1EntryView : View {
         }
         
         let url = FileManager.sharedContainerURL().appendingPathComponent(fileName)
+        _ = url.startAccessingSecurityScopedResource()
         
-        if post.isVideo, let uiImage = AVUtil.generateVideoThumbnail(videoPath: url) {
-            return Image(uiImage: uiImage)
+        if post.isVideo {
+            // TODO: - 경량화시켜서 섬네일 표시
+            return Image("sample")
         } else if let data = try? Data(contentsOf: url),
                   let uiImage = UIImage(data: data) {
             return Image(uiImage: uiImage)
         }
+        
+        url.stopAccessingSecurityScopedResource()
         
         return nil
     }
