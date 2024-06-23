@@ -1,5 +1,5 @@
 //
-//  AVPlayerViewController.swift
+//  AVPlayerViewController+.swift
 //  study-WidgetExample
 //
 //  Created by 윤범태 on 6/20/24.

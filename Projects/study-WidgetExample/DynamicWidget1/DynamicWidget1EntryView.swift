@@ -27,12 +27,6 @@ struct DynamicWidget1EntryView : View {
 
     var body: some View {
         VStack {
-            // Text("Time:")
-            // Text(entry.date, style: .time)
-            // 
-            // Text("Favorite Emoji:")
-            
-            
             LazyVGrid(columns: columns, spacing: MARGIN) {
                 Button(intent: OpenAppIntent()) {
                     Text(entry.configuration.favoriteEmoji)
@@ -40,13 +34,19 @@ struct DynamicWidget1EntryView : View {
                 
                 ForEach(posts, id: \.hash) { post in
                     Link(destination: URL(string: "widget://deeplink?filename=\(post.fileName ?? "unknown")")!) {
-                        let thumbnail = prepareThumbnail(post: post) ?? Image("sample")
-                        
-                        thumbnail
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 50, height: 50)
-                            .clipShape(RoundedRectangle(cornerSize: .init(width: 10, height: 10)))
+                        if let thumbnail = prepareCachedThumbnail(post: post) {
+                            thumbnail
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 50, height: 50)
+                                .clipShape(RoundedRectangle(cornerSize: .init(width: 10, height: 10)))
+                        } else {
+                            Image("sample")
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 50, height: 50)
+                                .clipShape(RoundedRectangle(cornerSize: .init(width: 10, height: 10)))
+                        }
                     }
                 }
             }
@@ -56,25 +56,27 @@ struct DynamicWidget1EntryView : View {
         }
     }
     
-    private func prepareThumbnail(post: Post) -> Image? {
+    private func prepareCachedThumbnail(post: Post) -> Image? {
         guard let fileName = post.fileName else {
             return nil
         }
         
-        let url = FileManager.sharedContainerURL().appendingPathComponent(fileName)
+        let url = FileManager.sharedContainerURL()
+            .appendingPathComponent("thumbnail")
+            .appendingPathComponent(fileName + ".thumbnail.png")
+        
         _ = url.startAccessingSecurityScopedResource()
         
-        if post.isVideo {
-            // TODO: - 경량화시켜서 섬네일 표시
-            return Image("sample")
-        } else if let data = try? Data(contentsOf: url),
+        if let data = try? Data(contentsOf: url),
                   let uiImage = UIImage(data: data) {
-            return Image(uiImage: uiImage)
+            let image = Image(uiImage: uiImage)
+            url.stopAccessingSecurityScopedResource()
+            
+            return image
+        } else {
+            url.stopAccessingSecurityScopedResource()
+            return nil
         }
-        
-        url.stopAccessingSecurityScopedResource()
-        
-        return nil
     }
 }
 

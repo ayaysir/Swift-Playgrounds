@@ -130,6 +130,27 @@ extension UpdateMediaView {
             }
             print("file write success:", toURL)
             
+            let thumbDir = FileManager.sharedContainerURL()
+                .appendingPathComponent("thumbnail")
+            let thumbURL = thumbDir
+                .appendingPathComponent(newPost.fileName! + ".thumbnail.png")
+            
+            if !FileManager.default.fileExists(atPath: thumbDir.path) {
+                try FileManager.default.createDirectory(atPath: thumbDir.path, withIntermediateDirectories: true, attributes: nil)
+            }
+            
+            AVUtil.generateThumbnail(for: toURL, size: .init(width: 300, height: 300), scale: 1) { image in
+                guard let image else {
+                    print("thumbnail fiald")
+                    return
+                }
+                
+                try? image.pngData()?.write(to: thumbURL)
+                print("thumbnail write success:", thumbURL)
+            }
+            
+            toURL.stopAccessingSecurityScopedResource()
+            
             try viewContext.save()
             print("Post saved to viewContext.")
         } catch {

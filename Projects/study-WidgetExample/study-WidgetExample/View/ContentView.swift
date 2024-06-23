@@ -29,14 +29,20 @@ struct ContentView: View {
                         DetailView(post: post)
                     } label: {
                         HStack {
-                            let thumbnail = prepareThumbnail(post: post) ?? Image("sample")
-                            
-                            thumbnail
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 50, height: 50)
-                                .clipShape(RoundedRectangle(cornerSize: .init(width: 10, height: 10)))
-                            
+                            if let thumbnail = prepareCachedThumbnail(post: post) {
+                                thumbnail
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 50, height: 50)
+                                    .clipShape(RoundedRectangle(cornerSize: .init(width: 10, height: 10)))
+                            } else if post.fileName != nil {
+                                prepareThumbnail(post: post)!
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 50, height: 50)
+                                    .clipShape(RoundedRectangle(cornerSize: .init(width: 10, height: 10)))
+                            }
+                                                    
                             Text(post.title ?? "unknown title")
                         }
                     }
@@ -58,6 +64,8 @@ struct ContentView: View {
             Text("Select an item")
         }
         .sheet(isPresented: $showUpdateView) {
+            
+        } content: {
             UpdateMediaView()
         }
     }
@@ -89,7 +97,8 @@ struct ContentView: View {
             return nil
         }
         
-        let url = FileManager.sharedContainerURL().appendingPathComponent(fileName)
+        let url = FileManager.sharedContainerURL()
+            .appendingPathComponent(fileName)
         
         if post.isVideo, let uiImage = AVUtil.generateVideoThumbnail(videoPath: url) {
             return Image(uiImage: uiImage)
@@ -99,6 +108,29 @@ struct ContentView: View {
         }
         
         return nil
+    }
+    
+    private func prepareCachedThumbnail(post: Post) -> Image? {
+        guard let fileName = post.fileName else {
+            return nil
+        }
+        
+        let url = FileManager.sharedContainerURL()
+            .appendingPathComponent("thumbnail")
+            .appendingPathComponent(fileName + ".thumbnail.png")
+        
+        _ = url.startAccessingSecurityScopedResource()
+        
+        if let data = try? Data(contentsOf: url),
+                  let uiImage = UIImage(data: data) {
+            let image = Image(uiImage: uiImage)
+            url.stopAccessingSecurityScopedResource()
+            
+            return image
+        } else {
+            url.stopAccessingSecurityScopedResource()
+            return nil
+        }
     }
 }
 
