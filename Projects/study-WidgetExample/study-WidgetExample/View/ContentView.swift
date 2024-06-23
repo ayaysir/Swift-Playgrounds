@@ -23,8 +23,8 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List {
-                Text(deepLinkText.isEmpty ? "DeepLinkText" : deepLinkText)
-                Text("SharedCounter: \(Counter.currentCount())")
+                // Text(deepLinkText.isEmpty ? "DeepLinkText" : deepLinkText)
+                // Text("SharedCounter: \(Counter.currentCount())")
                 ForEach(posts) { post in
                     NavigationLink {
                         DetailView(post: post)
@@ -79,6 +79,11 @@ struct ContentView: View {
                 if let fileName = posts[$0].fileName {
                     let url = FileManager.sharedContainerURL().appendingPathComponent(fileName)
                     try? FileManager.default.removeItem(at: url)
+                    
+                    let thumbURL = FileManager.sharedContainerURL()
+                        .appendingPathComponent("thumbnail")
+                        .appendingPathComponent(fileName + ".thumbnail.png")
+                    try? FileManager.default.removeItem(at: thumbURL)
                 }
                 
                 return posts[$0]

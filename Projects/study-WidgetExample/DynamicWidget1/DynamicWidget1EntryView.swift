@@ -28,9 +28,9 @@ struct DynamicWidget1EntryView : View {
     var body: some View {
         VStack {
             LazyVGrid(columns: columns, spacing: MARGIN) {
-                Button(intent: OpenAppIntent()) {
-                    Text(entry.configuration.favoriteEmoji)
-                }
+                // Button(intent: OpenAppIntent()) {
+                //     Text(entry.configuration.favoriteEmoji)
+                // }
                 
                 ForEach(posts, id: \.hash) { post in
                     Link(destination: URL(string: "widget://deeplink?filename=\(post.fileName ?? "unknown")")!) {
