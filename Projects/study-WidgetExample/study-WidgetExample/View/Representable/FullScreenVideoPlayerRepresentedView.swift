@@ -8,26 +8,20 @@
 import SwiftUI
 import AVKit
 
-final class FullScreenVideoRepresentedViewModel: ObservableObject {
-    @Published var isLooping = false
-}
-
 struct FullScreenVideoPlayerRepresentedView: UIViewControllerRepresentable {
     let url: URL
-    @StateObject var viewModel: FullScreenVideoRepresentedViewModel
+    let player = AVPlayer()
     
     func makeUIViewController(context: Context) -> AVPlayerViewController {
         let controller = AVPlayerViewController()
-        let player = AVPlayer(url: url)
         controller.player = player
+        
+        player.replaceCurrentItem(with: .init(url: url))
         
         let selectorToForceFullScreenMode = NSSelectorFromString("_transitionToFullScreenAnimated:interactive:completionHandler:")
         
         player.play()
-        
-        if !viewModel.isLooping {
-            loopVideo(player)
-        }
+        loopVideo()
         
         // 강제 풀스크린 전환
         // asyncAfter는 전체화면에서 컨트롤 요소가 나오지 않을 떄에만 사용
@@ -43,19 +37,17 @@ struct FullScreenVideoPlayerRepresentedView: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: AVPlayerViewController, context: Context) {
     }
     
-    /// 비디오를 반복 재생
-    func loopVideo(_ videoPlayer: AVPlayer) {
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil, queue: nil) { notification in
-            videoPlayer.seek(to: CMTime.zero)
-            videoPlayer.play()
-        }
+    func loopVideo() {
+        NotificationCenter.default.removeObserver(self, name: AVPlayerItem.didPlayToEndTimeNotification, object: nil)
         
-        DispatchQueue.main.async {
-            viewModel.isLooping = true
+        // Be sure to specify the object as the AVPlayer's player item if you have multiple players. https://stackoverflow.com/a/40396824
+        NotificationCenter.default.addObserver(forName: AVPlayerItem.didPlayToEndTimeNotification, object: self.player.currentItem, queue: .main) { _ in
+            player.seek(to: CMTime.zero)
+            player.play()
         }
     }
 }
 
 #Preview {
-    FullScreenVideoPlayerRepresentedView(url: URL(string: "https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_2mb.mp4")!, viewModel: .init())
+    FullScreenVideoPlayerRepresentedView(url: URL(string: "https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_2mb.mp4")!)
 }

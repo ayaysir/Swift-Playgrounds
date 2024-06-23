@@ -12,33 +12,40 @@ struct DetailView: View {
     let post: Post
     var isOpenFromWidget = false
     @Environment(\.dismiss) var dismiss
-    @StateObject var fsViewModel = FullScreenVideoRepresentedViewModel()
     
     var body: some View {
-        if isOpenFromWidget {
-            HStack {
-                Button {
-                    dismiss()
-                } label: {
-                    Image(systemName: "xmark")
+        VStack {
+            if isOpenFromWidget {
+                HStack {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark")
+                    }
+                    
+                    Spacer()
                 }
-                
-                Spacer()
+                .padding()
             }
-            .padding()
-        }
-        
-        if let fileName = post.fileName {
-            let url = FileManager.sharedContainerURL().appendingPathComponent(fileName)
             
-            if post.isVideo {
-                FullScreenVideoPlayerRepresentedView(url: url, viewModel: fsViewModel)
+            if let fileName = post.fileName {
+                let url = FileManager.sharedContainerURL().appendingPathComponent(fileName)
+                
+                if post.isVideo {
+                    FullScreenVideoPlayerRepresentedView(url: url)
+                } else {
+                    QLPreviewRepresentedView(url: url)
+                }
             } else {
-                QLPreviewRepresentedView(url: url)
+                // TODO: - alert: 파일이 없습니다.
+                FullScreenVideoPlayerRepresentedView(url: Bundle.main.url(forResource: "SampleVideo", withExtension: "mp4")!)
             }
-        } else {
-            // TODO: - alert: 파일이 없습니다.
-            FullScreenVideoPlayerRepresentedView(url: Bundle.main.url(forResource: "SampleVideo", withExtension: "mp4")!, viewModel: .init())
+        }
+        .onAppear {
+            
+        }
+        .onDisappear {
+            
         }
     }
 }
