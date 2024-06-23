@@ -62,7 +62,7 @@ struct UpdateMediaView: View {
             VStack {
                 TextField("제목", text: $txfTitle)
                 TextField("코멘트", text: $txfComment)
-                    .focused($focusComment, equals: .comment)
+                    // .focused($focusComment, equals: .comment)
                 Button("추가") {
                     saveToCoreData()
                     dismiss()
@@ -74,7 +74,7 @@ struct UpdateMediaView: View {
             DocumentPickerReperesentedView { url in
                 fileURL = url
                 txfTitle = (url.lastPathComponent as NSString).deletingPathExtension
-                focusComment = .comment
+                // focusComment = .comment
             }
         }
         .onChange(of: fileURL) {

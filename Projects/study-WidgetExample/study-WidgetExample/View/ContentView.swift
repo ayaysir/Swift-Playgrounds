@@ -11,6 +11,7 @@ import CoreData
 struct ContentView: View {
     @Environment(\.deepLinkText) var deepLinkText
     @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.widgetCenter) private var widgetCenter
     
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Post.createdTimestamp, ascending: true)],
@@ -64,9 +65,11 @@ struct ContentView: View {
             Text("Select an item")
         }
         .sheet(isPresented: $showUpdateView) {
-            
+            widgetCenter.reloadAllTimelines()
         } content: {
             UpdateMediaView()
+        }
+        .onDisappear {
         }
     }
     
@@ -83,6 +86,7 @@ struct ContentView: View {
             
             do {
                 try viewContext.save()
+                widgetCenter.reloadAllTimelines()
             } catch {
                 // Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.

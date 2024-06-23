@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WidgetKit
 
 @main
 struct study_WidgetExampleApp: App {
@@ -37,7 +38,6 @@ struct study_WidgetExampleApp: App {
                     print("appSupport dirpath:", URL.applicationSupportDirectory.absoluteString)
                     print("shared container:", FileManager.sharedContainerURL())
                     print("*************************")
-                    
                 }
         }
     }
@@ -54,5 +54,9 @@ extension EnvironmentValues {
         } set {
             self[DeepLinkEnv.self] = newValue
         }
+    }
+    
+    var widgetCenter: WidgetCenter {
+        WidgetCenter.shared
     }
 }
