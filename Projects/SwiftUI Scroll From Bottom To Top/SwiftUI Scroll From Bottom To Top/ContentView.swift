@@ -12,7 +12,7 @@ struct ContentView: View {
     TabView {
       ScrollFromBottomToTop_iOS14_View()
         .tabItem {
-          Text("iOS 14 ~ iOS 16")
+          Text("iOS 14 +")
         }
       
       if #available(iOS 17.0, *) {
@@ -35,29 +35,39 @@ struct ScrollFromBottomToTop_iOS14_View: View {
   let reversedSomeList = Array(Array(1...100).reversed())
   
   var body: some View {
-    ScrollView {
-      LazyVStack {
-        ForEach(reversedSomeList, id: \.self) { index in
-          ZStack {
-            RoundedRectangle(cornerSize: .init(width: 10, height: 10))
-              .frame(height: 50)
-              .foregroundColor(.blue.opacity(0.1 + Double(index) * 0.009))
-              .onAppear {
-                print("Displayed: Cell \(index)")
-              }
-            Text("Cell \(index)")
-          }
-          // 개별 요소를 180도로 회전
-          .rotationEffect(.degrees(180))
-          .onTapGesture {
-            print("Tapped: Cell \(index)")
+    GeometryReader { proxy in
+      ScrollView {
+        LazyVStack {
+          ForEach(reversedSomeList, id: \.self) { index in
+            ZStack {
+              RoundedRectangle(cornerSize: .init(width: 10, height: 10))
+                .frame(height: 50)
+                .foregroundColor(.blue.opacity(0.1 + Double(index) * 0.009))
+                .onAppear {
+                  print("Displayed: Cell \(index)")
+                }
+              Text("Cell \(index)")
+            }
+            // 개별 요소를 180도로 회전
+            .rotationEffect(.degrees(180))
+            .rotation3DEffect(
+              .degrees(180),
+              axis: (x: 0.0, y: 1.0, z: 0.0)
+            )
+            .onTapGesture {
+              print("Tapped: Cell \(index)")
+            }
           }
         }
+        .frame(minHeight: proxy.size.height)
       }
+      .padding()
+      // 스크롤 뷰를 180도로 회전
+      .rotation3DEffect(
+        .degrees(180),
+        axis: (x: 1.0, y: 0.0, z: 0.0)
+      )
     }
-    .padding()
-    // 스크롤 뷰를 180도로 회전
-    .rotationEffect(.degrees(180))
   }
 }
 
