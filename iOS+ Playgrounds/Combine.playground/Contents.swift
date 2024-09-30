@@ -180,29 +180,29 @@ _ = failed.sink(receiveCompletion: { result in
  */
 
 
-// 6. Record: 입력과 완료를 기록해 다른 subscriber에서 반복될 수 있는 publisher
-let record = Record<String, Error> { recording in
-    print("===== Make Record ===== ")
-    recording.receive("LeBao")
-    recording.receive("AiBao")
-    recording.receive("FuBao")
-    recording.receive(completion: .failure(NSError(domain: "ㅠ", code: -1)))
-}
+  // 6. Record: 입력과 완료를 기록해 다른 subscriber에서 반복될 수 있는 publisher
+  let record = Record<String, Error> { recording in
+      print("===== Make Record ===== ")
+      recording.receive("LeBao")
+      recording.receive("AiBao")
+      recording.receive("FuBao")
+      recording.receive(completion: .failure(NSError(domain: "ㅠ", code: -1)))
+  }
 
-for _ in 1...3 {
-    _ = record.sink {
-        print($0)
-    } receiveValue: {
-        print($0, terminator: "\t")
-    }
-}
+  for _ in 1...3 {
+      _ = record.sink {
+          print($0)
+      } receiveValue: {
+          print($0, terminator: "\t")
+      }
+  }
 
-/*
- ===== Make Record =====
- LeBao    AiBao    FuBao    failure(Error Domain=ㅠ Code=-1 "(null)")
- LeBao    AiBao    FuBao    failure(Error Domain=ㅠ Code=-1 "(null)")
- LeBao    AiBao    FuBao    failure(Error Domain=ㅠ Code=-1 "(null)")
- */
+  /*
+   ===== Make Record =====
+   LeBao    AiBao    FuBao    failure(Error Domain=ㅠ Code=-1 "(null)")
+   LeBao    AiBao    FuBao    failure(Error Domain=ㅠ Code=-1 "(null)")
+   LeBao    AiBao    FuBao    failure(Error Domain=ㅠ Code=-1 "(null)")
+   */
 
 // 7. AnyPublisher
 let originalPublisher = [1, nil, 3].publisher
@@ -296,6 +296,13 @@ anyPublisher1.sink {
 }
 
 /*
+ 결과:
+ value: 1
+ value: 3
+ AnyPublisher completion: finished
+ */
+
+/*
  ========= Subject =========
  */
 
@@ -327,6 +334,19 @@ currentValueSubject.send("2")
 currentValueSubject.send("3")
 currentValueSubject.send(completion: .finished)
 
+/*
+ 결과:
+ 1 번째 sink value: 1
+ 2 번째 sink value: 1
+ 3 번째 sink value: 1
+ 1 번째 sink value: 2
+ 3 번째 sink value: 2
+ 1 번째 sink value: 3
+ 3 번째 sink value: 3
+ 1 번째 sink completion: finished
+ 3 번째 sink completion: finished
+ */
+
 // 2. PassthroughSubject
 /*
  정의를 보니 "downstream의 subscriber들에게 값을 전파한다"라고 되어있네요.
@@ -356,6 +376,16 @@ passthroughSubject.send("ee")
 passthroughSubject.send("ff")
 passthroughSubject.send(completion: .finished)
 
+/*
+ 결과:
+ 1 번째 Passthrough sink value: ee
+ 2 번째 Passthrough sink value: ee
+ 1 번째 Passthrough sink value: ff
+ 2 번째 Passthrough sink value: ff
+ 1 번째 Passthrough sink completion: finished
+ 2 번째 Passthrough sink completion: finished
+ */
+
 // Assign
 class SampleObject {
     var intValue: Int {
@@ -378,6 +408,16 @@ let assign = Subscribers.Assign<SampleObject, Int>(object: sampleObject, keyPath
 let intArrayPublisher = [6, 19, 34, 55, 390].publisher
 intArrayPublisher.subscribe(assign)
 print("Final IntValue:", sampleObject.intValue)
+/*
+ 결과:
+ intValue Changed: 6
+ intValue Changed: 19
+ intValue Changed: 34
+ intValue Changed: 55
+ intValue Changed: 390
+ Final IntValue: 390
+ */
+
 /*
  intArrayPublisher
      .assign(to: \.intValue, on: myObject)
@@ -420,19 +460,7 @@ print("==================")
 
 /*
  결과
- (1) input값이 1일 때만 요청횟수를 1 증가
- ===== DEMAND =====
- receive subscription: ([2, 333, 4, 5])
- [DEMAND] subscribe 시작!
- request max: (1)
- receive value: (2)
- [DEMAND] receive input: 2
- request max: (1) (synchronous)
- receive value: (333)
- [DEMAND] receive input: 333
- ==================
- 
- (2)input값이 333일 때만 요청횟수를 1 증가
+ (1) input값이 333일 때만 요청횟수를 1 증가
  ===== DEMAND =====
  receive subscription: ([2, 333, 4, 5])
  [DEMAND] subscribe 시작!
@@ -467,6 +495,21 @@ print("===== DEMAND2 =====")
     .print()
     .subscribe(DemandTestSubscriber2())
 print("==================")
+
+/*
+ (2) unlimited
+ ===== DEMAND2 =====
+ receive subscription: ([2, 333, 4, 5])
+ [DEMAND] subscribe 시작!
+ request unlimited
+ receive value: (2)
+ receive value: (333)
+ receive value: (4)
+ receive value: (5)
+ receive finished
+ [DEMAND] receive completion: finished
+ ==================
+ */
 
 // Completion
 
@@ -513,6 +556,14 @@ let anySubject1 = PassthroughSubject<Int, PinguError>()
 anySubject1.subscribe(pinguAnySubscriber)
 anySubject1.send(130300)
 anySubject1.send(completion: .failure(.pinguIsBaboo))
+
+/*
+ 결과:
+ receive input: 100
+ Pingu는 바보입니다.
+ receive input: 130300
+ Pingu는 바보입니다.
+ */
 
 /*
  ===============================================
@@ -595,6 +646,18 @@ pandaSubscriptions.forEach {
 }
 print("=================================")
 
+/*
+ 결과:
+ ======= PandaSubscription =======
+ PandaSubscription 생성
+ 요청받은 demand : unlimited
+ PandaPublisher: name: FuBao, age: 3
+ PandaPublisher: name: AiBao, age: 10
+ PandaPublisher: name: LeBao, age: 11
+ PandaSubscription이 cancel됨!
+ =================================
+ */
+
 // Operators
 /*
  ===============================================
@@ -605,6 +668,7 @@ intPublisher
         return element * 2
     }
     .sink(receiveValue: { print($0, terminator: " ") })
+// 결과: 2 4 6 8 10 12 14
 print()
 
 struct Point {
@@ -624,6 +688,7 @@ pointPublisher
     }
 
 pointPublisher.send(Point(x: 344, y: 483, z: 932))
+// 결과: x: 344, y: 483, z: 932
 
 // TryMap
 func checkNil(_ element: Int?) throws -> Int {
@@ -639,19 +704,28 @@ let tryMapPublisher = [1, 2, nil, 4].publisher
 let tryMapSink: ((Subscribers.Completion<Error>) -> Void) = {
     switch $0 {
     case .failure(let error):
-        print("TryMapPublisher:", error)
+        print("TryMapPublisher sink:", error)
     case .finished:
-        print("TryMapPublisher: THE END")
+        print("TryMapPublisher sink: THE END")
     }
 }
+print("===========")
 
 tryMapPublisher
     .tryMap {
         try checkNil($0)
     }
     .sink(receiveCompletion: tryMapSink) {
-        print("TryMapPublisher:", $0)
+        print("TryMapPublisher receiveValue:", $0)
     }
+
+/*
+ 결과:
+ TryMapPublisher receiveValue: 1
+ TryMapPublisher receiveValue: 2
+ TryMapPublisher sink: elementIsNil
+ */
+
 /*
  1
  2
@@ -669,11 +743,20 @@ tryMapPublisher
         try checkNil($0)
     }
     .mapError {
-        $0 as? PandaError ?? .thisIsBlackBear
+      print("error detected:", $0)
+      return PandaError.thisIsBlackBear
     }
     .sink(receiveCompletion: tryMapSink) {
-        print("TryMapPublisher:", $0)
+        print("TryMapPublisher2 receiveValue:", $0)
     }
+
+/*
+ 결과:
+ TryMapPublisher2 receiveValue: 1
+ TryMapPublisher2 receiveValue: 2
+ error detected: elementIsNil
+ TryMapPublisher sink: thisIsBlackBear
+ */
 
 // Scan: 배열의 Reduce와 비슷한(???)
 pandaPublisher
@@ -682,13 +765,33 @@ pandaPublisher
         return accumulatedResult + currentSubscriber.age
     }
     .sink(receiveValue: { print("AgeSum:", $0) })
+/*
+ 결과:
+ accumulatedResult: 0, currentSubscriber: YoutubeSubscriber(name: "FuBao", age: 3)
+ AgeSum: 3
+ accumulatedResult: 3, currentSubscriber: YoutubeSubscriber(name: "AiBao", age: 10)
+ AgeSum: 13
+ accumulatedResult: 13, currentSubscriber: YoutubeSubscriber(name: "LeBao", age: 11)
+ AgeSum: 24
+ */
 
 // TryScan
 tryMapPublisher
     .tryScan(0) { accResult, currValue in
         try accResult + checkNil(currValue)
     }
-    .sink(receiveCompletion: { print("[TryScan]", $0) }, receiveValue: { print("[TryScan]", $0) })
+    .sink(receiveCompletion: {
+      print("[TryScan]", $0)
+    }, receiveValue: {
+      print("[TryScan]", $0)
+    })
+
+/*
+ 결과:
+ [TryScan] 1
+ [TryScan] 3
+ [TryScan] failure(__lldb_expr_61.PinguError.elementIsNil)
+ */
 
 // SetFailureType
 let stfPublisher = [1, 2, 3, 4].publisher
@@ -697,11 +800,20 @@ let pinguErrorPublisher = PassthroughSubject<Int, PinguError>()
 stfPublisher
     .setFailureType(to: PinguError.self)
     .combineLatest(pinguErrorPublisher)
-    .sink(receiveCompletion: { print("[SetFailureType]", $0) }, receiveValue: { print("[SetFailureType]", $0) })
+    .sink(receiveCompletion: {
+      print("[SetFailureType]", $0)
+    }, receiveValue: {
+      print("[SetFailureType]", $0)
+    })
 
 pinguErrorPublisher.send(0)
 /*
  위 코드와 같이 combineLatest와 같이 여러 개의 publisher들을 함께 사용해야 하는 경우가 있습니다. 이런 경우에는 Publisher의 Output, Failure 타입이 같아야 사용이 가능한데요, 이럴 때 Failure 타입을 맞춰주기 위해 setFailureType을 사용하게 됩니다.
+ */
+
+/*
+ 결과:
+ [SetFailureType] (4, 0)
  */
 
 // Filter, TryFilter
@@ -712,7 +824,7 @@ pinguErrorPublisher.send(0)
     } receiveValue: {
         print($0, terminator: " ")
     }
-
+// 결과: 2 4 6
 
 [2, 2, 4, 4, 5, 6].publisher
     .tryFilter { element in
@@ -725,18 +837,28 @@ pinguErrorPublisher.send(0)
     .sink { completion in
         switch completion {
         case .failure(let error):
-            print("TryFilter:", error)
+            print("TryFilter failure:", error)
         case .finished:
-            print("All is even")
+            print("ATryFilter completed: All is even")
         }
     } receiveValue: { value in
-        print("TryFilter:", value)
+        print("TryFilter receivedValue:", value)
     }
+
+/*
+ 결과:
+ TryFilter receivedValue: 2
+ TryFilter receivedValue: 2
+ TryFilter receivedValue: 4
+ TryFilter receivedValue: 4
+ TryFilter failure: elementIsNil
+ */
 
 // CompactMap, TryCompactMap
 ["100", "235456", "a.b", "4443", "eefef", "45678.5"].publisher
     .compactMap { Int($0) }
     .sink(receiveCompletion: { _ in print() }, receiveValue: { print($0, terminator: " ") })
+// 결과: 100 235456 4443
 
 ["100", "235456", "a.b", "4443", "babo", "45678.5"].publisher
     .tryCompactMap {
@@ -754,6 +876,7 @@ pinguErrorPublisher.send(0)
             print("TryCompactMap:", error)
         }
     }, receiveValue: { print($0, terminator: " ") })
+// 결과: 100 235456 4443 TryCompactMap: pinguIsBaboo
 
 // RemoveDuplicates, TryRemoveDuplicates
 struct Name {
@@ -805,7 +928,7 @@ struct Name {
     } receiveValue: { value in
         print(value, terminator: " ")
     }
-
+// 결과: 1 2 [TryReduceDuplicates] pinguIsBaboo
 
 // ReplaceEmpty
 Empty<[String], Never>()
@@ -815,6 +938,11 @@ Empty<[String], Never>()
 [Int]().publisher
     .replaceEmpty(with: 5)
     .sink { print("[ReplaceEmpty]", $0) }
+
+/*
+ [ReplaceEmpty] ["EE", "EE"]
+ [ReplaceEmpty] 5
+ */
 
 // ReplaceError
 ["1", "2", "a.b", "3"].publisher
@@ -838,12 +966,12 @@ Empty<[String], Never>()
     }
 
 /*
- [ReplaceEmpty] 5
  [ReplaceError] 1
  [ReplaceError] 2
  [ReplaceError] FuBao
  [ReplaceError] 로 인해 에러가 없어졌다.
  
+ 참고:
  replaceError는 하나의 Element를 보내고 스트림을 종료해서 에러를 처리하려는 경우에 유용하다고 하네요. catch라는 Operator를 사용해서 에러를 처리해주는 게 좋다고 합니다.
  */
 
@@ -869,7 +997,13 @@ Empty<[String], Never>()
     } receiveValue: { value in
         print("[Catch]", value)
     }
-
+/*
+ 결과:
+ [Catch] 1
+ [Catch] 2
+ [Catch] Monika
+ [Catch] 로 인해 에러가 없어졌다.
+ */
 
 // ==================== 1, 2일차 끝 =======================
 
@@ -927,7 +1061,7 @@ timerPublisher
     .sink { "CollectByTime".printWithResult($0) }
     .store(in: &cbtSubscription)
 /*
- 출판을 1초마다 하고 콜렉트를 4초로 설정하면 1초 단위로 4개씩 모이고 방출
+ 결과 출력: 출판을 1초마다 하고 콜렉트를 4초로 설정하면 1초 단위로 4개씩 모이고 방출
  [CollectByTime] [2023-08-18 05:58:05 +0000, 2023-08-18 05:58:06 +0000, 2023-08-18 05:58:07 +0000, 2023-08-18 05:58:08 +0000]
  [CollectByTime] [2023-08-18 05:58:09 +0000, 2023-08-18 05:58:10 +0000, 2023-08-18 05:58:11 +0000, 2023-08-18 05:58:12 +0000]
  [CollectByTime] [2023-08-18 05:58:13 +0000, 2023-08-18 05:58:14 +0000, 2023-08-18 05:58:15 +0000, 2023-08-18 05:58:16 +0000]
@@ -975,6 +1109,7 @@ timerPublisher
     }
     .sink(receiveCompletion: { "TryReduce Comp".printWithResult($0) },
           receiveValue: { "TryReduce Val".printWithResult($0) })
+// 결과: [TryReduce Comp] failure(__lldb_expr_69.PinguError.pinguIsBaboo)
 
 /*
  =======================================
@@ -1198,6 +1333,7 @@ struct Panda: Ikimono {
  */
 
 // DropUntilOutput
+
 // Upstream
 let synthPublisher = PassthroughSubject<Int, Never>()
 // Downstream
@@ -1927,7 +2063,7 @@ fmPub2.send("ZZZZ")
  [FlatMap Val] ZZZZ
  */
 
-// 아스키코드 정수 배열을 받아서 문자열로 변환
+// flatMap 예제: 아스키코드 정수 배열을 받아서 문자열로 변환
 let decodeOnlyAlphabet: ([Int]) -> AnyPublisher<String, Never> = { codes in
     Just(
         codes
@@ -1988,7 +2124,7 @@ slPubs.send(completion: .finished)
  [SwitchToLatest Comp] finished
  */
 
-
+// switchToLatest 예제
 var utSubsc = Set<AnyCancellable>()
 func userTapMockUp() {
     let url = URL(string: "https://source.unsplash.com/random")!
@@ -2056,7 +2192,7 @@ intPub1.send(1)
 intPub1.send(2)
 // intPub1.send(completion: .failure(.pinguIsBaboo)) // FatalError 발생
 
-
+// catch
 [4, 6, 0, 1, 3, 7].publisher
     .tryMap {
         guard $0 != 0 else { throw PinguError.pinguIsBaboo }
@@ -2075,6 +2211,7 @@ intPub1.send(2)
 let intPub2 = [4, 6, 0, 1, 3, 7].publisher
 let anotherIntPub2 = [99, 999, 9999].publisher
 
+// tryCatch
 intPub2
     .tryMap {
         guard $0 != 0 else { throw PinguError.pinguIsBaboo }
@@ -2313,8 +2450,6 @@ for throttle in throttles {
         usleep(UInt32(throttle.1 * 1_000_000))
     }
 }
-
-
 
 /*
  Network Request를 2초마다 보냄

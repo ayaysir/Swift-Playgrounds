@@ -1,7 +1,5 @@
 import UIKit
 
-var greeting = "Hello, playground"
-
 func getPoint(somePoint: (Int, Int)) {
     switch somePoint {
     case (0, 0):
@@ -115,8 +113,13 @@ if case .success(let data) = result {
 }
 
 let scores = (1...10).map { _ in Int.random(in: 1...10) }
-for case let score in scores where score > 4 {
-    score
+for score in scores where score > 4 {
+    print(score)
+}
+
+let scoresIncludeNil = [1, 13, 6, 5, nil, 30, 4, nil]
+for case let score? in scoresIncludeNil where score >= 5 {
+    print("5점 초과 스코어", score)
 }
 
 func dateString(timestamp: Int) -> String {

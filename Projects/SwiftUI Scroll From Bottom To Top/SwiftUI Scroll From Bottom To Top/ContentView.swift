@@ -48,7 +48,7 @@ struct ScrollFromBottomToTop_iOS14_View: View {
                 }
               Text("Cell \(index)")
             }
-            // 개별 요소를 180도로 회전
+            // 개별 요소를 180도로 회전 후 좌우 플립
             .rotationEffect(.degrees(180))
             .rotation3DEffect(
               .degrees(180),
@@ -62,7 +62,7 @@ struct ScrollFromBottomToTop_iOS14_View: View {
         .frame(minHeight: proxy.size.height)
       }
       .padding()
-      // 스크롤 뷰를 180도로 회전
+      // 스크롤 뷰를 x축을 기준으로 180도로 회전
       .rotation3DEffect(
         .degrees(180),
         axis: (x: 1.0, y: 0.0, z: 0.0)
