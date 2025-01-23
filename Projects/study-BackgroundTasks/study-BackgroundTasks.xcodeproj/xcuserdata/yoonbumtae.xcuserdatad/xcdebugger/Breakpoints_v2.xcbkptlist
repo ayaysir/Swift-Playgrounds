@@ -18,36 +18,6 @@
             endingLineNumber = "47"
             landmarkName = "body"
             landmarkType = "24">
-            <Locations>
-               <Location
-                  uuid = "0A2D9F4B-1CAA-44C9-91DD-5A6E61FAD734 - e7926c94980d5e90"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in closure #3 () -&gt; SwiftUI.Button&lt;SwiftUI.Text&gt; in closure #2 () -&gt; &lt;&lt;opaque return type of static SwiftUI.ToolbarContentBuilder.buildBlock&lt;&#x3c4;_0_0, &#x3c4;_0_1, &#x3c4;_0_2 where &#x3c4;_0_0: SwiftUI.ToolbarContent, &#x3c4;_0_1: SwiftUI.ToolbarContent, &#x3c4;_0_2: SwiftUI.ToolbarContent&gt;(&#x3c4;_0_0, &#x3c4;_0_1, &#x3c4;_0_2) -&gt; some&gt;&gt;.0 in closure #1 () -&gt; &lt;&lt;opaque return type of SwiftUI.View.toolbar&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.ToolbarContent&gt;(content: () -&gt; &#x3c4;_1_0) -&gt; some&gt;&gt;.0 in study_BackgroundTasks.ContentView.body.getter : some"
-                  moduleName = "study-BackgroundTasks"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yoonbumtae/Desktop/Xcode%20Project/Xcode%20Practice/Playgrounds/Projects/study-BackgroundTasks/study-BackgroundTasks/ContentView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "47"
-                  endingLineNumber = "47">
-               </Location>
-               <Location
-                  uuid = "0A2D9F4B-1CAA-44C9-91DD-5A6E61FAD734 - e7926c94980d5e90"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in closure #3 () -&gt; SwiftUI.Button&lt;SwiftUI.Text&gt; in closure #2 () -&gt; &lt;&lt;opaque return type of static SwiftUI.ToolbarContentBuilder.buildBlock&lt;&#x3c4;_0_0, &#x3c4;_0_1, &#x3c4;_0_2 where &#x3c4;_0_0: SwiftUI.ToolbarContent, &#x3c4;_0_1: SwiftUI.ToolbarContent, &#x3c4;_0_2: SwiftUI.ToolbarContent&gt;(&#x3c4;_0_0, &#x3c4;_0_1, &#x3c4;_0_2) -&gt; some&gt;&gt;.0 in closure #1 () -&gt; &lt;&lt;opaque return type of SwiftUI.View.toolbar&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.ToolbarContent&gt;(content: () -&gt; &#x3c4;_1_0) -&gt; some&gt;&gt;.0 in study_BackgroundTasks.ContentView.body.getter : some"
-                  moduleName = "study-BackgroundTasks"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yoonbumtae/Desktop/Xcode%20Project/Xcode%20Practice/Playgrounds/Projects/study-BackgroundTasks/study-BackgroundTasks/ContentView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "47"
-                  endingLineNumber = "47">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
