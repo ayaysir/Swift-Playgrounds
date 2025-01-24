@@ -16,6 +16,11 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		4460FEC12D43667900108A3B /* Doc */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Doc;
+			sourceTree = "<group>";
+		};
 		44CFC6702D42040500DFA665 /* ConnectToNative */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = ConnectToNative;
@@ -37,6 +42,7 @@
 		44CFC6652D42040500DFA665 = {
 			isa = PBXGroup;
 			children = (
+				4460FEC12D43667900108A3B /* Doc */,
 				44CFC6832D4205A700DFA665 /* README.md */,
 				44CFC6702D42040500DFA665 /* ConnectToNative */,
 				44CFC66F2D42040500DFA665 /* Products */,
@@ -67,6 +73,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				4460FEC12D43667900108A3B /* Doc */,
 				44CFC6702D42040500DFA665 /* ConnectToNative */,
 			);
 			name = ConnectToNative;
@@ -277,7 +284,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bgsmm.study.ConnectToNative;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "ConnectToNative/Preview Content/ConnectToNative-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "ConnectToNative/NativeSource/ConnectToNative-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -309,7 +316,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bgsmm.study.ConnectToNative;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "ConnectToNative/Preview Content/ConnectToNative-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "ConnectToNative/NativeSource/ConnectToNative-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

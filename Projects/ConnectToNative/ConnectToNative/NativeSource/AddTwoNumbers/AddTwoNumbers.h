@@ -11,5 +11,6 @@
 #include <stdio.h>
 
 int addTwoNumbers(int a, int b);
+int multipleTwoNumbers(int a, int b);
 
 #endif /* AddTwoNumbers_h */

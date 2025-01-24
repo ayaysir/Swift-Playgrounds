@@ -10,3 +10,7 @@
 int addTwoNumbers(int a, int b) {
   return a + b;
 }
+
+int multipleTwoNumbers(int a, int b) {
+  return a * b;
+}
