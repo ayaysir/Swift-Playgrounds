@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView_1: View {
   @StateObject private var store = WebViewStore_1()
+  
   var body: some View {
     NavigationStack {
       VStack {
@@ -25,14 +26,15 @@ struct ContentView_1: View {
             .aspectRatio(contentMode: .fit)
             .frame(width: 32, height: 32)
         }
-        .disabled(false)
+        .disabled(!store.canGoBack)
+        
         Button(action: goForward) {
           Image(systemName: "chevron.right")
             .imageScale(.large)
             .aspectRatio(contentMode: .fit)
             .frame(width: 32, height: 32)
         }
-        .disabled(false)
+        .disabled(!store.canGoForward)
       })
     }
     .onAppear {
@@ -40,7 +42,10 @@ struct ContentView_1: View {
       store.webView.load(URLRequest(url: URL(string: "https://testpages.herokuapp.com/styled/alerts/alert-test.html")!))
     }
     .alert(store.alertMessage, isPresented: $store.showAlert) {
-      Button("확인", role: .none) { }
+      Button("확인", role: .none) {
+        // 확인 버튼을 누른 다음에 후속 작업이 실행되어야 하기 때문에 별다른 반환값이 없어도 눌렀다는 사실을 알려준다.
+        store.alertResult?()
+      }
     }
     .alert(store.confirmMessage, isPresented: $store.showConfirm) {
       Button("예", role: .none) {

@@ -15,6 +15,8 @@ final class WebViewStore_1: ObservableObject {
   // Combine으로 Publish 되는 변수들
   @Published var estimatedProgress: Double = 0.0
   @Published var title: String? = ""
+  @Published var canGoBack = false
+  @Published var canGoForward = false
   
   // private var cancellable: AnyCancellable?
   private var cancellables = Set<AnyCancellable>()
@@ -31,12 +33,23 @@ final class WebViewStore_1: ObservableObject {
       .receive(on: DispatchQueue.main)
       .assign(to: \.title, on: self)
       .store(in: &cancellables)
+    
+    webView.publisher(for: \.canGoBack)
+      .receive(on: DispatchQueue.main)
+      .assign(to: \.canGoBack, on: self)
+      .store(in: &cancellables)
+    
+    webView.publisher(for: \.canGoForward)
+      .receive(on: DispatchQueue.main)
+      .assign(to: \.canGoForward, on: self)
+      .store(in: &cancellables)
   }
   
   // MARK: - 여기에서 연결할 변수들을 @Published로 추가
   
   @Published var showAlert = false
   @Published var alertMessage = ""
+  var alertResult: (() -> Void)?
   
   @Published var showConfirm = false
   @Published var confirmMessage = ""

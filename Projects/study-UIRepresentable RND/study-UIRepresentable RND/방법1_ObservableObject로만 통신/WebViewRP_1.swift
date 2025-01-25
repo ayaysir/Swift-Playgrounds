@@ -40,10 +40,12 @@ struct WebViewRP_1: UIViewRepresentable {
     func webView(
       _ webView: WKWebView,
       runJavaScriptAlertPanelWithMessage message: String,
-      initiatedByFrame frame: WKFrameInfo
-    ) async {
+      initiatedByFrame frame: WKFrameInfo,
+      completionHandler: @escaping @MainActor () -> Void
+    ) {
       parent.store.showAlert = true
       parent.store.alertMessage = message
+      parent.store.alertResult = completionHandler
     }
     
     func webView(
