@@ -111,7 +111,12 @@ struct HD_WebViewRP: UIViewRepresentable {
     }
     
     // Confirm창: completionHandler 전송으로 구현 (간단)
-    func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping @MainActor (Bool) -> Void) {
+    func webView(
+      _ webView: WKWebView,
+      runJavaScriptConfirmPanelWithMessage message: String,
+      initiatedByFrame frame: WKFrameInfo,
+      completionHandler: @escaping @MainActor (Bool) -> Void
+    ) {
       DispatchQueue.main.async {
         self.parent.showConfirm = true
         self.parent.alertMessage = message

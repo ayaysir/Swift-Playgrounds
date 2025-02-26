@@ -11,7 +11,7 @@ import SwiftUI
 struct study_UIRepresentable_RNDApp: App {
   var body: some Scene {
     WindowGroup {
-      ContentView_1()
+      ColorizeView()
     }
   }
 }
