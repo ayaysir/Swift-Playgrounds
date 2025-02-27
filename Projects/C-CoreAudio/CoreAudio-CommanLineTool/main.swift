@@ -8,4 +8,5 @@
 import Foundation
 
 // CAMetadata()
-CAToneFileGenerator()
+// CAToneFileGenerator()
+CAStreamFormatTester()
