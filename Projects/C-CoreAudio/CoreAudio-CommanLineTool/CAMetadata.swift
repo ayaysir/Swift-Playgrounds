@@ -35,11 +35,12 @@ func CAMetadata() {
   }
   
   var dictionarySize: UInt32 = 0
+  // AudioFileGetPropertyInfo는 속성 정보만 확인합니다. 실제 속성의 값을 읽지는 않습니다. (값의 크기만 확인)
   theErr = AudioFileGetPropertyInfo(
     audioFile,
-    kAudioFilePropertyInfoDictionary,
-    &dictionarySize,
-    nil // isWritable
+    kAudioFilePropertyInfoDictionary, // propertyID: 확인하려는 속성의 식별자
+    &dictionarySize, // propertySize: 해당 속성의 크기를 반환할 변수.
+    nil // isWritable: 이 속성이 쓰기 가능한지 여부를 반환할 변수. 
   )
   
   guard theErr == noErr else {
@@ -52,11 +53,13 @@ func CAMetadata() {
   // Swift에서 Core Foundation 타입(CFDictionary)을 다룰 때는 UnsafeMutablePointer<CFDictionary?>을 명시적으로 사용해야 합니다.
   // withUnsafeMutablePointer(to:)를 사용하여 안전하게 포인터를 전달합니다.
   withUnsafeMutablePointer(to: &dictionary) { dictionaryPointer in
+    // AudioFileGetProperty 함수는 지정된 오디오 파일에서 특정 속성의 실제 값을 가져오는 데 사용됩니다.
+    // 실제 속성 값을 읽습니다. AudioFileGetPropertyInfo로 얻은 정보를 바탕으로 속성의 값을 읽을 수 있습니다.
     theErr = AudioFileGetProperty(
       audioFile,
       kAudioFilePropertyInfoDictionary,
       &dictionarySize,
-      dictionaryPointer
+      dictionaryPointer // 속성 값을 저장할 버퍼.
     )
   }
   
