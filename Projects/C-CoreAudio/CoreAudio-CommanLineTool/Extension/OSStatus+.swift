@@ -8,15 +8,22 @@
 import Foundation
 
 extension OSStatus {
+  var errorBytes: [CChar] {
+    // [
+    //   CChar((self >> 24) & 0xFF),
+    //   CChar((self >> 16) & 0xFF),
+    //   CChar((self >> 8) & 0xFF),
+    //   CChar(self & 0xFF),
+    // ]
+    (0...3).map { CChar((self >> (24 - ($0 * 8))) & 0xFF) }
+  }
+  
   var debugDescription: String {
-    let fourCC = String(format: "%c%c%c%c",
-                        (self >> 24) & 0xFF,
-                        (self >> 16) & 0xFF,
-                        (self >> 8) & 0xFF,
-                        self & 0xFF
-    )
-    
-    return "\(self) (\(fourCC))"
+    return if errorBytes.allSatisfy({ isprint(Int32($0)) != 0}) {
+      "\(self) (\(String(cString: errorBytes + [0])))"
+    } else {
+      "\(self)"
+    }
   }
 }
 

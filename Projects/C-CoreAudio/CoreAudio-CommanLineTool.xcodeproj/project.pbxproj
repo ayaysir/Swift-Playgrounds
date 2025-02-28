@@ -248,6 +248,7 @@
 		44F684532D6EF300004ECB7C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "CoreAudio-CommanLineTool/CoreAudio-CommanLineTool.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6S2SA26VAN;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -259,6 +260,7 @@
 		44F684542D6EF300004ECB7C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "CoreAudio-CommanLineTool/CoreAudio-CommanLineTool.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6S2SA26VAN;
 				ENABLE_HARDENED_RUNTIME = YES;
