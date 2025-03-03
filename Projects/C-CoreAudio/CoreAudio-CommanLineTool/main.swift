@@ -10,4 +10,5 @@ import Foundation
 // CAMetadata()
 // CAToneFileGenerator()
 // CAStreamFormatTester()
-AudioQueueRecorder_Main()
+// AudioQueueRecorder_main()
+AudioQueuePlayer_main()

@@ -16,13 +16,8 @@ fileprivate struct Recorder {
 }
 
 // MARK: - Utility Functions
-fileprivate func checkError(_ message: String, callback: () -> (OSStatus)) {
-  let status = callback()
-  guard status == noErr else {
-    print("Error: \(message), \(status.debugDescription)")
-    exit(1)
-  }
-}
+
+// CheckError(): 분리
 
 /// 현재 오디오 입력 장치의 outSampleRate 읽기
 fileprivate func getDefaultInputDeviceSampleRate(_ outSampleRate: inout Float64) -> OSStatus {
@@ -206,7 +201,7 @@ func customAudioQueueInputCallback(
         false, // inUseCache
         inBuffer.pointee.mAudioDataByteSize, // inNumBytes: 작성할 데이터 버퍼의 크기
         inPacketDesc, // inPacketDescriptions: 패킷 설명 구조체
-        recorderPointer.pointee.recordPacket, // inStartingPacket: Int64, 작성할 파일의 어떤 패킷의 인덱스
+        recorderPointer.pointee.recordPacket, // inStartingPacket: Iznt64, 작성할 파일의 어떤 패킷의 인덱스
         &outNumPackets, // ioNumPackets: 작성할 패킷의 수
         inBuffer.pointee.mAudioData // inBuffer
       )
@@ -234,7 +229,7 @@ func customAudioQueueInputCallback(
 
 fileprivate let kNumberRecordBuffers = 3
 
-func AudioQueueRecorder_Main() {
+func AudioQueueRecorder_main() {
   // 형식 설정
   var recorder = Recorder()
   var recordFormat = AudioStreamBasicDescription()

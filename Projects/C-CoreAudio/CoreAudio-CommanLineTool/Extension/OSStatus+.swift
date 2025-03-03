@@ -15,7 +15,10 @@ extension OSStatus {
     //   CChar((self >> 8) & 0xFF),
     //   CChar(self & 0xFF),
     // ]
-    (0...3).map { CChar((self >> (24 - ($0 * 8))) & 0xFF) }
+    // (0...3).map { CChar((self >> (24 - ($0 * 8))) & 0xFF) }
+    (0...3).map {
+      CChar(truncatingIfNeeded: (self >> (24 - ($0 * 8))) & 0xFF)
+    }
   }
   
   var debugDescription: String {
