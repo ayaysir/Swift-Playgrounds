@@ -11,4 +11,6 @@ import Foundation
 // CAToneFileGenerator()
 // CAStreamFormatTester()
 // AudioQueueRecorder_main()
-AudioQueuePlayer_main()
+// AudioQueuePlayer_main()
+AudioConverter_main()
+// AudioConverterExt_main()

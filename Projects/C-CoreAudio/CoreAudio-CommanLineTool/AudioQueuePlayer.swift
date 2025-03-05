@@ -179,11 +179,9 @@ fileprivate func CustomAQPOutputCallback(
 
 // MARK: - Main
 
-fileprivate let kNumberRecordBuffers = 3
-
 func AudioQueuePlayer_main() {
   var player = Player()
-  print("오디오 URL을 입력하세요:", terminator: " ")
+  print("재생할 오디오 URL을 입력하세요:", terminator: " ")
   let fileURLWithPath = readLine()!
   
   // 입력을 위한 오디오 파일 열기
@@ -270,11 +268,11 @@ func AudioQueuePlayer_main() {
   )
   
   // 재생 버퍼를 할당하고, 큐에 넣음
-  var buffers: [AudioQueueBufferRef?] = .init(repeating: nil, count: kNumberRecordBuffers)
+  var buffers: [AudioQueueBufferRef?] = .init(repeating: nil, count: kNumberPlaybackBuffers)
   player.isDone = false
   player.packetPosition = 0
   
-  for i in 0..<kNumberRecordBuffers {
+  for i in 0..<kNumberPlaybackBuffers {
     checkError("AudioQueueAllocateBuffer failed.") {
       AudioQueueAllocateBuffer(
         queue,
