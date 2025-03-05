@@ -5,10 +5,6 @@
 //  Created by 윤범태 on 3/4/25.
 //
 
-
-// TODO: - 변환된 음원의 속도가 빨라져서 원래 음원의 길이보다 짧은 현상, 계속 디버깅 시도해봤으나 아직 해결못함
-// 책 2회독에서 다시 시도
-
 import Foundation
 import AudioToolbox
 
@@ -66,6 +62,7 @@ fileprivate func convert(settings: inout AudioConverterSettings) {
   var packetsPerBuffer: UInt32 = 0
   var outputBufferSize: UInt32 = 32 * 1024 // 기본 버퍼 크기: 32KB
   var sizePerPacket: UInt32 = settings.inputFormat.mBytesPerPacket
+  let bytesPerFrame: UInt32 = settings.outputFormat.mBytesPerFrame // ✅
   
   if sizePerPacket == 0 {
     // 가변 비트율 데이터의 버퍼당 패킷 결정
@@ -86,13 +83,15 @@ fileprivate func convert(settings: inout AudioConverterSettings) {
     }
     
     // 🔈
-    packetsPerBuffer = outputBufferSize / sizePerPacket
+    // packetsPerBuffer = outputBufferSize / sizePerPacket
+    packetsPerBuffer = outputBufferSize / bytesPerFrame // ✅
     
     let capacity = packetsPerBuffer.toInt * MemoryLayout<AudioStreamPacketDescription>.size
     settings.inputFilePacketDescs = UnsafeMutablePointer<AudioStreamPacketDescription>.allocate(capacity: capacity)
   } else {
     // 고정 비트율 데이터의 버퍼당 패킷 결정
-    packetsPerBuffer = outputBufferSize / sizePerPacket
+    // packetsPerBuffer = outputBufferSize / sizePerPacket
+    packetsPerBuffer = outputBufferSize / bytesPerFrame // ✅
   }
   
   // 오디오 변환 버퍼를 위해 메모리 할당
@@ -129,21 +128,24 @@ fileprivate func convert(settings: inout AudioConverterSettings) {
       return
     }
     
+    let inStartingPacket = Int64(outputFilePacketPosition / bytesPerFrame)
     // 변환된 데이터를 오디오 파일에 작성 // 🔈
     checkError("Couldn't write packets to file") {
       AudioFileWritePackets(
         outputFileID,
         false,
-        ioOutputDataPackets,
+        ioOutputDataPackets * bytesPerFrame,
         nil, // PCM 출력 파일은 고정 비트율이므로 패킷 정보 사용 안함
-        Int64(outputFilePacketPosition / settings.outputFormat.mBytesPerPacket), // inStartingPacket: Int64,
+        // Int64(outputFilePacketPosition / settings.outputFormat.mBytesPerPacket), // inStartingPacket: Int64,
+        inStartingPacket, // ✅
         &ioOutputDataPackets,
         convertedData.mBuffers.mData!
       )
     }
     
     // 🔈
-    outputFilePacketPosition += (ioOutputDataPackets * settings.outputFormat.mBytesPerPacket)
+    // outputFilePacketPosition += (ioOutputDataPackets * settings.outputFormat.mBytesPerPacket)
+    outputFilePacketPosition += (ioOutputDataPackets * bytesPerFrame) // ✅
   }
   
   AudioConverterDispose(audioConverterRef)
@@ -246,7 +248,7 @@ fileprivate func CustomAudioConverterCallback(
 
 func AudioConverter_main() {
   var audioConvertSettings = AudioConverterSettings()
-  print("변환할 오디오 URL을 입력하세요:", terminator: " ")
+  print("[AudioConverter] 변환할 오디오 URL을 입력하세요:", terminator: " ")
   let fileURLWithPath = readLine()!
   
   // 변환을 위한 오디오 파일 열기

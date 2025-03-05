@@ -164,7 +164,7 @@ fileprivate func convertWithLogs(settings: inout AudioConverterSettings) {
 
 func AudioConverterExt_main() {
   var settings = AudioConverterSettings()
-  print("변환할 오디오 URL을 입력하세요:", terminator: " ")
+  print("[AudioConverterExt] 변환할 오디오 URL을 입력하세요:", terminator: " ")
   let fileURLWithPath = readLine()!
   
   // 변환을 위한 오디오 파일 열기
