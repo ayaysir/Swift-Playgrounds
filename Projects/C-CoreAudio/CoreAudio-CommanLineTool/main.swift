@@ -12,5 +12,6 @@ import Foundation
 // CAStreamFormatTester()
 // AudioQueueRecorder_main()
 // AudioQueuePlayer_main()
-AudioConverter_main()
+// AudioConverter_main()
 // AudioConverterExt_main()
+AudioUnitPlayer_main()

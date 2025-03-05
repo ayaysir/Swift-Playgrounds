@@ -29,19 +29,6 @@ fileprivate struct AudioConverterSettings {
 
 // CheckError(): 분리
 
-func printAudioDescription(_ format: AudioStreamBasicDescription, label: String) {
-    print("\n=== \(label) ===")
-    print("Sample Rate: \(format.mSampleRate)")
-    print("Channels: \(format.mChannelsPerFrame)")
-    print("Bits Per Channel: \(format.mBitsPerChannel)")
-    print("Bytes Per Packet: \(format.mBytesPerPacket)")
-    print("Frames Per Packet: \(format.mFramesPerPacket)")
-    print("Bytes Per Frame: \(format.mBytesPerFrame)")
-    print("Format ID: \(format.mFormatID)")
-    print("Format Flags: \(format.mFormatFlags)")
-    print("===============\n")
-}
-
 fileprivate func convert(settings: inout AudioConverterSettings) {
   var audioConverterRef: AudioConverterRef?
   
@@ -128,13 +115,13 @@ fileprivate func convert(settings: inout AudioConverterSettings) {
       return
     }
     
-    let inStartingPacket = Int64(outputFilePacketPosition / bytesPerFrame)
+    let inStartingPacket = Int64(outputFilePacketPosition / bytesPerFrame) // ✅
     // 변환된 데이터를 오디오 파일에 작성 // 🔈
     checkError("Couldn't write packets to file") {
       AudioFileWritePackets(
         outputFileID,
         false,
-        ioOutputDataPackets * bytesPerFrame,
+        ioOutputDataPackets * bytesPerFrame, // ✅
         nil, // PCM 출력 파일은 고정 비트율이므로 패킷 정보 사용 안함
         // Int64(outputFilePacketPosition / settings.outputFormat.mBytesPerPacket), // inStartingPacket: Int64,
         inStartingPacket, // ✅
