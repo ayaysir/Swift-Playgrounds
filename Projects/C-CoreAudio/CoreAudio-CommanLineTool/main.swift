@@ -14,4 +14,5 @@ import Foundation
 // AudioQueuePlayer_main()
 // AudioConverter_main()
 // AudioConverterExt_main()
-AudioUnitPlayer_main()
+// AudioUnitPlayer_main()
+AudioUnitSineWave_main()
