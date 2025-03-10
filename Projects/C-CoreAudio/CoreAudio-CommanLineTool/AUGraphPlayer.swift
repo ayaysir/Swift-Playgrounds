@@ -17,6 +17,9 @@ fileprivate struct AUGraphPlayer {
   var outputUnit: AudioUnit?
   
   // ifdef: Part 2
+  /*
+   AudioUnit speechUnit;
+   */
   
   var inputBufferList: UnsafeMutablePointer<AudioBufferList>?
   var ringBuffer: UnsafeMutablePointer<CARingBufferWrapper>?
@@ -322,6 +325,15 @@ fileprivate func createAUGraph(_ player: inout AUGraphPlayer) {
   }
   
   // ifdef: Part 2
+  /*
+   1. 그래프에 mixerCD(AudioComponentDescription) 추가
+   mixerCD = kAudioUnitType_StereoMixer
+   AUGraphNode(graph, &mixerCD, &mixerNode)
+   
+   2. 그래프에 음성 합성기 추가
+   speechCD = kAudioUnitType_SpeechSynthesis
+   AUGraphNode(graph, &speechCD, &speechNode)
+   */
   
   // AUGraph 열기
   // 그래프를 여는 것은 모든 포함된 오디오 유닛을 열지만, 아무런 자원을 할당하지 않는다
@@ -340,6 +352,12 @@ fileprivate func createAUGraph(_ player: inout AUGraphPlayer) {
     )
   }
   
+  /*
+   3. 음성 합성 및 믹서에 대한 오디오 유닛 획득
+   AUGraphNodeInfo(graph, speechNode, nil, &player.outputUnit);
+   AUGraphNodeInfo(graph, mixerNode, nil, &mixerUnit);
+   */
+  
   guard let outputUnitPtr = player.outputUnit else {
     fatalError("ERROR: outputUnit is nil.")
   }
@@ -356,6 +374,42 @@ fileprivate func createAUGraph(_ player: inout AUGraphPlayer) {
       propSize
     )
   }
+  
+  /*
+   4. 믹서 유닛의 streamFormat 설정
+   AudioUnitSetProperty(mixerUnit, kAudioUnitProperty_StreamFormat, 0, ...); // bus 0
+   AudioUnitSetProperty(mixerUnit, kAudioUnitProperty_StreamFormat, 1, ...); // bus 1
+   
+   원하는 입력의 수를 버스 0에서 n으로 제공하고, 결과는 믹서 출력 스코프의 버스 0에 하나의 혼합된 스트림을 갖는다.
+   
+   5. 음성 합성, 스테레오 믹서, 기본 출력 유닛을 연결
+   // Connections
+   
+   // Mixer output scope(bus 0) to outputUnit input scope(bus 0)
+   AUGraphConnectNodeInput(graph, mixerNode, 0, outputNode, 0);
+   
+   // Mixer input scope(bus 1) to speech unit output scope(bus 0)
+   AUGraphConnectNodeInput(graph, speechNode, 0, mixerNode, 1);
+   
+   // Mixer input scope(bus 0) to render callback
+   // (from rightBuffer, which in turn is from inputUnit)
+   AudioUnitSetProperty(mixerUnit, ...);
+   
+   
+              ┌─────────┐
+From Hardware │  AUHAL  │ [Input/Callback]
+              │         ┼─────┐
+              └─────────┘┌────▼───────┐  ▼[Render/Callback]
+                         │  Hardware  │     ┌────────────────┐  ┌────────────────┐
+                         └────────────◄─────┼                │  │                │
+                                            │ AU Stereo Mixer┼─►│Basic OutputUnit┼───► To Hardware...
+                                     ┌──────►                │  │                │
+                       ┌─────────────┼────┐ └────────────────┘  └────────────────┘
+                       │                  │
+                       │   AU SpeechSynth │
+                       │                  │
+                       └──────────────────┘
+   */
   
   var callbackStruct = AURenderCallbackStruct()
   callbackStruct.inputProc = GraphRenderProc
