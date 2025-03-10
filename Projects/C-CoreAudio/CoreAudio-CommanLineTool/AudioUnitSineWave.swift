@@ -70,6 +70,8 @@ fileprivate func createAndConnectOutput(_ player: inout SineWavePlayer) {
   }
 }
 
+// MARK: - Callback Function
+
 /**
  AURenderCallback을 따르고, Sine 파형을 만든다.
 
@@ -119,7 +121,7 @@ fileprivate func SineWaveRenderProc(
   
   // 파형이 어디에 위치하는지 컨텍스트 개게로 추적할 필요가 있고,
   // 따라서 렌더링한 마지막 샘플이 파장의 중간 지점에 있다면
-  // 다음 콜백에서 그 지점에서 다시 시작할 수 있다. (렌터 콜백 버퍼는 파장과 정렬되지 않음)
+  // 다음 콜백에서 그 지점에서 다시 시작할 수 있다. (렌더 콜백 버퍼는 파장과 정렬되지 않음)
   playerPointer.pointee.startingFrameCount = j
   
   return noErr

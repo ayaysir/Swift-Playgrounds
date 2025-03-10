@@ -15,4 +15,5 @@ import Foundation
 // AudioConverter_main()
 // AudioConverterExt_main()
 // AudioUnitPlayer_main()
-AudioUnitSineWave_main()
+// AudioUnitSineWave_main()
+AUGraphPlayer_main()

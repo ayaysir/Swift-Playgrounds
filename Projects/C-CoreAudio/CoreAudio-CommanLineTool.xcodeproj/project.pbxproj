@@ -22,9 +22,23 @@
 		44F6844B2D6EF300004ECB7C /* CoreAudio-CommanLineTool */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "CoreAudio-CommanLineTool"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		4426E6B52D7EC63500ACC157 /* Exceptions for "CoreAudio-CommanLineTool" folder in "Compile Sources" phase from "CoreAudio-CommanLineTool" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 44F684472D6EF300004ECB7C /* Sources */;
+			membershipExceptions = (
+				Util/CARingBuffer/CARingBuffer.h,
+				Util/CARingBuffer/CARingBufferWrapper.h,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		44F6844D2D6EF300004ECB7C /* CoreAudio-CommanLineTool */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				4426E6B52D7EC63500ACC157 /* Exceptions for "CoreAudio-CommanLineTool" folder in "Compile Sources" phase from "CoreAudio-CommanLineTool" target */,
+			);
 			path = "CoreAudio-CommanLineTool";
 			sourceTree = "<group>";
 		};
@@ -94,6 +108,7 @@
 				TargetAttributes = {
 					44F6844A2D6EF300004ECB7C = {
 						CreatedOnToolsVersion = 16.2;
+						LastSwiftMigration = 1620;
 					};
 				};
 			};
@@ -248,6 +263,7 @@
 		44F684532D6EF300004ECB7C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "CoreAudio-CommanLineTool/CoreAudio-CommanLineTool.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -255,6 +271,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "CoreAudio-CommanLineTool/Util/CARingBuffer/CoreAudio-CommanLineTool-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -262,6 +280,7 @@
 		44F684542D6EF300004ECB7C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "CoreAudio-CommanLineTool/CoreAudio-CommanLineTool.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -269,6 +288,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "CoreAudio-CommanLineTool/Util/CARingBuffer/CoreAudio-CommanLineTool-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
