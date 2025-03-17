@@ -11,6 +11,7 @@ import AVFAudio
 struct ContentView: View {
   @Environment(\.scenePhase) var phase
   @StateObject var manager: AudioManager = .init()
+  @State var passthruMananger: PassthroughManager = .init()
   @State private var isOn = false
   
   var body: some View {
@@ -23,10 +24,24 @@ struct ContentView: View {
           .foregroundStyle(.tint)
         Text("Generate Sine Wave")
       }
+      
+      Button {
+        AudioManager.audioSessionInitialize(category: .playAndRecord)
+        Task {
+          if await passthruMananger.checkAudioInputAvailable() {
+            passthruMananger.setupRemoteIOUnit()
+          }
+        }
+      } label: {
+        Image(systemName: "speaker.wave.3.fill")
+          .imageScale(.large)
+          .foregroundStyle(.tint)
+        Text("Passthrough")
+      }
     }
     .padding()
     .onAppear {
-      manager.audioSessionInitialize()
+      AudioManager.audioSessionInitialize(category: .playback)
     }
     .onChange(of: isOn) {
       if isOn {

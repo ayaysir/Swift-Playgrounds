@@ -14,25 +14,6 @@ let BACKGROUND_FREQ = 523.25
 let BUFFER_COUNT = 3
 let BUFFER_DURATION = 0.5
 
-struct AudioPlayer {
-  var streamFormat = AudioStreamBasicDescription(
-    mSampleRate: 44100.0,
-    mFormatID: kAudioFormatLinearPCM,
-    mFormatFlags: kAudioFormatFlagIsFloat,
-    mBytesPerPacket: 4,
-    mFramesPerPacket: 1,
-    mBytesPerFrame: 4,
-    mChannelsPerFrame: 1,
-    mBitsPerChannel: 32,
-    mReserved: 0
-  )
-  
-  var audioQueue: AudioQueueRef?
-  var bufferSize: UInt32 = 0
-  var startingFrameCount: Double = 0.0
-  var currentFrequency: Double = 0.0
-}
-
 final class AudioManager: ObservableObject {
   var player = AudioPlayer()
   
@@ -89,18 +70,13 @@ final class AudioManager: ObservableObject {
     return noErr
   }
   
-  func audioSessionInitialize() {
+  static func audioSessionInitialize(category: AVAudioSession.Category) {
     let audioSession = AVAudioSession.sharedInstance()
     
     do {
-      try audioSession.setCategory(
-        .playback,
-        mode: .default,
-        policy: .default,
-        options: .mixWithOthers
-      )
+      try audioSession.setCategory(category)
       try audioSession.setActive(true)
-      print("\(#function) is activated.")
+      print("\(#function) is activated: \(category.rawValue)")
     } catch {
       print("ERROR: \(#function) is failed.")
     }
