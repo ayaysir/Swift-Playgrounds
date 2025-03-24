@@ -1,0 +1,15 @@
+{
+  "originHash" : "5ca0939c58953a4dcf16c98e77cbce8f6bb42acb77f1b98a733ec6e05ad02257",
+  "pins" : [
+    {
+      "identity" : "alertkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/sparrowcode/AlertKit",
+      "state" : {
+        "revision" : "3b73be8db5a7e7efaf474c6ed919f5a437d843c9",
+        "version" : "5.1.9"
+      }
+    }
+  ],
+  "version" : 3
+}
