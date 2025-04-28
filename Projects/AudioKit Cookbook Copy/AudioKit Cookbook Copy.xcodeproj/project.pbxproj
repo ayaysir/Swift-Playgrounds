@@ -1,0 +1,532 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		44E6A3D82DBEA8FA0009500A /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 44E6A3D72DBEA8FA0009500A /* AudioKit */; };
+		44E6A3DB2DBF48150009500A /* AudioKitEX in Frameworks */ = {isa = PBXBuildFile; productRef = 44E6A3DA2DBF48150009500A /* AudioKitEX */; };
+		44E6A3DE2DBF48570009500A /* AudioKitUI in Frameworks */ = {isa = PBXBuildFile; productRef = 44E6A3DD2DBF48570009500A /* AudioKitUI */; };
+		44E6A3E12DBF49280009500A /* Controls in Frameworks */ = {isa = PBXBuildFile; productRef = 44E6A3E02DBF49280009500A /* Controls */; };
+		44E6A3E42DBF496C0009500A /* DunneAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 44E6A3E32DBF496C0009500A /* DunneAudioKit */; };
+		44E6A3E72DBF49900009500A /* Flow in Frameworks */ = {isa = PBXBuildFile; productRef = 44E6A3E62DBF49900009500A /* Flow */; };
+		44E6A3EA2DBF49A80009500A /* Keyboard in Frameworks */ = {isa = PBXBuildFile; productRef = 44E6A3E92DBF49A80009500A /* Keyboard */; };
+		44E6A3ED2DBF49D10009500A /* SoundpipeAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 44E6A3EC2DBF49D10009500A /* SoundpipeAudioKit */; };
+		44E6A3F02DBF4A5D0009500A /* Waveform in Frameworks */ = {isa = PBXBuildFile; productRef = 44E6A3EF2DBF4A5D0009500A /* Waveform */; };
+		44E6A3F32DBF4B090009500A /* Tonic in Frameworks */ = {isa = PBXBuildFile; productRef = 44E6A3F22DBF4B090009500A /* Tonic */; };
+		44E6A42C2DBF6EC70009500A /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 44E6A42B2DBF6EC20009500A /* README.md */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		44E6A3A92DBE87030009500A /* AudioKit Cookbook Copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AudioKit Cookbook Copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		44E6A42B2DBF6EC20009500A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		44E6A3AB2DBE87030009500A /* AudioKit Cookbook Copy */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			explicitFolders = (
+				Resource/Sounds,
+			);
+			path = "AudioKit Cookbook Copy";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		44E6A3A62DBE87030009500A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				44E6A3E12DBF49280009500A /* Controls in Frameworks */,
+				44E6A3E42DBF496C0009500A /* DunneAudioKit in Frameworks */,
+				44E6A3ED2DBF49D10009500A /* SoundpipeAudioKit in Frameworks */,
+				44E6A3E72DBF49900009500A /* Flow in Frameworks */,
+				44E6A3F02DBF4A5D0009500A /* Waveform in Frameworks */,
+				44E6A3D82DBEA8FA0009500A /* AudioKit in Frameworks */,
+				44E6A3DE2DBF48570009500A /* AudioKitUI in Frameworks */,
+				44E6A3EA2DBF49A80009500A /* Keyboard in Frameworks */,
+				44E6A3F32DBF4B090009500A /* Tonic in Frameworks */,
+				44E6A3DB2DBF48150009500A /* AudioKitEX in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		44E6A3A02DBE87030009500A = {
+			isa = PBXGroup;
+			children = (
+				44E6A42B2DBF6EC20009500A /* README.md */,
+				44E6A3AB2DBE87030009500A /* AudioKit Cookbook Copy */,
+				44E6A3AA2DBE87030009500A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		44E6A3AA2DBE87030009500A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				44E6A3A92DBE87030009500A /* AudioKit Cookbook Copy.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		44E6A3A82DBE87030009500A /* AudioKit Cookbook Copy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 44E6A3B82DBE87050009500A /* Build configuration list for PBXNativeTarget "AudioKit Cookbook Copy" */;
+			buildPhases = (
+				44E6A3A52DBE87030009500A /* Sources */,
+				44E6A3A62DBE87030009500A /* Frameworks */,
+				44E6A3A72DBE87030009500A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				44E6A3AB2DBE87030009500A /* AudioKit Cookbook Copy */,
+			);
+			name = "AudioKit Cookbook Copy";
+			packageProductDependencies = (
+				44E6A3D72DBEA8FA0009500A /* AudioKit */,
+				44E6A3DA2DBF48150009500A /* AudioKitEX */,
+				44E6A3DD2DBF48570009500A /* AudioKitUI */,
+				44E6A3E02DBF49280009500A /* Controls */,
+				44E6A3E32DBF496C0009500A /* DunneAudioKit */,
+				44E6A3E62DBF49900009500A /* Flow */,
+				44E6A3E92DBF49A80009500A /* Keyboard */,
+				44E6A3EC2DBF49D10009500A /* SoundpipeAudioKit */,
+				44E6A3EF2DBF4A5D0009500A /* Waveform */,
+				44E6A3F22DBF4B090009500A /* Tonic */,
+			);
+			productName = "AudioKit Cookbook Copy";
+			productReference = 44E6A3A92DBE87030009500A /* AudioKit Cookbook Copy.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		44E6A3A12DBE87030009500A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					44E6A3A82DBE87030009500A = {
+						CreatedOnToolsVersion = 16.2;
+					};
+				};
+			};
+			buildConfigurationList = 44E6A3A42DBE87030009500A /* Build configuration list for PBXProject "AudioKit Cookbook Copy" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 44E6A3A02DBE87030009500A;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				44E6A3D62DBEA8FA0009500A /* XCRemoteSwiftPackageReference "AudioKit" */,
+				44E6A3D92DBF48140009500A /* XCRemoteSwiftPackageReference "AudioKitEX" */,
+				44E6A3DC2DBF48570009500A /* XCRemoteSwiftPackageReference "AudioKitUI" */,
+				44E6A3DF2DBF49280009500A /* XCRemoteSwiftPackageReference "Controls" */,
+				44E6A3E22DBF496C0009500A /* XCRemoteSwiftPackageReference "DunneAudioKit" */,
+				44E6A3E52DBF49900009500A /* XCRemoteSwiftPackageReference "Flow" */,
+				44E6A3E82DBF49A80009500A /* XCRemoteSwiftPackageReference "Keyboard" */,
+				44E6A3EB2DBF49D10009500A /* XCRemoteSwiftPackageReference "SoundpipeAudioKit" */,
+				44E6A3EE2DBF4A5D0009500A /* XCRemoteSwiftPackageReference "Waveform" */,
+				44E6A3F12DBF4B090009500A /* XCRemoteSwiftPackageReference "Tonic" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 44E6A3AA2DBE87030009500A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				44E6A3A82DBE87030009500A /* AudioKit Cookbook Copy */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		44E6A3A72DBE87030009500A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				44E6A42C2DBF6EC70009500A /* README.md in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		44E6A3A52DBE87030009500A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		44E6A3B62DBE87050009500A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		44E6A3B72DBE87050009500A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		44E6A3B92DBE87050009500A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "AudioKit Cookbook Copy/AudioKit_Cookbook_Copy.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"AudioKit Cookbook Copy/Preview Content\"";
+				DEVELOPMENT_TEAM = 6S2SA26VAN;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.bgsmm.AudioKit-Cookbook-Copy";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Debug;
+		};
+		44E6A3BA2DBE87050009500A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "AudioKit Cookbook Copy/AudioKit_Cookbook_Copy.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"AudioKit Cookbook Copy/Preview Content\"";
+				DEVELOPMENT_TEAM = 6S2SA26VAN;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.bgsmm.AudioKit-Cookbook-Copy";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		44E6A3A42DBE87030009500A /* Build configuration list for PBXProject "AudioKit Cookbook Copy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				44E6A3B62DBE87050009500A /* Debug */,
+				44E6A3B72DBE87050009500A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		44E6A3B82DBE87050009500A /* Build configuration list for PBXNativeTarget "AudioKit Cookbook Copy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				44E6A3B92DBE87050009500A /* Debug */,
+				44E6A3BA2DBE87050009500A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		44E6A3D62DBEA8FA0009500A /* XCRemoteSwiftPackageReference "AudioKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/AudioKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.6.5;
+			};
+		};
+		44E6A3D92DBF48140009500A /* XCRemoteSwiftPackageReference "AudioKitEX" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/AudioKitEX.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.6.2;
+			};
+		};
+		44E6A3DC2DBF48570009500A /* XCRemoteSwiftPackageReference "AudioKitUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/AudioKitUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.3.7;
+			};
+		};
+		44E6A3DF2DBF49280009500A /* XCRemoteSwiftPackageReference "Controls" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/Controls.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.4;
+			};
+		};
+		44E6A3E22DBF496C0009500A /* XCRemoteSwiftPackageReference "DunneAudioKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/DunneAudioKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.6.1;
+			};
+		};
+		44E6A3E52DBF49900009500A /* XCRemoteSwiftPackageReference "Flow" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/Flow.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.4;
+			};
+		};
+		44E6A3E82DBF49A80009500A /* XCRemoteSwiftPackageReference "Keyboard" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/Keyboard.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.1;
+			};
+		};
+		44E6A3EB2DBF49D10009500A /* XCRemoteSwiftPackageReference "SoundpipeAudioKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/SoundpipeAudioKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.6.1;
+			};
+		};
+		44E6A3EE2DBF4A5D0009500A /* XCRemoteSwiftPackageReference "Waveform" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/Waveform.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.2;
+			};
+		};
+		44E6A3F12DBF4B090009500A /* XCRemoteSwiftPackageReference "Tonic" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/Tonic.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		44E6A3D72DBEA8FA0009500A /* AudioKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 44E6A3D62DBEA8FA0009500A /* XCRemoteSwiftPackageReference "AudioKit" */;
+			productName = AudioKit;
+		};
+		44E6A3DA2DBF48150009500A /* AudioKitEX */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 44E6A3D92DBF48140009500A /* XCRemoteSwiftPackageReference "AudioKitEX" */;
+			productName = AudioKitEX;
+		};
+		44E6A3DD2DBF48570009500A /* AudioKitUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 44E6A3DC2DBF48570009500A /* XCRemoteSwiftPackageReference "AudioKitUI" */;
+			productName = AudioKitUI;
+		};
+		44E6A3E02DBF49280009500A /* Controls */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 44E6A3DF2DBF49280009500A /* XCRemoteSwiftPackageReference "Controls" */;
+			productName = Controls;
+		};
+		44E6A3E32DBF496C0009500A /* DunneAudioKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 44E6A3E22DBF496C0009500A /* XCRemoteSwiftPackageReference "DunneAudioKit" */;
+			productName = DunneAudioKit;
+		};
+		44E6A3E62DBF49900009500A /* Flow */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 44E6A3E52DBF49900009500A /* XCRemoteSwiftPackageReference "Flow" */;
+			productName = Flow;
+		};
+		44E6A3E92DBF49A80009500A /* Keyboard */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 44E6A3E82DBF49A80009500A /* XCRemoteSwiftPackageReference "Keyboard" */;
+			productName = Keyboard;
+		};
+		44E6A3EC2DBF49D10009500A /* SoundpipeAudioKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 44E6A3EB2DBF49D10009500A /* XCRemoteSwiftPackageReference "SoundpipeAudioKit" */;
+			productName = SoundpipeAudioKit;
+		};
+		44E6A3EF2DBF4A5D0009500A /* Waveform */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 44E6A3EE2DBF4A5D0009500A /* XCRemoteSwiftPackageReference "Waveform" */;
+			productName = Waveform;
+		};
+		44E6A3F22DBF4B090009500A /* Tonic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 44E6A3F12DBF4B090009500A /* XCRemoteSwiftPackageReference "Tonic" */;
+			productName = Tonic;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 44E6A3A12DBE87030009500A /* Project object */;
+}
