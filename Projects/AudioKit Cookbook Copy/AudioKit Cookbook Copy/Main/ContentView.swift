@@ -25,10 +25,11 @@ struct ListView: View {
         // 접었다 펼 수 있는 영역을 만듭니다.
         DisclosureGroup("Mini Apps") {
           NavigationLink("Arpeggiator", destination: ArpeggiatorView())
+          NavigationLink("Audio 3D", destination: AudioKit3DView())
         }
       }
     }
-    .navigationTitle("examples")
+    .navigationTitle("AudioKit Cookbook")
   }
 }
 

@@ -30,6 +30,7 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			explicitFolders = (
 				Resource/Sounds,
+				Samples,
 			);
 			path = "AudioKit Cookbook Copy";
 			sourceTree = "<group>";

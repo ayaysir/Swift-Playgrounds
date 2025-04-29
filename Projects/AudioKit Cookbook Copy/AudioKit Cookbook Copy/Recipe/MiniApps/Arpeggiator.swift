@@ -24,7 +24,28 @@ class ArpeggiatorConductor: HasAudioEngine {
   var midiCallback: CallbackInstrument!
   
   var heldNotes = [Int]()
-  var arpUp = false
+  
+  /*
+   arpUp이라는 변수명은 기능은 전달하지만, 직관성과 정확성 측면에서는 아쉬운 점이 있습니다.
+
+   ⸻
+
+   ✅ 의미 분석
+     •  arpUp == true: 현재 아르페지오가 하향 진행 중이며, 끝에 도달하면 방향을 상향으로 전환
+     •  arpUp == false: 현재 아르페지오가 상향 진행 중이며, 끝에 도달하면 방향을 하향으로 전환
+
+   즉, 이 변수는 현재 방향이 아니라 다음 진행 방향을 정하는 기준이 되고 있습니다.
+
+   ⸻
+
+   ❌ 문제점
+
+   arpUp이라는 이름은 일반적으로 **“현재 위로 진행 중인가?”**라는 의미로 해석되기 쉽습니다.
+   하지만 실제 로직에서는 위로 진행 중일 때는 false, 아래로 진행 중일 때는 true입니다. 이로 인해 코드의 의미와 이름이 충돌하며, 혼란을 초래할 수 있습니다.
+   */
+  // var arpUp = false
+  var isArpDescending = false
+  
   var currentNote = 0
   var sequencerNoteLength = 1.0
   
@@ -64,20 +85,26 @@ class ArpeggiatorConductor: HasAudioEngine {
       return
     }
     
-    if !arpUp {
-      // UP 시킴
+    /*
+     heldNotes는 읖높이별로 정렬이 되어있지 않음 (예: [4, 6, 3, 5]
+     각 음은 바로 다음의 음을 찾아야 함
+     6     6
+      5   5 5
+       4 4   4
+        3     ...
+     */
+    if !isArpDescending {
       if heldNotes.max() != currentNote {
         currentNote = heldNotes.filter { $0 > currentNote }.min() ?? heldNotes.min()!
       } else {
-        arpUp = true
+        isArpDescending = true
         currentNote = heldNotes.filter { $0 < currentNote }.max() ?? heldNotes.max()!
       }
     } else {
-      // DOWN 시킴
       if heldNotes.min() != currentNote {
         currentNote = heldNotes.filter { $0 < currentNote }.max() ?? heldNotes.max()!
       } else {
-        arpUp = false
+        isArpDescending = false
         currentNote = heldNotes.filter { $0 > currentNote }.min() ?? heldNotes.min()!
       }
     }
@@ -150,6 +177,7 @@ struct ArpeggiatorView: View {
         noteOff: conductor.noteOff
       )
     }
+    .navigationTitle("Arpeggiator")
     .onAppear {
       conductor.start()
     }
