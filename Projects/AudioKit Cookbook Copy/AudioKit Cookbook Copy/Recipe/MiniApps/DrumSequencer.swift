@@ -71,9 +71,16 @@ class DrumSequencerConductor: ObservableObject, HasAudioEngine {
         noteNumber: MIDINoteNumber( 30 + MIDINoteNumber(AUValue.random(in: 0...1.99)) ),
         velocity: MIDIVelocity(AUValue.random(in: 80...127)),
         position: Duration(beats: Double(i) / 4.0),
-        duration: Duration(beats: 0.5)
+        // ⚠️ 마지막 노트의 position: 3.75일때 duration 0.5를 연주하면 3.75 + 0.5 = 4.25로
+        // 비트가 4를 넘어 다음 루프의 첫 번째 하이햇이 연주되지 않음
+        // 마지막 노트인 경우 duration 0.25 로 조정해서 겹치지 않게
+        // (사실 처음부터 duration 0.1로 해도 알아서 잘 연주됨)
+        duration: Duration(beats: i == 15 ? 0.25 : 0.5)
       )
     }
+    
+    sequencer.tracks[2].debug()
+    print("===========================")
     
     updateHiHatsRoll()
   }
@@ -145,6 +152,7 @@ class DrumSequencerConductor: ObservableObject, HasAudioEngine {
       position: Duration(beats: 2),
       duration: Duration(beats: 1)
     )
+    
   }
   
   func updateHiHatsRoll() {

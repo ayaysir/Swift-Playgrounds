@@ -26,7 +26,7 @@ struct ListView: View {
     Form {
       Section(header: Text("Categories")) {
         // 접었다 펼 수 있는 영역을 만듭니다..
-        DisclosureGroup("Mini Apps") {
+        DisclosureGroup("Mini Apps", isExpanded: .constant(true)) {
           NavigationLink("Arpeggiator") { ArpeggiatorView() }
           NavigationLink("Audio 3D") { AudioKit3DView() }
           NavigationLink("Drums") { DrumsView() }
