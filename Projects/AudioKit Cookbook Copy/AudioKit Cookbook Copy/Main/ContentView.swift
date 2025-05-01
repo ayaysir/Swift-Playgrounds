@@ -7,6 +7,9 @@
 
 import SwiftUI
 
+fileprivate typealias Directory = Group
+fileprivate typealias ViewList = Group
+
 struct ContentView: View {
   var body: some View {
     NavigationSplitView {
@@ -22,10 +25,12 @@ struct ListView: View {
   var body: some View {
     Form {
       Section(header: Text("Categories")) {
-        // 접었다 펼 수 있는 영역을 만듭니다.
+        // 접었다 펼 수 있는 영역을 만듭니다..
         DisclosureGroup("Mini Apps") {
-          NavigationLink("Arpeggiator", destination: ArpeggiatorView())
-          NavigationLink("Audio 3D", destination: AudioKit3DView())
+          NavigationLink("Arpeggiator") { ArpeggiatorView() }
+          NavigationLink("Audio 3D") { AudioKit3DView() }
+          NavigationLink("Drums") { DrumsView() }
+          NavigationLink("Drum Sequencer") { DrumSequencerView() }
         }
       }
     }

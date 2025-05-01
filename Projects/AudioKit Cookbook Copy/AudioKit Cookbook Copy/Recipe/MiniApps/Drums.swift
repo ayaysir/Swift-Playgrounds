@@ -102,7 +102,7 @@ struct PadsView: View {
   var conductor: DrumsConductor
   
   var padsAction: (_ padNumber: Int) ->  Void
-  @State var downPads: [Int] = []
+  @State private var downPads: [Int] = []
   
   var body: some View {
     VStack(spacing: 10) {

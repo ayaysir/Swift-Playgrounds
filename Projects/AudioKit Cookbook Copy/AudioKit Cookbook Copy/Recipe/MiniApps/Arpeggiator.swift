@@ -154,7 +154,7 @@ class ArpeggiatorConductor: HasAudioEngine {
 }
 
 struct ArpeggiatorView: View {
-  @State private var conductor = ArpeggiatorConductor()
+  @Bindable private var conductor = ArpeggiatorConductor()
   @Environment(\.colorScheme) var colorScheme
   
   var body: some View {
