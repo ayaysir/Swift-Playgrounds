@@ -31,6 +31,7 @@ struct ListView: View {
           NavigationLink("Audio 3D") { AudioKit3DView() }
           NavigationLink("Drums") { DrumsView() }
           NavigationLink("Drum Sequencer") { DrumSequencerView() }
+          NavigationLink("Drum Synthesizers") { DrumSynthesizersView() }
         }
       }
     }
