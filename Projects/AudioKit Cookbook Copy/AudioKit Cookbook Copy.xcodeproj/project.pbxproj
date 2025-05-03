@@ -26,9 +26,33 @@
 		44E6A42B2DBF6EC20009500A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		442304B02DC624600035FF91 /* Exceptions for "AudioKit Cookbook Copy" folder in "AudioKit Cookbook Copy" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Recipe/MiniApps/EQ-중심주파수_대역폭.md",
+			);
+			target = 44E6A3A82DBE87030009500A /* AudioKit Cookbook Copy */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		442304B12DC624600035FF91 /* Exceptions for "AudioKit Cookbook Copy" folder in "Compile Sources" phase from "AudioKit Cookbook Copy" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 44E6A3A52DBE87030009500A /* Sources */;
+			membershipExceptions = (
+				"Recipe/MiniApps/EQ-중심주파수_대역폭.md",
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		44E6A3AB2DBE87030009500A /* AudioKit Cookbook Copy */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				442304B02DC624600035FF91 /* Exceptions for "AudioKit Cookbook Copy" folder in "AudioKit Cookbook Copy" target */,
+				442304B12DC624600035FF91 /* Exceptions for "AudioKit Cookbook Copy" folder in "Compile Sources" phase from "AudioKit Cookbook Copy" target */,
+			);
 			explicitFolders = (
 				"Resource/MIDI Files",
 				Resource/Samples,
