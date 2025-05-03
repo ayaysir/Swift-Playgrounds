@@ -16,7 +16,6 @@ import Tonic
 import SceneKit
 import AVFoundation
 
-@Observable
 final class AudioKit3DViewModel {
   var conductor = AudioEngine3DConductor()
   var coordinator = SceneCoordinator()
@@ -34,7 +33,7 @@ protocol UpdateAudioSourceNodeDelegate: AnyObject {
   func updateSoundSourcePosition(_ position3D: AVAudio3DPoint)
 }
 
-class AudioEngine3DConductor: ProcessesPlayerInput, UpdateAudioSourceNodeDelegate {
+class AudioEngine3DConductor: ObservableObject, ProcessesPlayerInput, UpdateAudioSourceNodeDelegate {
   let engine = AudioEngine()
   var player = AudioPlayer()
   let buffer: AVAudioPCMBuffer
@@ -154,7 +153,7 @@ class SceneCoordinator: NSObject, SCNSceneRendererDelegate {
 }
 
 struct AudioKit3DView: View {
-  private var viewModel = AudioKit3DViewModel()
+  @State private var viewModel = AudioKit3DViewModel()
   
   var body: some View {
     VStack {

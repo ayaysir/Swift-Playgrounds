@@ -40,8 +40,7 @@ struct DrumSample {
 
 // MARK: - Conductors
 
-@Observable
-class DrumsConductor: HasAudioEngine {
+class DrumsConductor: ObservableObject, HasAudioEngine {
   private(set) var lastPlayed: String = "None"
   let engine = AudioEngine()
   
@@ -78,7 +77,7 @@ class DrumsConductor: HasAudioEngine {
 // MARK: - DrumsView
 
 struct DrumsView: View {
-  private var conductor = DrumsConductor()
+  @State var conductor = DrumsConductor()
   
   var body: some View {
     VStack(spacing: 2) {
@@ -99,7 +98,7 @@ struct DrumsView: View {
 // MARK: - PadsView
 
 struct PadsView: View {
-  var conductor: DrumsConductor
+  @StateObject var conductor: DrumsConductor
   
   var padsAction: (_ padNumber: Int) ->  Void
   @State private var downPads: [Int] = []

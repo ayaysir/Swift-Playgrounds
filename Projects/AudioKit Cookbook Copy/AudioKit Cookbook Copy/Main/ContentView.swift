@@ -7,9 +7,6 @@
 
 import SwiftUI
 
-fileprivate typealias Directory = Group
-fileprivate typealias ViewList = Group
-
 struct ContentView: View {
   var body: some View {
     NavigationSplitView {
@@ -32,6 +29,7 @@ struct ListView: View {
           NavigationLink("Drums") { DrumsView() }
           NavigationLink("Drum Sequencer") { DrumSequencerView() }
           NavigationLink("Drum Synthesizers") { DrumSynthesizersView() }
+          NavigationLink("Graphic Equalizer") { GraphicEqualizerView() }
         }
       }
     }

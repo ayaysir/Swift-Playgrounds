@@ -13,7 +13,6 @@ import AVFoundation
 import Combine
 import SwiftUI
 
-@Observable
 class DrumSequencerConductor: ObservableObject, HasAudioEngine {
   let engine = AudioEngine()
   let drums = MIDISampler(name: "Drums")
@@ -23,19 +22,19 @@ class DrumSequencerConductor: ObservableObject, HasAudioEngine {
   )
   
   // published
-  var tempo: Float = 120 {
+  @Published var tempo: Float = 120 {
     didSet {
       sequencer.setTempo(BPM(tempo))
     }
   }
   
-  var isPlaying = false {
+  @Published var isPlaying = false {
     didSet {
       isPlaying ? sequencer.play() : sequencer.stop()
     }
   }
   
-  var hiHatsRoll: String = "⬜️⬜️⬜️⬜️ ⬜️⬜️⬜️⬜️ ⬜️⬜️⬜️⬜️ ⬜️⬜️⬜️⬜️"
+  @Published var hiHatsRoll: String = "⬜️⬜️⬜️⬜️ ⬜️⬜️⬜️⬜️ ⬜️⬜️⬜️⬜️ ⬜️⬜️⬜️⬜️"
   
   /// 랜덤 리듬 패턴을 생성하여 `sequencer.tracks[2]`에 할당합니다.
   ///

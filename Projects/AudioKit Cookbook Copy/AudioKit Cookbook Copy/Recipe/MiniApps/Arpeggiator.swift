@@ -14,8 +14,7 @@ import Keyboard
 import Controls
 import Tonic
 
-@Observable
-class ArpeggiatorConductor: HasAudioEngine {
+class ArpeggiatorConductor: ObservableObject, HasAudioEngine {
   let engine = AudioEngine()
   var instrument = AppleSampler()
   
@@ -50,13 +49,13 @@ class ArpeggiatorConductor: HasAudioEngine {
   var sequencerNoteLength = 1.0
   
   // 외부 퍼블리시
-  var tempo: Float = 120.0 {
+  @Published var tempo: Float = 120.0 {
     didSet {
       sequencer.tempo = BPM(tempo)
     }
   }
   
-  var noteLength: Float = 1.0 {
+  @Published var noteLength: Float = 1.0 {
     didSet {
       sequencerNoteLength = Double(noteLength)
       sequencer.clear()
@@ -154,7 +153,7 @@ class ArpeggiatorConductor: HasAudioEngine {
 }
 
 struct ArpeggiatorView: View {
-  @Bindable private var conductor = ArpeggiatorConductor()
+  @StateObject private var conductor = ArpeggiatorConductor()
   @Environment(\.colorScheme) var colorScheme
   
   var body: some View {
