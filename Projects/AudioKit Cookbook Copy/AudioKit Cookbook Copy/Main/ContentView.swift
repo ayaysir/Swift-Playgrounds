@@ -30,6 +30,7 @@ struct ListView: View {
           NavigationLink("Drum Sequencer") { DrumSequencerView() }
           NavigationLink("Drum Synthesizers") { DrumSynthesizersView() }
           NavigationLink("Graphic Equalizer") { GraphicEqualizerView() }
+          NavigationLink("Instrument EXS") { InstrumentEXSView() }
         }
       }
     }
