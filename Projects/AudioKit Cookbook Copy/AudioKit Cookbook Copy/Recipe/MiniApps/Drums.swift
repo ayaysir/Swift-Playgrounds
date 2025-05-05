@@ -19,7 +19,12 @@ struct DrumSample {
   var fileName: String
   var midiNote: Int
   var audioFile: AVAudioFile?
+#if os(iOS)
   var color: UIColor = .red
+#else
+  var color: NSColor = .red
+#endif
+  
   
   init(_ prettyName: String, fileName: String, midiNote: Int) {
     self.name = prettyName
@@ -178,7 +183,7 @@ extension PadsView {
      */
     
     let colors = conductor.drumSamples.map { sample in
-      downPads.contains { $0 == padId } ? UIColor.gray : sample.color
+      downPads.contains { $0 == padId } ? .gray : sample.color
     }
 
     return .init(colors[padId])

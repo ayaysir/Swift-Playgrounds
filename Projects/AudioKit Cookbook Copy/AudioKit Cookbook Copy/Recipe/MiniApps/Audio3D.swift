@@ -115,9 +115,9 @@ class SceneCoordinator: NSObject, SCNSceneRendererDelegate {
       
       updateAudioSourceNodeDelegate?.updateSoundSourcePosition(
         AVAudio3DPoint(
-          x: soundSource.position.x,
-          y: soundSource.position.y,
-          z: soundSource.position.z
+          x: soundSource.position.x.osSafeVector,
+          y: soundSource.position.y.osSafeVector,
+          z: soundSource.position.z.osSafeVector
         )
       )
       
@@ -125,11 +125,12 @@ class SceneCoordinator: NSObject, SCNSceneRendererDelegate {
       // and Oriental (either by Vector of Angular) together
       updateAudioSourceNodeDelegate?.updateListenerPosition3D(
         AVAudio3DPoint(
-          x: pointOfView.position.x,
-          y: pointOfView.position.y,
-          z: pointOfView.position.z
+          x: pointOfView.position.x.osSafeVector,
+          y: pointOfView.position.y.osSafeVector,
+          z: pointOfView.position.z.osSafeVector
         )
       )
+      
       
       updateAudioSourceNodeDelegate?.updateListenerOrientationVector(
         AVAudio3DVectorOrientation(

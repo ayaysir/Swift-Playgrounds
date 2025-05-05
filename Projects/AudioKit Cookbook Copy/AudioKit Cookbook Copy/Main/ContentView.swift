@@ -31,20 +31,23 @@ struct ListView: View {
           Link("Drum Synthesizers")
           Link("Graphic Equalizer")
           Link("Instrument EXS")
+          Link("Instrument SFZ")
         }
       }
     }
     .navigationTitle("AudioKit Cookbook")
   }
   
-  let viewDict: [String: Lazy<AnyView>] = [
-    "Arpeggiator": Lazy(AnyView(ArpeggiatorView())),
-    "Audio 3D": Lazy(AnyView(AudioKit3DView())),
-    "Drums": Lazy(AnyView(DrumsView())),
-    "Drum Sequencer": Lazy(AnyView(DrumSequencerView())),
-    "Drum Synthesizers": Lazy(AnyView(DrumSynthesizersView())),
-    "Graphic Equalizer": Lazy(AnyView(GraphicEqualizerView())),
-    "Instrument EXS": Lazy(AnyView(InstrumentEXSView()))
+  typealias V = AnyView
+  let viewDict: [String: Lazy<V>] = [
+    "Arpeggiator": Lazy(V(ArpeggiatorView())),
+    "Audio 3D": Lazy(V(AudioKit3DView())),
+    "Drums": Lazy(V(DrumsView())),
+    "Drum Sequencer": Lazy(V(DrumSequencerView())),
+    "Drum Synthesizers": Lazy(V(DrumSynthesizersView())),
+    "Graphic Equalizer": Lazy(V(GraphicEqualizerView())),
+    "Instrument EXS": Lazy(V(InstrumentEXSView())),
+    "Instrument SFZ": Lazy(V(InstrumentSFZView())),
   ]
 }
 

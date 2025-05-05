@@ -1,5 +1,5 @@
 //
-//  InstruentEXS.swift
+//  InstrumentEXS.swift
 //  AudioKit Cookbook Copy
 //
 //  Created by 윤범태 on 5/4/25.
@@ -19,7 +19,7 @@ import Tonic
  2. 샘플러 loadInstrument: sawPiano1.exs 지정
  3. 그래프 뷰 표시할 노드로 샘플러 지정, 키보드 on, off 이벤트 지정
  */
-class InstruentEXSConductor: ObservableObject, HasAudioEngine {
+class InstrumentEXSConductor: ObservableObject, HasAudioEngine {
   let engine = AudioEngine()
   var instrument = AppleSampler()
   
@@ -58,7 +58,7 @@ class InstruentEXSConductor: ObservableObject, HasAudioEngine {
 }
 
 struct InstrumentEXSView: View {
-  @StateObject var conductor = InstruentEXSConductor()
+  @StateObject var conductor = InstrumentEXSConductor()
   @Environment(\.colorScheme) var colorScheme
   
   var body: some View {

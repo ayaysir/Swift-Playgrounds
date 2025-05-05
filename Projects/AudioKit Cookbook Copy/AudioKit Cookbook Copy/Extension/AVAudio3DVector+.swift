@@ -14,9 +14,11 @@ extension SCNNode {
    */
   var forwardVector: vector_float3 {
     {
-      return vector_float3(self.transform.m31,
-                           self.transform.m32,
-                           self.transform.m33)
+      return vector_float3(
+        self.transform.m31.osSafeVector,
+        self.transform.m32.osSafeVector,
+        self.transform.m33.osSafeVector
+      )
     }()
   }
   
@@ -25,9 +27,11 @@ extension SCNNode {
    */
   var upVector: vector_float3 {
     {
-      return vector_float3(self.transform.m21,
-                           self.transform.m22,
-                           self.transform.m23)
+      return vector_float3(
+        self.transform.m21.osSafeVector,
+        self.transform.m22.osSafeVector,
+        self.transform.m23.osSafeVector
+      )
     }()
   }
 }
