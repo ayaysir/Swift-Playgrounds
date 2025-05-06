@@ -1,5 +1,5 @@
 //
-//  Float+.swift
+//  CGFloat+OSSafeVector.swift
 //  AudioKit Cookbook Copy
 //
 //  Created by 윤범태 on 5/5/25.
@@ -12,9 +12,11 @@ extension CGFloat {
   var osSafeVector: Float {
     Float(self)
   }
-#else
-  var osSafeVector: CGFloat {
+#endif
+}
+
+extension Float {
+  var osSafeVector: Float {
     self
   }
-#endif
 }

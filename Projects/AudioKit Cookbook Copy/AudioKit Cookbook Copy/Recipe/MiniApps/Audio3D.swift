@@ -113,6 +113,8 @@ class SceneCoordinator: NSObject, SCNSceneRendererDelegate {
         recursively: true
        ) {
       
+      // AVAudio3DPoint: (Float * 3)
+      // position.x: iOS(Float), macOS(CGFloat)
       updateAudioSourceNodeDelegate?.updateSoundSourcePosition(
         AVAudio3DPoint(
           x: soundSource.position.x.osSafeVector,
@@ -123,6 +125,8 @@ class SceneCoordinator: NSObject, SCNSceneRendererDelegate {
       
       // Make sure you update the Listener Position
       // and Oriental (either by Vector of Angular) together
+      // AVAudio3DPoint: (Float * 3)
+      // position.x: iOS(Float), macOS(CGFloat)
       updateAudioSourceNodeDelegate?.updateListenerPosition3D(
         AVAudio3DPoint(
           x: pointOfView.position.x.osSafeVector,
@@ -130,7 +134,6 @@ class SceneCoordinator: NSObject, SCNSceneRendererDelegate {
           z: pointOfView.position.z.osSafeVector
         )
       )
-      
       
       updateAudioSourceNodeDelegate?.updateListenerOrientationVector(
         AVAudio3DVectorOrientation(

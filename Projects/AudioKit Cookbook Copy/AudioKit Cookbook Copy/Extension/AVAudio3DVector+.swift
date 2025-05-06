@@ -11,6 +11,7 @@ import SceneKit
 extension SCNNode {
   /**
    The Camera forward orientation vector as vector_float3.
+   - VectorFloat3은 Float을 받는데, m31 등은 macOS에서 CGFloat, iOS에서 Float임
    */
   var forwardVector: vector_float3 {
     {
