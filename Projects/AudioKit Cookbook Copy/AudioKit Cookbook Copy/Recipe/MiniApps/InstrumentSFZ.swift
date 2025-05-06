@@ -51,15 +51,63 @@ struct InstrumentSFZView: View {
   // 이 값은 해당 값을 읽는 뷰에서 사용할 수 있는 가로 공간의 크기(사이즈 클래스)를 알려줍니다.
   @Environment(\.horizontalSizeClass) var horizontalSizeClass
   
+  private let rowsInPage = 3
+  @State private var currentPage = 0
+  
+  /// 서랍 한 줄
+  @ViewBuilder func paramOneRow(params: [NodeParameter]) -> some View {
+    HStack {
+      ForEach(params, id: \.self) { param in
+        ParameterRow(param: param)
+      }
+    }
+    .padding(5)
+  }
+  
+  /// 서랍 전체 (단일 페이지)
   @ViewBuilder func paramRows(chunked: [[NodeParameter]]) -> some View {
     ForEach(0..<chunked.count, id: \.self) { chunkIndex in
-      HStack {
-        ForEach(chunked[chunkIndex], id: \.self) { param in
-          ParameterRow(param: param)
-            // .simultaneousGesture(DragGesture())
+      paramOneRow(params: chunked[chunkIndex])
+    }
+  }
+  
+  /// 서랍 (여러 페이지)
+  @ViewBuilder func paramRowsForPage(chunked: [[NodeParameter]], rowsInPage: Int = 3) -> some View {
+    let stridedIndice = Array(stride(from: 0, to: chunked.count, by: rowsInPage))
+    
+    ForEach(stridedIndice, id: \.self) { stridedIndex in
+      VStack {
+        ForEach(0..<rowsInPage, id: \.self) { innerIndex in
+          if let params = chunked[safe: stridedIndex + innerIndex] {
+            paramOneRow(params: params)
+          }
+        }
+        
+        Spacer()
+      }
+      .tag(stridedIndex / rowsInPage)
+    }
+  }
+  
+  /// 페이지 내비게이터
+  @ViewBuilder func pageNavigator(chunkedCount: Int) -> some View {
+    let totalPage = Int(ceil(Double(chunkedCount) / Double(rowsInPage)))
+    HStack {
+      Spacer()
+      Button("이전") {
+        if currentPage > 0 {
+          currentPage -= 1
         }
       }
-      .padding(5)
+      .disabled(currentPage == 0)
+      Text("\(currentPage + 1) /  \(totalPage)")
+      Button("다음") {
+        if currentPage < totalPage - 1 {
+          currentPage += 1
+        }
+      }
+      .disabled(currentPage == totalPage - 1)
+      Spacer()
     }
   }
   
@@ -72,10 +120,16 @@ struct InstrumentSFZView: View {
     GeometryReader { proxy in
       VStack {
         if horizontalSizeClass == .compact {
-          ScrollView {
-            paramRows(chunked: instrumentParamsChunked)
+          // ScrollView {
+          //   paramRows(chunked: instrumentParamsChunked)
+          // }
+          
+          TabView(selection: $currentPage) {
+            paramRowsForPage(chunked: instrumentParamsChunked, rowsInPage: rowsInPage)
           }
-          // .gesture(DragGesture(), including: .subviews)
+          .indexViewStyle(.page(backgroundDisplayMode: .interactive))
+          
+          pageNavigator(chunkedCount: instrumentParamsChunked.count)
         } else {
           paramRows(chunked: instrumentParamsChunked)
         }
