@@ -34,6 +34,7 @@ struct ListView: View {
           Link("Instrument SFZ")
           Link("MIDI Monitor")
           Link("MIDI Track Demo View")
+          Link("Music Toy")
         }
       }
     }
@@ -52,6 +53,7 @@ struct ListView: View {
     "Instrument SFZ": Lazy(V(InstrumentSFZView())),
     "MIDI Monitor": Lazy(V(MIDIMonitorView())),
     "MIDI Track Demo View": Lazy(V(MIDITrackDemoView())),
+    "Music Toy": Lazy(V(MusicToyView())),
   ]
 }
 
