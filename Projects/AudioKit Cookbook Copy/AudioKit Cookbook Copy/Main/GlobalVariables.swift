@@ -16,3 +16,7 @@ import SwiftUI
 extension NSNotification.Name {
     static let MIDIKey = Notification.Name("MIDIKey")
 }
+
+// MARK: - System variables
+
+let isPreview = ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
