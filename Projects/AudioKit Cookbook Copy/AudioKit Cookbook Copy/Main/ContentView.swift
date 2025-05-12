@@ -24,19 +24,9 @@ struct ListView: View {
       Section(header: Text("Categories")) {
         // 접었다 펼 수 있는 영역을 만듭니다..
         DisclosureGroup("Mini Apps", isExpanded: .constant(true)) {
-          Link("Arpeggiator")
-          Link("Audio 3D")
-          Link("Drums")
-          Link("Drum Sequencer")
-          Link("Drum Synthesizers")
-          Link("Graphic Equalizer")
-          Link("Instrument EXS")
-          Link("Instrument SFZ")
-          Link("MIDI Monitor")
-          Link("MIDI Track Demo View")
-          Link("Music Toy")
-          Link("Noise Generators")
-          Link("Recorder")
+          ForEach(viewDict.keys.sorted(), id: \.self) { title in
+            Link(title)
+          }
         }
       }
     }
@@ -58,6 +48,7 @@ struct ListView: View {
     "Music Toy": Lazy(V(MusicToyView())),
     "Noise Generators": Lazy(V(NoiseGeneratorsView())),
     "Recorder": Lazy(V(RecorderView())),
+    "Telephone": Lazy(V(TelephoneView())),
   ]
 }
 
