@@ -49,6 +49,7 @@ struct ListView: View {
     "Noise Generators": Lazy(V(NoiseGeneratorsView())),
     "Recorder": Lazy(V(RecorderView())),
     "Telephone": Lazy(V(TelephoneView())),
+    "Tuner": Lazy(V(TunerView())),
   ]
 }
 

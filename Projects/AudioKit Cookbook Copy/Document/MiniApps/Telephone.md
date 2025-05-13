@@ -123,5 +123,4 @@ let keypad = OperationGenerator {
 * `OperationGenerator`는 저수준 DSP 코드 없이 오디오 신호 처리를 구현할 수 있게 해줍니다.
 * `triggeredWithEnvelope`, `metronome`, `parameters`는 동적 오디오 제어를 위한 핵심 Sporth 연산자입니다.
 
-필요하다면 개별 Generator 예제를 따로 설명드릴 수 있습니다.
-
+---
