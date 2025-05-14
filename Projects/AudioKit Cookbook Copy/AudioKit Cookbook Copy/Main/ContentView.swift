@@ -19,13 +19,15 @@ struct ContentView: View {
 }
 
 struct ListView: View {
+  @State private var expandMiniApps = false
+  
   var body: some View {
     Form {
       Section(header: Text("Categories")) {
         // 접었다 펼 수 있는 영역을 만듭니다..
-        DisclosureGroup("Mini Apps", isExpanded: .constant(true)) {
-          ForEach(viewDict.keys.sorted(), id: \.self) { title in
-            Link(title)
+        DisclosureGroup("Mini Apps", isExpanded: $expandMiniApps) {
+          ForEach(miniAppsViewDict.keys.sorted(), id: \.self) { title in
+            Link(title, viewDict: miniAppsViewDict)
           }
         }
       }
@@ -34,7 +36,11 @@ struct ListView: View {
   }
   
   typealias V = AnyView
-  let viewDict: [String: Lazy<V>] = [
+  typealias ViewDict = [String: Lazy<V>]
+  
+  // MARK: - View Dictionaries
+  
+  let miniAppsViewDict: ViewDict = [
     "Arpeggiator": Lazy(V(ArpeggiatorView())),
     "Audio 3D": Lazy(V(AudioKit3DView())),
     "Drums": Lazy(V(DrumsView())),
@@ -50,11 +56,12 @@ struct ListView: View {
     "Recorder": Lazy(V(RecorderView())),
     "Telephone": Lazy(V(TelephoneView())),
     "Tuner": Lazy(V(TunerView())),
+    "VocalTract": Lazy(V(VocalTractView())),
   ]
 }
 
 extension ListView {
-  func Link(_ title: String) -> some View {
+  func Link(_ title: String, viewDict: ViewDict) -> some View {
     NavigationLink(title, destination: viewDict[title])
   }
 }
