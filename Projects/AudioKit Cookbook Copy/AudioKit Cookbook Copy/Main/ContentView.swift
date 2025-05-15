@@ -7,6 +7,9 @@
 
 import SwiftUI
 
+typealias V = AnyView
+typealias ViewDict = [String: Lazy<V>]
+
 struct ContentView: View {
   var body: some View {
     NavigationSplitView {
@@ -26,21 +29,34 @@ struct ListView: View {
       Section(header: Text("Categories")) {
         // 접었다 펼 수 있는 영역을 만듭니다..
         DisclosureGroup("Mini Apps", isExpanded: $expandMiniApps) {
-          ForEach(miniAppsViewDict.keys.sorted(), id: \.self) { title in
-            Link(title, viewDict: miniAppsViewDict)
+          ForEach(ViewDicts.miniApps.keys.sorted(), id: \.self) { title in
+            Link(title, viewDict: ViewDicts.miniApps)
+          }
+        }
+        
+        DisclosureGroup("Operations", isExpanded: .constant(true)) {
+          ForEach(ViewDicts.operations.keys.sorted(), id: \.self) { title in
+            Link(title, viewDict: ViewDicts.operations)
           }
         }
       }
     }
     .navigationTitle("AudioKit Cookbook")
   }
-  
-  typealias V = AnyView
-  typealias ViewDict = [String: Lazy<V>]
+}
+
+extension ListView {
+  func Link(_ title: String, viewDict: ViewDict) -> some View {
+    NavigationLink(title, destination: viewDict[title])
+  }
+}
+
+struct ViewDicts {
+  private init() {}
   
   // MARK: - View Dictionaries
   
-  let miniAppsViewDict: ViewDict = [
+  static let miniApps: ViewDict = [
     "Arpeggiator": Lazy(V(ArpeggiatorView())),
     "Audio 3D": Lazy(V(AudioKit3DView())),
     "Drums": Lazy(V(DrumsView())),
@@ -58,12 +74,10 @@ struct ListView: View {
     "Tuner": Lazy(V(TunerView())),
     "VocalTract": Lazy(V(VocalTractView())),
   ]
-}
-
-extension ListView {
-  func Link(_ title: String, viewDict: ViewDict) -> some View {
-    NavigationLink(title, destination: viewDict[title])
-  }
+  
+  static let operations: ViewDict = [
+    "Crossing Signal": Lazy(V(CrossingSignalView())),
+  ]
 }
 
 #Preview {
