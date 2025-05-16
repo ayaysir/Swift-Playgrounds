@@ -77,6 +77,7 @@ struct ViewDicts {
   
   static let operations: ViewDict = [
     "Crossing Signal": Lazy(V(CrossingSignalView())),
+    "Drone Operation": Lazy(V(DroneOperationView())),
   ]
 }
 
