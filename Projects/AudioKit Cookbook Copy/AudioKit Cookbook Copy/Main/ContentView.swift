@@ -79,6 +79,7 @@ struct ViewDicts {
     "Crossing Signal": Lazy(V(CrossingSignalView())),
     "Drone Operation": Lazy(V(DroneOperationView())),
     "Instrument Operation": Lazy(V(InstrumentOperationView())),
+    "Phasor Operation": Lazy(V(PhasorOperationView())),
   ]
 }
 
