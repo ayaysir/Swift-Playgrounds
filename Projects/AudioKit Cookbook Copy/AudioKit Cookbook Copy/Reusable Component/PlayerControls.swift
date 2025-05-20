@@ -16,16 +16,7 @@ struct PlayerControls: View {
   
   var conductor: ProcessesPlayerInput
   
-  let sources: [[String]] = [
-    ["Bass Synth", "Bass Synth.mp3"],
-    ["Drums", "beat.aiff"],
-    ["Female Voice", "alphabet.mp3"],
-    ["Guitar", "Guitar.mp3"],
-    ["Male Voice", "Counting.mp3"],
-    ["Piano", "Piano.mp3"],
-    ["Strings", "Strings.mp3"],
-    ["Synth", "Synth.mp3"],
-  ]
+  let sources: [[String]] = globalSourceArray
   
   @State var isPlaying = false
   @State var sourceName = "Drums"
@@ -76,8 +67,10 @@ struct PlayerControls: View {
     .frame(minWidth: 300, idealWidth: 350, maxWidth: 360, minHeight: 50, idealHeight: 50, maxHeight: 50, alignment: .center)
     .padding()
     .sheet(isPresented: $isShowingSources,
-           onDismiss: { print("finished!") },
-           content: { SourceAudioSheet(playerControls: self) })
+           onDismiss: {
+      // print("finished!")
+    },
+           content: { SourceAudioSheet(playerControls: self)})
   }
   
   func load(filename: String) {
