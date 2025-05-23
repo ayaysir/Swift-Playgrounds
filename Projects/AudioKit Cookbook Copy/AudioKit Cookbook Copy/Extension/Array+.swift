@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SporthAudioKit
 
 extension Array {
   subscript(safe index: Int) -> Element? {
@@ -26,3 +27,8 @@ extension Array {
   }
 }
 
+extension Array where Element == SporthAudioKit.Operation {
+  func n(_ oneBasedIndex: Int) -> Element {
+    self[oneBasedIndex - 1]
+  }
+}

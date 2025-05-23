@@ -83,6 +83,7 @@ struct ViewDicts {
     "Pitch Shift Operation": Lazy(V(PitchShiftOperationView())),
     "Segment Operation": Lazy(V(SegmentOperationView())),
     "Smooth Delay Operation": Lazy(V(SmoothDelayOperationView())),
+    "Stereo Delay Operation": Lazy(V(StereoDelayOperationView())),
   ]
 }
 
