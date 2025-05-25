@@ -85,6 +85,7 @@ struct ViewDicts {
     "Smooth Delay Operation": Lazy(V(SmoothDelayOperationView())),
     "Stereo Delay Operation": Lazy(V(StereoDelayOperationView())),
     "Stereo Operation": Lazy(V(StereoOperationView())),
+    "Variable Delay Operation": Lazy(V(VariableDelayOperationView())),
   ]
 }
 

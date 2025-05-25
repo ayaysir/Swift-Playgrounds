@@ -16,19 +16,6 @@ class StereoOperationConductor: ObservableObject, HasAudioEngine {
   let engine = AudioEngine()
   private let panner: Panner
   
-  @Published var isRunning = false {
-    didSet { isRunning ? generator.start() : generator.stop() }
-  }
-  @Published var pan: AUValue = 0.0 {
-    didSet { panner.pan = pan }
-  }
-  @Published var leftStartFreq: AUValue = 440.0 {
-    didSet { generator.parameter1 = leftStartFreq }
-  }
-  @Published var rightStartFreq: AUValue = 220.0 {
-    didSet { generator.parameter2 = rightStartFreq }
-  }
-  
   let generator = OperationGenerator(channelCount: 2) { params in
     let slowSine = round(Operation.sineWave(frequency: 1) * 12) / 12
     // 단위: cent -> 오퍼레이션 사인 웨이브에 frequency:vibrato로 사용
@@ -57,6 +44,19 @@ class StereoOperationConductor: ObservableObject, HasAudioEngine {
     
     generator.parameter1 = leftStartFreq
     generator.parameter2 = rightStartFreq
+  }
+  
+  @Published var isRunning = false {
+    didSet { isRunning ? generator.start() : generator.stop() }
+  }
+  @Published var pan: AUValue = 0.0 {
+    didSet { panner.pan = pan }
+  }
+  @Published var leftStartFreq: AUValue = 440.0 {
+    didSet { generator.parameter1 = leftStartFreq }
+  }
+  @Published var rightStartFreq: AUValue = 220.0 {
+    didSet { generator.parameter2 = rightStartFreq }
   }
 }
 
