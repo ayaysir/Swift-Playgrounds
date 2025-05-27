@@ -1,5 +1,7 @@
 # STK Ensemble
 
+https://github.com/user-attachments/assets/fcab9142-670f-4026-a257-19ec9dce263e
+
 이 코드는 **AudioKit**, **STKAudioKit**, 그리고 SwiftUI를 활용하여 세 개의 가상 악기(Flute, Clarinet, Tubular Bells)를 조합한 \*\*음악 합주 시스템(Ensemble Generator)\*\*입니다. 주기적으로 음을 무작위로 선택하여 세 악기가 연주되며, 각 악기의 볼륨을 조절하고, 스케일(Scale)과 전조(Transpose)를 실시간으로 반영할 수 있습니다.
 
 ---
