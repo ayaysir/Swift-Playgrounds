@@ -1,5 +1,5 @@
 {
-  "originHash" : "a6cb702d492df44d111022e21940e7a40a13049ae03f27b630f0b492517c9990",
+  "originHash" : "f9a20c72293f17c6d20fe0e157ea731ab77e005308b7b9fec309a58f66f010d4",
   "pins" : [
     {
       "identity" : "audiokit",
@@ -89,6 +89,15 @@
       "state" : {
         "revision" : "638c95036430ce23ba2810101de319ed31f481bb",
         "version" : "5.5.1"
+      }
+    },
+    {
+      "identity" : "stkaudiokit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/AudioKit/STKAudioKit.git",
+      "state" : {
+        "revision" : "e6af9e24eb599d4ff34d5776b0801cf0068142bc",
+        "version" : "5.5.4"
       }
     },
     {

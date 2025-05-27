@@ -47,7 +47,6 @@ class PluckedStringConductor: ObservableObject, HasAudioEngine {
     scale.map { $0 + Int(transpose) }
   }
 
-  
   init() {
     let mixer = DryWetMixer(pluckedString, pluckedString2)
     delay = Delay(mixer)
@@ -99,7 +98,7 @@ struct PluckedStringView: View {
       .buttonStyle(.borderedProminent)
       HStack {
         CookbookKnob(
-          text: "playRate (BPM \(String(format: "%.1f", conductor.playRate * 60)))",
+          text: "playRate\n(BPM \(String(format: "%.1f", conductor.playRate * 60)))",
           parameter: $conductor.playRate,
           range: 1.0...10.0,
           units: "Hz"
@@ -124,34 +123,13 @@ struct PluckedStringView: View {
         )
       }
       .padding()
-      HStack {
-        VStack {
-          Stepper(
-            "Transpose \(conductor.transpose > 0 ? "+" : "")\(conductor.transpose)",
-            value: $conductor.transpose,
-            in: -11...11,
-            step: 1
-          )
-          Picker("Scale", selection: $conductor.scale) {
-            Text("Lydian").tag([60, 62, 64, 66, 67, 69, 71])
-            Text("Double Harmonic Scale").tag([60, 61, 64, 65, 67, 68, 71])
-            Text("Blues Scale").tag([60, 63, 65, 66, 67, 70])
-            Text("Whole Tone Scale").tag([60, 62, 64, 66, 68, 70])
-            Text("Gypsy Scale").tag([60, 62, 63, 66, 67, 68, 70])
-            Text("Insen Scale").tag([60, 61, 65, 67, 70])
-            Text("Major Petantatonic").tag([60, 62, 64, 67, 69])
-            Text("Minor Petantatonic").tag([60, 63, 65, 67, 70])
-            Text("Major/Ionian").tag([60, 62, 64, 65, 67, 69, 71])
-            Text("Minor/Aeolian").tag([60, 62, 63, 65, 67, 68, 70])
-            Text("Harmonic Minor").tag([60, 62, 63, 65, 67, 68, 71])
-            Text("Melodic Minor").tag([60, 62, 63, 65, 67, 69, 71])
-            Text("Dorian").tag([60, 62, 63, 65, 67, 69, 70])
-            Text("Phrygian").tag([60, 61, 63, 65, 67, 68, 70])
-            Text("Mixolydian").tag([60, 62, 64, 65, 67, 69, 70])
-            Text("Locrian").tag([60, 61, 63, 65, 66, 68, 70])
-          }
-        }
-      }
+      Stepper(
+        "Transpose \(conductor.transpose > 0 ? "+" : "")\(conductor.transpose)",
+        value: $conductor.transpose,
+        in: -11...11,
+        step: 1
+      )
+      Self.ScalePicker(selection: $conductor.scale)
       NodeOutputView(conductor.reverb)
     }
     .padding()
@@ -163,7 +141,31 @@ struct PluckedStringView: View {
       conductor.stop()
     }
   }
+  
+  static func ScalePicker<SelectionValue: Hashable>(selection: Binding<SelectionValue>) -> some View {
+    Picker("Scale", selection: selection) {
+      Text("Lydian").tag([60, 62, 64, 66, 67, 69, 71])
+      Text("Double Harmonic Scale").tag([60, 61, 64, 65, 67, 68, 71])
+      Text("Blues Scale").tag([60, 63, 65, 66, 67, 70])
+      Text("Whole Tone Scale").tag([60, 62, 64, 66, 68, 70])
+      Text("Gypsy Scale").tag([60, 62, 63, 66, 67, 68, 70])
+      Text("Insen Scale").tag([60, 61, 65, 67, 70])
+      Text("Major Petantatonic").tag([60, 62, 64, 67, 69])
+      Text("Minor Petantatonic").tag([60, 63, 65, 67, 70])
+      Text("Major/Ionian").tag([60, 62, 64, 65, 67, 69, 71])
+      Text("Minor/Aeolian").tag([60, 62, 63, 65, 67, 68, 70])
+      Text("Harmonic Minor").tag([60, 62, 63, 65, 67, 68, 71])
+      Text("Melodic Minor").tag([60, 62, 63, 65, 67, 69, 71])
+      Text("Dorian").tag([60, 62, 63, 65, 67, 69, 70])
+      Text("Phrygian").tag([60, 61, 63, 65, 67, 68, 70])
+      Text("Mixolydian").tag([60, 62, 64, 65, 67, 69, 70])
+      Text("Locrian").tag([60, 61, 63, 65, 66, 68, 70])
+      Text("Chromatic Scale").tag(Array(60...71))
+    }
+  }
 }
+
+
 
 #Preview {
   PluckedStringView()

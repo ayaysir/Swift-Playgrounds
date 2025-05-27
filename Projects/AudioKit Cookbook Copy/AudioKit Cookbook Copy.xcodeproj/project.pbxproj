@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		440908552DE5C27F009D8AA3 /* STKAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 440908542DE5C27F009D8AA3 /* STKAudioKit */; };
 		4423049C2DC4D4690035FF91 /* SporthAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4423049B2DC4D4690035FF91 /* SporthAudioKit */; };
 		44E6A3D82DBEA8FA0009500A /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 44E6A3D72DBEA8FA0009500A /* AudioKit */; };
 		44E6A3DB2DBF48150009500A /* AudioKitEX in Frameworks */ = {isa = PBXBuildFile; productRef = 44E6A3DA2DBF48150009500A /* AudioKitEX */; };
@@ -52,6 +53,7 @@
 				44E6A3E12DBF49280009500A /* Controls in Frameworks */,
 				4423049C2DC4D4690035FF91 /* SporthAudioKit in Frameworks */,
 				44E6A3E42DBF496C0009500A /* DunneAudioKit in Frameworks */,
+				440908552DE5C27F009D8AA3 /* STKAudioKit in Frameworks */,
 				44E6A3ED2DBF49D10009500A /* SoundpipeAudioKit in Frameworks */,
 				44E6A3E72DBF49900009500A /* Flow in Frameworks */,
 				44E6A3F02DBF4A5D0009500A /* Waveform in Frameworks */,
@@ -115,6 +117,7 @@
 				44E6A3EF2DBF4A5D0009500A /* Waveform */,
 				44E6A3F22DBF4B090009500A /* Tonic */,
 				4423049B2DC4D4690035FF91 /* SporthAudioKit */,
+				440908542DE5C27F009D8AA3 /* STKAudioKit */,
 			);
 			productName = "AudioKit Cookbook Copy";
 			productReference = 44E6A3A92DBE87030009500A /* AudioKit Cookbook Copy.app */;
@@ -156,6 +159,7 @@
 				44E6A3EE2DBF4A5D0009500A /* XCRemoteSwiftPackageReference "Waveform" */,
 				44E6A3F12DBF4B090009500A /* XCRemoteSwiftPackageReference "Tonic" */,
 				4423049A2DC4D4690035FF91 /* XCRemoteSwiftPackageReference "SporthAudioKit" */,
+				440908532DE5C27F009D8AA3 /* XCRemoteSwiftPackageReference "STKAudioKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 44E6A3AA2DBE87030009500A /* Products */;
@@ -413,6 +417,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		440908532DE5C27F009D8AA3 /* XCRemoteSwiftPackageReference "STKAudioKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/STKAudioKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.5.4;
+			};
+		};
 		4423049A2DC4D4690035FF91 /* XCRemoteSwiftPackageReference "SporthAudioKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AudioKit/SporthAudioKit.git";
@@ -504,6 +516,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		440908542DE5C27F009D8AA3 /* STKAudioKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 440908532DE5C27F009D8AA3 /* XCRemoteSwiftPackageReference "STKAudioKit" */;
+			productName = STKAudioKit;
+		};
 		4423049B2DC4D4690035FF91 /* SporthAudioKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4423049A2DC4D4690035FF91 /* XCRemoteSwiftPackageReference "SporthAudioKit" */;

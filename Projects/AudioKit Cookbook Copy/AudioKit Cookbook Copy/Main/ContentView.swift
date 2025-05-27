@@ -46,6 +46,11 @@ struct ListView: View {
           ForEach(ViewDicts.physicalModels.keys.sorted(), id: \.self) { title in
             Link(title, viewDict: ViewDicts.physicalModels)
           }
+          // Text("More at STKAudioKit").onTapGesture {
+          //   if let url = URL(string: "https://www.audiokit.io/STKAudioKit/") {
+          //     UIApplication.shared.open(url)
+          //   }
+          // }
         }
       }
     }
@@ -98,7 +103,8 @@ struct ViewDicts {
   ]
   
   static let physicalModels: ViewDict = [
-    "PluckedString": Lazy(V(PluckedStringView())),
+    "Plucked String": Lazy(V(PluckedStringView())),
+    "STK Ensemble": Lazy(V(STKEnsembleView())),
   ]
 }
 
