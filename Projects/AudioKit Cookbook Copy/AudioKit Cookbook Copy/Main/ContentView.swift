@@ -23,6 +23,8 @@ struct ContentView: View {
 
 struct ListView: View {
   @State private var expandMiniApps = false
+  @State private var expandOperations = false
+  @State private var expandPhysicalModels = true
   
   var body: some View {
     Form {
@@ -34,9 +36,15 @@ struct ListView: View {
           }
         }
         
-        DisclosureGroup("Operations", isExpanded: .constant(true)) {
+        DisclosureGroup("Operations", isExpanded: $expandOperations) {
           ForEach(ViewDicts.operations.keys.sorted(), id: \.self) { title in
             Link(title, viewDict: ViewDicts.operations)
+          }
+        }
+        
+        DisclosureGroup("PhysicalModels", isExpanded: $expandPhysicalModels) {
+          ForEach(ViewDicts.physicalModels.keys.sorted(), id: \.self) { title in
+            Link(title, viewDict: ViewDicts.physicalModels)
           }
         }
       }
@@ -87,6 +95,10 @@ struct ViewDicts {
     "Stereo Operation": Lazy(V(StereoOperationView())),
     "Variable Delay Operation": Lazy(V(VariableDelayOperationView())),
     "Vocal Tract Operation": Lazy(V(VocalTractOperationView())),
+  ]
+  
+  static let physicalModels: ViewDict = [
+    "PluckedString": Lazy(V(PluckedStringView())),
   ]
 }
 
