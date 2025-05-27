@@ -1,8 +1,9 @@
-# Feedback  
+# Feedback 
 
- ![Feedback](https://liquipedia.net/commons/images/4/42/FeedbackIcon.gif)  
- 
-음향에서 \*\*피드백(feedback)\*\*은 **출력된 소리의 일부를 다시 입력으로 되돌려서 재사용하는 것**을 말합니다. 주로 **딜레이(Delay)**, **리버브(Reverb)** 등의 이펙트에서 사용되며, **반복되거나 잔향이 남는 소리**를 만드는 데 쓰입니다. 
+![Feedback](https://liquipedia.net/commons/images/4/42/FeedbackIcon.gif)
+
+음향에서 <strong>피드백(feedback)</strong>은 **출력된 소리의 일부를 다시 입력으로 되돌려서 재사용하는 것**을 말합니다. 주로 **딜레이(Delay)**, **리버브(Reverb)** 등의 이펙트에서 사용되며, **반복되거나 잔향이 남는 소리**를 만드는 데 쓰입니다. 
+
 ---
 
 ## 🎧 예시로 설명
