@@ -52,6 +52,12 @@ struct ListView: View {
           //   }
           // }
         }
+        
+        DisclosureGroup("Effects", isExpanded: .constant(true)) {
+          ForEach(ViewDicts.effects.keys.sorted(), id: \.self) { title in
+            Link(title, viewDict: ViewDicts.effects)
+          }
+        }
       }
     }
     .navigationTitle("AudioKit Cookbook")
@@ -105,6 +111,10 @@ struct ViewDicts {
   static let physicalModels: ViewDict = [
     "Plucked String": Lazy(V(PluckedStringView())),
     "STK Ensemble": Lazy(V(STKEnsembleView())),
+  ]
+  
+  static let effects: ViewDict = [
+    :
   ]
 }
 
