@@ -114,7 +114,9 @@ struct ViewDicts {
   ]
   
   static let effects: ViewDict = [
-    :
+    "Auto Panner": Lazy(V(AutoPannerView())),
+    "Auto Wah": Lazy(V(AutoWahView())),
+    "Balancer": Lazy(V(BalancerView())),
   ]
 }
 

@@ -23,16 +23,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		440909102DE81623009D8AA3 /* Document */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Document; sourceTree = "<group>"; };
 		44E6A3A92DBE87030009500A /* AudioKit Cookbook Copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AudioKit Cookbook Copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		44E6A42B2DBF6EC20009500A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		440D322A2DC8BA2000929967 /* Document */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Document;
-			sourceTree = "<group>";
-		};
 		44E6A3AB2DBE87030009500A /* AudioKit Cookbook Copy */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			explicitFolders = (
@@ -71,7 +67,7 @@
 		44E6A3A02DBE87030009500A = {
 			isa = PBXGroup;
 			children = (
-				440D322A2DC8BA2000929967 /* Document */,
+				440909102DE81623009D8AA3 /* Document */,
 				44E6A42B2DBF6EC20009500A /* README.md */,
 				44E6A3AB2DBE87030009500A /* AudioKit Cookbook Copy */,
 				44E6A3AA2DBE87030009500A /* Products */,
