@@ -22,7 +22,7 @@ class AutoPannerConductor: ObservableObject, ProcessesPlayerInput {
   var mixer: Mixer
   
   init() {
-    buffer = Cookbook.sourceBuffer(source: "Piano")
+    buffer = Cookbook.sourceBuffer(source: .piano)
     player.buffer = buffer
     player.isLooping = true
     

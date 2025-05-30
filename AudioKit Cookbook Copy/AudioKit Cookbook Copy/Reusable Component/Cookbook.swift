@@ -39,11 +39,11 @@ public let globalSourceArray: [[String]] = globalSourceKeys.map { key in
 
 class Cookbook {
   static var sourceBuffer: AVAudioPCMBuffer {
-    sourceBuffer(source: "Drums")
+    sourceBuffer(source: GlobalSource.drums)
   }
   
-  static func sourceBuffer(source: String) -> AVAudioPCMBuffer {
-    let url = Bundle.main.resourceURL?.appending(path: "Samples/\(globalSourceDict[source]!)")
+  static func sourceBuffer(source: GlobalSource) -> AVAudioPCMBuffer {
+    let url = Bundle.main.resourceURL?.appending(path: source.filePath)
     let file = try! AVAudioFile(forReading: url!)
     return try! AVAudioPCMBuffer(file: file)!
   }

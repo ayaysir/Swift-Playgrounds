@@ -38,7 +38,7 @@ class StereoDelayOperationConductor: ObservableObject, ProcessesPlayerInput {
   }
   
   init() {
-    buffer = Cookbook.sourceBuffer(source: "Female Voice")
+    buffer = Cookbook.sourceBuffer(source: .femaleVoice)
     player.buffer = buffer
     player.isLooping = true
     

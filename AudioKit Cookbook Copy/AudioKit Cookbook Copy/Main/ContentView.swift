@@ -24,7 +24,7 @@ struct ContentView: View {
 struct ListView: View {
   @State private var expandMiniApps = false
   @State private var expandOperations = false
-  @State private var expandPhysicalModels = true
+  @State private var expandPhysicalModels = false
   
   var body: some View {
     Form {
@@ -117,6 +117,7 @@ struct ViewDicts {
     "Auto Panner": Lazy(V(AutoPannerView())),
     "Auto Wah": Lazy(V(AutoWahView())),
     "Balancer": Lazy(V(BalancerView())),
+    "Chorus": Lazy(V(ChorusView())),
   ]
 }
 
