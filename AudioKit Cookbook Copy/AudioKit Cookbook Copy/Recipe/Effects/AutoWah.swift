@@ -17,11 +17,12 @@ class AutoWahConductor: ObservableObject, ProcessesPlayerInput {
   let player = AudioPlayer()
   let dryWetMixer: DryWetMixer
   let buffer: AVAudioPCMBuffer
+  let defaultSource: GlobalSource = .guitar
   
   let autoWah: AutoWah
   
   init() {
-    buffer = Cookbook.sourceBuffer(source: .guitar)
+    buffer = Cookbook.sourceBuffer(source: defaultSource)
     player.buffer = buffer
     player.isLooping = true
     
@@ -48,7 +49,7 @@ struct AutoWahView: View {
   
   var body: some View {
     VStack {
-      PlayerControls(conductor: conductor, sourceName: "Guitar")
+      PlayerControlsII(conductor: conductor, source: conductor.defaultSource)
       HStack {
         ForEach(conductor.autoWah.parameters) {
           ParameterRow(param: $0)

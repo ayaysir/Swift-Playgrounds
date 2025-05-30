@@ -51,7 +51,7 @@ struct BalancerView: View {
   
   var body: some View {
     VStack {
-      PlayerControls(conductor: conductor)
+      PlayerControlsII(conductor: conductor)
       HStack {
         CookbookKnob(
           text: "Rate",

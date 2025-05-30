@@ -17,12 +17,13 @@ class AutoPannerConductor: ObservableObject, ProcessesPlayerInput {
   let player = AudioPlayer()
   let dryWetMixer: DryWetMixer
   let buffer: AVAudioPCMBuffer
+  let defaultSource: GlobalSource = .piano
   
   let panner: AutoPanner
   var mixer: Mixer
   
   init() {
-    buffer = Cookbook.sourceBuffer(source: .piano)
+    buffer = Cookbook.sourceBuffer(source: defaultSource)
     player.buffer = buffer
     player.isLooping = true
     
@@ -53,7 +54,7 @@ struct AutoPannerView: View {
   
   var body: some View {
     VStack {
-      PlayerControls(conductor: conductor, sourceName: "Piano")
+      PlayerControlsII(conductor: conductor, source: conductor.defaultSource)
       HStack {
         ForEach(conductor.panner.parameters) {
           ParameterRow(param: $0)

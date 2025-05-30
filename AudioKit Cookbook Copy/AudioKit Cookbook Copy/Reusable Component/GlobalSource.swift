@@ -7,7 +7,11 @@
 
 import Foundation
 
-enum GlobalSource: CaseIterable {
+enum GlobalSource: CaseIterable, Identifiable {
+  var id: String {
+    "\(name)__\(fileName)"
+  }
+  
   static var allCases: [GlobalSource] = [
     .baseSynth, .drums, .femaleVoice, .guitar, .maleVoice, .piano, .strings, .synth
   ]

@@ -18,11 +18,12 @@ class ChorusConductor: ObservableObject, ProcessesPlayerInput {
   let player = AudioPlayer()
   let dryWetMixer: DryWetMixer
   let buffer: AVAudioPCMBuffer
+  let defaultSource: GlobalSource = .strings
   
   let chorus: Chorus // DunneAudioKit
   
   init() {
-    buffer = Cookbook.sourceBuffer(source: .strings)
+    buffer = Cookbook.sourceBuffer(source: defaultSource)
     player.buffer = buffer
     player.isLooping = true
     
@@ -50,7 +51,7 @@ struct ChorusView: View {
   
   var body: some View {
     VStack {
-      PlayerControls(conductor: conductor, sourceName: "Strings")
+      PlayerControlsII(conductor: conductor, source: conductor.defaultSource)
       HStack {
         ForEach(conductor.chorus.parameters) {
           ParameterRow(param: $0)
