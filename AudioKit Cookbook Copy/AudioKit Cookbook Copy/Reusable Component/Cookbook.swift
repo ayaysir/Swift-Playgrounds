@@ -7,6 +7,7 @@
 
 import Foundation
 import AVFoundation
+import AudioKit
 
 // 사전 구조 (이름 → 파일명)
 public let globalSourceDict: [String: String] = [
@@ -46,5 +47,29 @@ class Cookbook {
     let url = Bundle.main.resourceURL?.appending(path: source.filePath)
     let file = try! AVAudioFile(forReading: url!)
     return try! AVAudioPCMBuffer(file: file)!
+  }
+  
+  static func fullLengthBuffer(url: URL) -> AVAudioPCMBuffer? {
+    guard let file = try? AVAudioFile(forReading: url) else {
+      Log("failed to read AVAudioFile", url)
+      return nil
+    }
+
+    guard let buffer = AVAudioPCMBuffer(
+      pcmFormat: file.processingFormat,
+      frameCapacity: AVAudioFrameCount(file.length)
+    ) else {
+      Log("failed to create AVAudioPCMBuffer")
+      return nil
+    }
+
+    do {
+      try file.read(into: buffer)
+    } catch {
+      Log("failed to read into buffer: \(error.localizedDescription)")
+      return nil
+    }
+    
+    return buffer
   }
 }

@@ -139,13 +139,23 @@ extension PlayerControlsII {
     conductor.player.stop()
     Log(url)
     
-    guard let buffer = try? AVAudioPCMBuffer(url: url) else {
+    // guard let buffer = try? AVAudioPCMBuffer(url: url) else {
+    //   Log("failed to load sample", url.deletingPathExtension().lastPathComponent)
+    //   return
+    // }
+    
+    guard let buffer = Cookbook.fullLengthBuffer(url: url) else {
       Log("failed to load sample", url.deletingPathExtension().lastPathComponent)
       return
     }
-    conductor.player.file = try? AVAudioFile(forReading: url)
+    
+    // conductor.player.file = try? AVAudioFile(forReading: url)
+    conductor.player.file = nil
     conductor.player.isLooping = true
     conductor.player.buffer = buffer
+    
+    Log("buffer length:", buffer.frameLength)
+    Log("buffer duration:", Double(buffer.frameLength) / buffer.format.sampleRate)
     
     if isPlaying {
       conductor.player.play()

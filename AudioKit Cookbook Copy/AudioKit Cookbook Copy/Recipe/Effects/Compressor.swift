@@ -52,12 +52,15 @@ struct CompressorView: View {
   var body: some View {
     VStack {
       PlayerControlsII(conductor: conductor, source: conductor.defaultSource)
+      .padding()
       HStack {
         ForEach(conductor.compressor.parameters) {
           ParameterRow(param: $0)
         }
         ParameterRow(param: conductor.dryWetMixer.parameters[0])
       }
+      .frame(height: 80)
+      .padding(.horizontal, 10)
       TabView {
         DryWetMixView(
           dry: conductor.player,
@@ -66,6 +69,7 @@ struct CompressorView: View {
         )
         ResizableImageView(image: Image(.imageParameterOfCompressor))
       }
+      .padding(.horizontal, 10)
       .tabViewStyle(.page)
       .onAppear {
         UIPageControl.appearance().isHidden = true
@@ -74,7 +78,6 @@ struct CompressorView: View {
         UIPageControl.appearance().isHidden = false
       }
     }
-    .padding()
     .navigationTitle("Compressor")
     .onAppear {
       conductor.start()
