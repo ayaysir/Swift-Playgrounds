@@ -119,6 +119,7 @@ struct ViewDicts {
     "Balancer": Lazy(V(BalancerView())),
     "Chorus": Lazy(V(ChorusView())),
     "Compressor": Lazy(V(CompressorView())),
+    "Convolution": Lazy(V(ConvolutionView())),
   ]
 }
 
