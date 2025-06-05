@@ -122,6 +122,7 @@ struct ViewDicts {
     "Convolution": Lazy(V(ConvolutionView())),
     "Delay": Lazy(V(DelayView())),
     "Dynamic Range Compressor": Lazy(V(DynamicRangeCompressorView())),
+    "Expander": Lazy(V(ExpanderView())),
   ]
 }
 
