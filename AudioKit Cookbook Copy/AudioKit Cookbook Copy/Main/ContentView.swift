@@ -123,6 +123,7 @@ struct ViewDicts {
     "Delay": Lazy(V(DelayView())),
     "Dynamic Range Compressor": Lazy(V(DynamicRangeCompressorView())),
     "Expander": Lazy(V(ExpanderView())),
+    "Flanger": Lazy(V(FlangerView())),
   ]
 }
 
