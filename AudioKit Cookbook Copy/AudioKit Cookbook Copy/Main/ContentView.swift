@@ -124,6 +124,7 @@ struct ViewDicts {
     "Dynamic Range Compressor": Lazy(V(DynamicRangeCompressorView())),
     "Expander": Lazy(V(ExpanderView())),
     "Flanger": Lazy(V(FlangerView())),
+    "Multi Tap Delay": Lazy(V(MultiTapDelayView())),
   ]
 }
 
