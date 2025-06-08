@@ -125,6 +125,8 @@ struct ViewDicts {
     "Expander": Lazy(V(ExpanderView())),
     "Flanger": Lazy(V(FlangerView())),
     "Multi Tap Delay": Lazy(V(MultiTapDelayView())),
+    "Panner": Lazy(V(PannerView())),
+    "Peak Limiter": Lazy(V(PeakLimiterView())),
   ]
 }
 
