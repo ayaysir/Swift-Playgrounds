@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum GlobalSource: CaseIterable, Identifiable {
+enum GlobalSource: CaseIterable, Identifiable, Hashable {
   var id: String {
     "\(name)__\(fileName)"
   }

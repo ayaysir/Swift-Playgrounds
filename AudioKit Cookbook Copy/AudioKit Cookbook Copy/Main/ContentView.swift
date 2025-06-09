@@ -127,6 +127,7 @@ struct ViewDicts {
     "Multi Tap Delay": Lazy(V(MultiTapDelayView())),
     "Panner": Lazy(V(PannerView())),
     "Peak Limiter": Lazy(V(PeakLimiterView())),
+    "Phase Lock Vocoder": Lazy(V(PhaseLockedVocoderView())),
   ]
 }
 
