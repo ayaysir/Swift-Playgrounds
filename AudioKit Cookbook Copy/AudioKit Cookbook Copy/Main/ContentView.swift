@@ -128,6 +128,9 @@ struct ViewDicts {
     "Panner": Lazy(V(PannerView())),
     "Peak Limiter": Lazy(V(PeakLimiterView())),
     "Phase Lock Vocoder": Lazy(V(PhaseLockedVocoderView())),
+    "Phaser": Lazy(V(PhaserView())),
+    "Pitch Shifter": Lazy(V(PitchShifterView())),
+    "Playback Speed": Lazy(V(PlaybackSpeedView())),
   ]
 }
 

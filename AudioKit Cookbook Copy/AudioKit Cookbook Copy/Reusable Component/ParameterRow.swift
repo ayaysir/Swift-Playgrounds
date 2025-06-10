@@ -17,10 +17,12 @@ class Refresher: ObservableObject {
 
 public struct ParameterRow: View {
   var param: NodeParameter
+  var customRange: ClosedRange<AUValue>?
   @StateObject var refresher = Refresher()
   
-  public init(param: NodeParameter) {
+  public init(param: NodeParameter, customRange: ClosedRange<AUValue>? = nil) {
     self.param = param
+    self.customRange = customRange
   }
   
   func floatToDoubleRange(_ floatRange: ClosedRange<Float>) -> ClosedRange<Double> {
@@ -50,6 +52,8 @@ public struct ParameterRow: View {
   }
   
   public var body: some View {
+    let range = customRange ?? param.range
+    
     VStack(alignment: .center) {
       VStack {
         Text(param.def.name)
@@ -65,7 +69,7 @@ public struct ParameterRow: View {
           param.value = $0 ? 1.0 : 0.0; refresher.version += 1
         })).labelsHidden()
       case .indexed:
-        if param.range.upperBound - param.range.lowerBound < 5 {
+        if range.upperBound - range.lowerBound < 5 {
           Picker(param.def.name, selection: getIntBinding()) {
             ForEach(intValues(), id: \.self) { value in
               Text("\(value)").tag(value)
@@ -73,11 +77,10 @@ public struct ParameterRow: View {
           }
           .pickerStyle(.segmented)
         } else {
-          SmallKnob(value: getBinding(), range: param.range)
-          
+          SmallKnob(value: getBinding(), range: range)
         }
       default:
-        SmallKnob(value: getBinding(), range: param.range)
+        SmallKnob(value: getBinding(), range: range)
       }
     }.frame(maxWidth: 150, maxHeight: 200).frame(minHeight: 100)
   }
