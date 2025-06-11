@@ -131,6 +131,9 @@ struct ViewDicts {
     "Phaser": Lazy(V(PhaserView())),
     "Pitch Shifter": Lazy(V(PitchShifterView())),
     "Playback Speed": Lazy(V(PlaybackSpeedView())),
+    "Stereo Delay": Lazy(V(StereoDelayView())),
+    "String Resonator": Lazy(V(StringResonatorView())),
+    "Time Pitch": Lazy(V(TimePitchView())),
   ]
 }
 
