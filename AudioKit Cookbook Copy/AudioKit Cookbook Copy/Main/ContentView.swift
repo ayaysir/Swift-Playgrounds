@@ -25,6 +25,7 @@ struct ListView: View {
   @State private var expandMiniApps = false
   @State private var expandOperations = false
   @State private var expandPhysicalModels = false
+  @State private var expandEffects = false
   
   var body: some View {
     Form {
@@ -53,7 +54,7 @@ struct ListView: View {
           // }
         }
         
-        DisclosureGroup("Effects", isExpanded: .constant(true)) {
+        DisclosureGroup("Effects", isExpanded: $expandEffects) {
           ForEach(ViewDicts.effects.keys.sorted(), id: \.self) { title in
             Link(title, viewDict: ViewDicts.effects)
           }
@@ -61,6 +62,7 @@ struct ListView: View {
       }
     }
     .navigationTitle("AudioKit Cookbook")
+    .navigationBarTitleDisplayMode(.inline)
   }
 }
 
@@ -134,6 +136,9 @@ struct ViewDicts {
     "Stereo Delay": Lazy(V(StereoDelayView())),
     "String Resonator": Lazy(V(StringResonatorView())),
     "Time Pitch": Lazy(V(TimePitchView())),
+    "Transient Shaper": Lazy(V(TransientShaperView())),
+    "Tremolo": Lazy(V(TremoloView())),
+    "Variable Delay": Lazy(V(VariableDelayView())),
   ]
 }
 
