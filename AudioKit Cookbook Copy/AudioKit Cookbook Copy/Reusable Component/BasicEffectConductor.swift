@@ -47,6 +47,8 @@ class BasicEffectConductor<FX: Node>: ObservableObject, ProcessesPlayerInput {
       effect.parameters.forEach {
         print("\($0.def.name) | \($0.value) | \($0.range)")
       }
+    } else {
+      print("Effect.parameters is empty.")
     }
   }
 }

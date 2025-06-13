@@ -26,6 +26,8 @@ struct ListView: View {
   @State private var expandOperations = false
   @State private var expandPhysicalModels = false
   @State private var expandEffects = false
+  @State private var expandDistortions = true
+  @State private var expandLabs = false
   
   var body: some View {
     Form {
@@ -59,6 +61,19 @@ struct ListView: View {
             Link(title, viewDict: ViewDicts.effects)
           }
         }
+        
+        DisclosureGroup("Distortions", isExpanded: $expandDistortions) {
+          ForEach(ViewDicts.distortions.keys.sorted(), id: \.self) { title in
+            Link(title, viewDict: ViewDicts.distortions)
+          }
+        }
+        
+        
+        DisclosureGroup("Labs", isExpanded: $expandLabs) {
+          ForEach(ViewDicts.labs.keys.sorted(), id: \.self) { title in
+            Link(title, viewDict: ViewDicts.labs)
+          }
+        }
       }
     }
     .navigationTitle("AudioKit Cookbook")
@@ -76,6 +91,12 @@ struct ViewDicts {
   private init() {}
   
   // MARK: - View Dictionaries
+  
+  static let distortions: ViewDict = [
+    "Apple Distortion": Lazy(V(AppleDistortionView())),
+    "BitCrusher": Lazy(V(BitCrusherView())),
+    "Clipper": Lazy(V(ClipperView())),
+  ]
   
   static let miniApps: ViewDict = [
     "Arpeggiator": Lazy(V(ArpeggiatorView())),
@@ -139,6 +160,10 @@ struct ViewDicts {
     "Transient Shaper": Lazy(V(TransientShaperView())),
     "Tremolo": Lazy(V(TremoloView())),
     "Variable Delay": Lazy(V(VariableDelayView())),
+  ]
+  
+  static let labs: ViewDict = [
+    "Gyro": Lazy(V(GyroShaderUIDemoView())),
   ]
 }
 
