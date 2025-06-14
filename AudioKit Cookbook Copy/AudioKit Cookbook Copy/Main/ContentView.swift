@@ -45,7 +45,7 @@ struct ListView: View {
           }
         }
         
-        DisclosureGroup("PhysicalModels", isExpanded: $expandPhysicalModels) {
+        DisclosureGroup("Physical Models", isExpanded: $expandPhysicalModels) {
           ForEach(ViewDicts.physicalModels.keys.sorted(), id: \.self) { title in
             Link(title, viewDict: ViewDicts.physicalModels)
           }
@@ -96,6 +96,9 @@ struct ViewDicts {
     "Apple Distortion": Lazy(V(AppleDistortionView())),
     "BitCrusher": Lazy(V(BitCrusherView())),
     "Clipper": Lazy(V(ClipperView())),
+    "Decimator": Lazy(V(DecimatorView())),
+    "Ring Modulator": Lazy(V(RingModulatorView())),
+    "Tanh Distortion": Lazy(V(TanhDistortionView())),
   ]
   
   static let miniApps: ViewDict = [
