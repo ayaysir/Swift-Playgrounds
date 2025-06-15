@@ -79,6 +79,8 @@ struct ListView: View {
             Link(title, viewDict: ViewDicts.labs)
           }
         }
+        
+        NavigationLink("Filters", destination: FiltersView())
       }
     }
     .navigationTitle("AudioKit Cookbook")
