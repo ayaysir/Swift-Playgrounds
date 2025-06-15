@@ -26,7 +26,7 @@ struct ListView: View {
   @State private var expandOperations = false
   @State private var expandPhysicalModels = false
   @State private var expandEffects = false
-  @State private var expandDistortions = true
+  @State private var expandDistortions = false
   @State private var expandLabs = false
   
   var body: some View {
@@ -68,6 +68,11 @@ struct ListView: View {
           }
         }
         
+        DisclosureGroup("Reverbs", isExpanded: .constant(true)) {
+          ForEach(ViewDicts.reverbs.keys.sorted(), id: \.self) { title in
+            Link(title, viewDict: ViewDicts.reverbs)
+          }
+        }
         
         DisclosureGroup("Labs", isExpanded: $expandLabs) {
           ForEach(ViewDicts.labs.keys.sorted(), id: \.self) { title in
@@ -91,6 +96,15 @@ struct ViewDicts {
   private init() {}
   
   // MARK: - View Dictionaries
+  
+  static let reverbs: ViewDict = [
+    "Apple Reverb": Lazy(V(ReverbView())),
+    "Chowning Reverb": Lazy(V(ChowningReverbView())),
+    "Comb Filter Reverb": Lazy(V(CombFilterReverbView())),
+    "Costello Reverb": Lazy(V(CostelloReverbView())),
+    "Flat Frequency Response Reverb": Lazy(V(FlatFrequencyResponseReverbView())),
+    "Zita Reverb": Lazy(V(ZitaReverbView())),
+  ]
   
   static let distortions: ViewDict = [
     "Apple Distortion": Lazy(V(AppleDistortionView())),

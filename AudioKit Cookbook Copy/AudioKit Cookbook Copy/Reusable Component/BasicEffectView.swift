@@ -12,6 +12,7 @@ import SwiftUI
 struct BasicEffectView<FX: Node>: View {
   let navTitle: String
   @StateObject var conductor: BasicEffectConductor<FX>
+  var isShowDrywetBalanceParameter: Bool = true
   
   var body: some View {
     VStack {
@@ -20,7 +21,9 @@ struct BasicEffectView<FX: Node>: View {
         ForEach(conductor.effect.parameters) {
           ParameterRow(param: $0)
         }
-        ParameterRow(param: conductor.dryWetMixer.parameters[0])
+        if isShowDrywetBalanceParameter {
+          ParameterRow(param: conductor.dryWetMixer.parameters[0])
+        }
       }
       DryWetMixView(
         dry: conductor.player,
