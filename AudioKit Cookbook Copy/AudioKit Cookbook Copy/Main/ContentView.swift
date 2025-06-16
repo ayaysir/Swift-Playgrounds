@@ -27,6 +27,7 @@ struct ListView: View {
   @State private var expandPhysicalModels = false
   @State private var expandEffects = false
   @State private var expandDistortions = false
+  @State private var expandReverbs = false
   @State private var expandLabs = false
   
   var body: some View {
@@ -68,9 +69,17 @@ struct ListView: View {
           }
         }
         
-        DisclosureGroup("Reverbs", isExpanded: .constant(true)) {
+        DisclosureGroup("Reverbs", isExpanded: $expandReverbs) {
           ForEach(ViewDicts.reverbs.keys.sorted(), id: \.self) { title in
             Link(title, viewDict: ViewDicts.reverbs)
+          }
+        }
+        
+        NavigationLink("Filters", destination: FiltersView())
+        
+        DisclosureGroup("Oscillators", isExpanded: .constant(true)) {
+          ForEach(ViewDicts.oscillators.keys.sorted(), id: \.self) { title in
+            Link(title, viewDict: ViewDicts.oscillators)
           }
         }
         
@@ -79,8 +88,6 @@ struct ListView: View {
             Link(title, viewDict: ViewDicts.labs)
           }
         }
-        
-        NavigationLink("Filters", destination: FiltersView())
       }
     }
     .navigationTitle("AudioKit Cookbook")
@@ -98,6 +105,12 @@ struct ViewDicts {
   private init() {}
   
   // MARK: - View Dictionaries
+  
+  static let oscillators: ViewDict = [
+    "Amplitude Envelope": Lazy(V(AmplitudeEnvelopeView())),
+    "Dynamic Oscillator": Lazy(V(DynamicOscillatorView())),
+    "FM Oscillator": Lazy(V(FMOscillatorView())),
+  ]
   
   static let reverbs: ViewDict = [
     "Apple Reverb": Lazy(V(ReverbView())),

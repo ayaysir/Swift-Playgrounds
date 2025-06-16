@@ -83,6 +83,7 @@ struct FiltersView: View {
   @StateObject private var conductor = FiltersConductor()
   @State private var segmentIndex = 0
   @State private var navTitle = "Filters"
+  @State private var forceRefresh = 0
 
   var body: some View {
     VStack {
@@ -109,6 +110,7 @@ struct FiltersView: View {
           wet: conductor.filter!,
           mix: conductor.dryWetMixer
         )
+        .id(forceRefresh)
         .tag(0)
         
         FilterListArea
@@ -133,6 +135,8 @@ struct FiltersView: View {
         Button {
           conductor.changeFilter(filterName: key)
           navTitle = key
+          forceRefresh += 1
+          
           if conductor.player.isPlaying {
             conductor.player.stop()
             conductor.player.start()

@@ -13,9 +13,14 @@ import Tonic
 struct CookbookKeyboard: View {
   var noteOn: (Pitch, CGPoint) -> Void = { _, _ in }
   var noteOff: (Pitch) -> Void
+  var pitchRange: ClosedRange<Pitch> = Pitch(48) ... Pitch(64)
+  
   var body: some View {
-    Keyboard(layout: .piano(pitchRange: Pitch(48) ... Pitch(64)),
-             noteOn: noteOn, noteOff: noteOff)
+    Keyboard(
+      layout: .piano(pitchRange: pitchRange),
+      noteOn: noteOn,
+      noteOff: noteOff
+    )
   }
 }
 
