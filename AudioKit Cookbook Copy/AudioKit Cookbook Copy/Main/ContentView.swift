@@ -110,6 +110,10 @@ struct ViewDicts {
     "Amplitude Envelope": Lazy(V(AmplitudeEnvelopeView())),
     "Dynamic Oscillator": Lazy(V(DynamicOscillatorView())),
     "FM Oscillator": Lazy(V(FMOscillatorView())),
+    "Morphing Oscillator": Lazy(V(MorphingOscillatorView())),
+    "Oscillator": Lazy(V(OscillatorView())),
+    "Phase Distortion Oscillator": Lazy(V(PhaseDistortionOscillatorView())),
+    "PWM Oscillator": Lazy(V(PWMOscillatorView())),
   ]
   
   static let reverbs: ViewDict = [
