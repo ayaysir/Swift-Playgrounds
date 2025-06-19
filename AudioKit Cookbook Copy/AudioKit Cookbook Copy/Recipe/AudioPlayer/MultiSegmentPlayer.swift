@@ -10,17 +10,6 @@ import AudioKitEX
 import AudioKitUI
 import SwiftUI
 
-private extension Comparable {
-  // ie: 5.clamped(to: 7...10)
-  // ie: 5.0.clamped(to: 7.0...10.0)
-  // ie: "a".clamped(to: "b"..."h")
-  /// **OTCore:**
-  /// Returns the value clamped to the passed range.
-  dynamic func clamped(to limits: ClosedRange<Self>) -> Self {
-    min(max(self, limits.lowerBound), limits.upperBound)
-  }
-}
-
 /// 현재 시스템 시간 기록
 /// - 다음 프레임이나 다음 타이머 실행 시점과 비교하여 **경과 시간(delta time)**을 계산하기 위함
 /// - `DispatchTime.now().uptimeNanoseconds`는 시스템이 부팅된 이후 경과한 시간(절대적인 시간)을 반환, ns -> s 로 변환

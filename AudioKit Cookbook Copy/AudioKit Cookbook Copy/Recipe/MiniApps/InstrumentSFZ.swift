@@ -42,6 +42,10 @@ class InstrumentSFZConductor: ObservableObject, HasAudioEngine {
     }
     
     engine.output = instrument
+    
+    instrument.parameters.enumerated().forEach { index, param in
+      print(index, param.def.name, param.range)
+    }
   }
 }
 
@@ -115,7 +119,7 @@ struct InstrumentSFZView: View {
     let instrumentParams = conductor.instrument.parameters
     let paramsPerLine = horizontalSizeClass == .compact ? 6 : 8
     let instrumentParamsChunked = instrumentParams.chunked(into: paramsPerLine)
-    let _ = print(instrumentParams, instrumentParamsChunked)
+    // let _ = print(instrumentParams, instrumentParamsChunked)
     
     GeometryReader { proxy in
       VStack {
@@ -147,5 +151,8 @@ struct InstrumentSFZView: View {
       conductor.stop()
     }
   }
-  
+}
+
+#Preview {
+  InstrumentSFZView()
 }
