@@ -38,26 +38,26 @@
 
 ## Motivation
 
-**TL;DR:** This project aims to build an app using TCA, striking a balance between simplicity and complexity. It focuses on exploring the most important use cases of TCA while providing concise and accessible documentation for new learners. The goal is to create a valuable learning resource that offers practical insights into using TCA effectively. 
+**TL;DR:** This project aims to build an app using TCA, striking a balance between simplicity and complexity. It focuses on exploring the most important use cases of TCA while providing concise and accessible documentation for new learners. The goal is to create a valuable learning resource that offers practical insights into using TCA effectively.  
 **요약:** 이 프로젝트는 TCA를 활용하여 단순성과 복잡성의 균형을 맞춘 앱을 개발하는 것을 목표로 합니다. TCA의 가장 중요한 사용 사례를 살펴보는 동시에 신규 학습자를 위해 간결하고 접근하기 쉬운 문서를 제공하는 데 중점을 둡니다. TCA를 효과적으로 사용하는 데 필요한 실질적인 통찰력을 제공하는 귀중한 학습 자료를 만드는 것이 목표입니다. 
  
-I aimed to showcase the power of the TCA architecture in building robust applications for the Apple ecosystem, including iOS, macOS, and more excitingly, its future expansion beyond the Apple world! 🚀 
+I aimed to showcase the power of the TCA architecture in building robust applications for the Apple ecosystem, including iOS, macOS, and more excitingly, its future expansion beyond the Apple world! 🚀  
 저는 iOS, macOS를 포함한 Apple 생태계에서 강력한 애플리케이션을 구축하는 데 있어 TCA 아키텍처의 힘을 보여주고, 더 나아가 Apple 세계를 넘어 미래로 확장하는 데 있어 TCA 아키텍처의 힘을 보여주고 싶었습니다! 🚀 
  
-While there are many articles available that demonstrate simple one-screen applications to introduce TCA's core concepts, I noticed a gap between these basic demos and real-world applications like [isoword](https://github.com/pointfreeco/isowords), which can be complex and challenging to understand certain important use cases (like navigation and how reducers are glued). 
-TCA의 핵심 개념을 소개하는 간단한 단일 화면 애플리케이션을 보여주는 문서가 많이 있지만, 이러한 기본 데모와 [isoword](https://github.com/pointfreeco/isowords)와 같은 실제 애플리케이션 사이에 차이가 있다는 것을 발견했습니다. 이러한 실제 애플리케이션은 복잡하고 특정 중요한 사용 사례(예: 탐색 및 리듀서의 결합 방식)를 이해하기 어려울 수 있습니다. 
+While there are many articles available that demonstrate simple one-screen applications to introduce TCA's core concepts, I noticed a gap between these basic demos and real-world applications like [isoword](https://github.com/pointfreeco/isowords), which can be complex and challenging to understand certain important use cases (like navigation and how reducers are glued).  
+TCA의 핵심 개념을 소개하는 간단한 단일 화면 애플리케이션을 보여주는 문서가 많이 있지만, 이러한 기본 데모와 [isoword](https://github.com/pointfreeco/isowords)와 같은 실제 애플리케이션 사이에 차이가 있다는 것을 발견했습니다. 이러한 실제 애플리케이션은 복잡하고 특정 중요한 사용 사례(예: 탐색 및 리듀서의 결합 방식)를 이해하기 어려울 수 있습니다.  
  
-In this demo, I have implemented a minimal online store that connects to a real network API (https://fakestoreapi.com). It features a product list, the ability to add items to the cart, and the functionality to place orders. While the requests are not processed in real-time (as it uses a fake API), the network status is simulated, allowing you to experience the interaction and mapping of network calls using TCA. 
-이 데모에서는 실제 네트워크 API(https://fakestoreapi.com)에 연결되는 간단한 온라인 스토어를 구현했습니다. 제품 목록, 장바구니에 상품 추가, 주문 기능을 제공합니다. 요청은 실시간으로 처리되지 않지만(가짜 API를 사용하므로), 네트워크 상태는 시뮬레이션되어 TCA를 사용한 네트워크 호출의 상호작용 및 매핑을 경험할 수 있습니다. 
-  
-While this demo may not be a full-scale real-world application, it includes enough reducers to illustrate how data can be effectively connected and how domains can be isolated to handle specific components within the app (e.g., Tabs -> Product List -> Product Cell -> Add to Cart button). 
-이 데모는 실제 세상의 전체적인 애플리케이션은 아니지만, 데이터를 효과적으로 연결하는 방법과 앱 내의 특정 구성 요소를 처리하기 위해 도메인을 분리하는 방법을 보여주는 데 충분한 리듀서가 포함되어 있습니다(예: 탭 -> 제품 목록 -> 제품 셀 -> 장바구니에 추가 버튼).
+In this demo, I have implemented a minimal online store that connects to a real network API (https://fakestoreapi.com). It features a product list, the ability to add items to the cart, and the functionality to place orders. While the requests are not processed in real-time (as it uses a fake API), the network status is simulated, allowing you to experience the interaction and mapping of network calls using TCA.  
+이 데모에서는 실제 네트워크 API(https://fakestoreapi.com)에 연결되는 간단한 온라인 스토어를 구현했습니다. 제품 목록, 장바구니에 상품 추가, 주문 기능을 제공합니다. 요청은 실시간으로 처리되지 않지만(가짜 API를 사용하므로), 네트워크 상태는 시뮬레이션되어 TCA를 사용한 네트워크 호출의 상호작용 및 매핑을 경험할 수 있습니다.  
  
-Furthermore, I have created tests to demonstrate one of TCA's key features: ensuring that tests fail if the expected state mutations are not captured accurately. This showcases how TCA promotes testability and helps ensure the correctness of your application. 
-또한, TCA의 핵심 기능 중 하나인 예상되는 상태 변화가 정확하게 포착되지 않으면 테스트가 실패하도록 하는 테스트를 만들었습니다. 이는 TCA가 테스트 가능성을 높이고 애플리케이션의 정확성을 보장하는 데 어떻게 도움이 되는지 보여줍니다. 
+While this demo may not be a full-scale real-world application, it includes enough reducers to illustrate how data can be effectively connected and how domains can be isolated to handle specific components within the app (e.g., Tabs -> Product List -> Product Cell -> Add to Cart button).  
+이 데모는 실제 세상의 전체적인 애플리케이션은 아니지만, 데이터를 효과적으로 연결하는 방법과 앱 내의 특정 구성 요소를 처리하기 위해 도메인을 분리하는 방법을 보여주는 데 충분한 리듀서가 포함되어 있습니다(예: 탭 -> 제품 목록 -> 제품 셀 -> 장바구니에 추가 버튼).  
  
-If you're looking to dive into TCA, this demo provides a valuable middle ground between simple examples and complex projects, offering concise documentation and practical insights into working with TCA in a more realistic application setting. 
-TCA에 대해 자세히 알아보고 싶다면 이 데모는 간단한 예제와 복잡한 프로젝트 사이의 귀중한 중간 지점을 제공하며, 간결한 설명서와 보다 현실적인 애플리케이션 설정에서 TCA를 사용하는 방법에 대한 실질적인 통찰력을 제공합니다. 
+Furthermore, I have created tests to demonstrate one of TCA's key features: ensuring that tests fail if the expected state mutations are not captured accurately. This showcases how TCA promotes testability and helps ensure the correctness of your application.  
+또한, TCA의 핵심 기능 중 하나인 예상되는 상태 변화가 정확하게 포착되지 않으면 테스트가 실패하도록 하는 테스트를 만들었습니다. 이는 TCA가 테스트 가능성을 높이고 애플리케이션의 정확성을 보장하는 데 어떻게 도움이 되는지 보여줍니다.  
+ 
+If you're looking to dive into TCA, this demo provides a valuable middle ground between simple examples and complex projects, offering concise documentation and practical insights into working with TCA in a more realistic application setting.  
+TCA에 대해 자세히 알아보고 싶다면 이 데모는 간단한 예제와 복잡한 프로젝트 사이의 귀중한 중간 지점을 제공하며, 간결한 설명서와 보다 현실적인 애플리케이션 설정에서 TCA를 사용하는 방법에 대한 실질적인 통찰력을 제공합니다.  
  
 ## Screenshots
 
@@ -72,14 +72,14 @@ TCA에 대해 자세히 알아보고 싶다면 이 데모는 간단한 예제와
 <img src="./Images/TCA_Architecture2.png">
 
 ### Hello World Example
-Consider the following implementation of a simple app using TCA, where you will have two buttons: one to increment a counter displayed on the screen and the other to decrement it. 
-TCA를 사용하여 간단한 앱을 구현해 보겠습니다. 여기에는 두 개의 버튼이 있습니다. 하나는 화면에 표시된 카운터를 증가시키는 버튼이고, 다른 하나는 감소시키는 버튼입니다. 
+Consider the following implementation of a simple app using TCA, where you will have two buttons: one to increment a counter displayed on the screen and the other to decrement it.  
+TCA를 사용하여 간단한 앱을 구현해 보겠습니다. 여기에는 두 개의 버튼이 있습니다. 하나는 화면에 표시된 카운터를 증가시키는 버튼이고, 다른 하나는 감소시키는 버튼입니다.  
  
-Here's an example of how this app would be coded with TCA: 
-다음은 TCA를 사용하여 이 앱을 코딩하는 방법의 예입니다. 
+Here's an example of how this app would be coded with TCA:  
+다음은 TCA를 사용하여 이 앱을 코딩하는 방법의 예입니다.  
  
-1. A struct that will represent the domain of the feature. This struct must conform `ReducerProtocol` protocol and providing `State` struct, `Action` enum and `reduce` method. 
-1. 기능의 도메인을 나타내는 구조체입니다. 이 구조체는 `ReducerProtocol` 프로토콜을 준수해야 하며 `State` 구조체, `Action` 열거형, 그리고 `reduce` 메서드를 제공해야 합니다. 
+1. A struct that will represent the domain of the feature. This struct must conform `ReducerProtocol` protocol and providing `State` struct, `Action` enum and `reduce` method.
+<br>기능의 도메인을 나타내는 구조체입니다. 이 구조체는 `ReducerProtocol` 프로토콜을 준수해야 하며 `State` 구조체, `Action` 열거형, 그리고 `reduce` 메서드를 제공해야 합니다. 
  
 ```swift
 struct CounterDomain: ReducerProtocol {
@@ -98,8 +98,8 @@ struct CounterDomain: ReducerProtocol {
 }
 ```
 
-2. The view that is presented in the screen will display the current state of the app. 
-2. 화면에 표시되는 뷰는 앱의 현재 상태(state)를 표시합니다.
+2. The view that is presented in the screen will display the current state of the app.
+<br>화면에 표시되는 뷰는 앱의 현재 상태(state)를 표시합니다.
 <!-- [-] 0 [+] -->
 <img src="./Images/viewDemo1.png" width="30%" height="30%">
 
@@ -109,8 +109,8 @@ struct State: Equatable {
 }
 ```
 
-3. When the user presses a button (let's say increase button), it will internally send an action to the store. 
-3. 사용자가 버튼(예를 들어 증가 버튼)을 누르면 내부적으로 스토어에 작업(action)이 전송됩니다.
+3. When the user presses a button (let's say increase button), it will internally send an action to the store.
+<br>사용자가 버튼(예를 들어 증가 버튼)을 누르면 내부적으로 스토어에 작업(action)이 전송됩니다.
 <img src="./Images/actionDemo1.png" width="30%" height="30%">
 
 ```swift
@@ -121,7 +121,7 @@ enum Action: Equatable {
 ```
  
 4. The action will be received by the reducer and proceed to mutate the state. Reducer MUST also return an effect, that represent logic from the "outside world" (network calls, notifications, database, etc). If no effect is needed, just return `EffectTask.none` .
-4. 액션은 리듀서(현재 상태와 액션을 받아 새로운 상태를 반환하는 순수 함수)에 의해 수신되어 상태를 변경합니다. 리듀서는 "외부 세계"(네트워크 호출, 알림, 데이터베이스 등)의 로직을 나타내는 이펙트(effect)도 반환해야 합니다. 이펙트가 필요하지 않으면 `EffectTask.none`을 반환하면 됩니다.
+<br>액션은 리듀서(현재 상태와 액션을 받아 새로운 상태를 반환하는 순수 함수)에 의해 수신되어 상태를 변경합니다. 리듀서는 "외부 세계"(네트워크 호출, 알림, 데이터베이스 등)의 로직을 나타내는 이펙트(effect)도 반환해야 합니다. 이펙트가 필요하지 않으면 `EffectTask.none`을 반환하면 됩니다.
  - 비순수 작업은 이펙트를 통해 따로 실행하게끔 분리
  - 예) 리듀서는 네트워크 요청 자체를 수행하지 않고, “이런 요청을 수행하라”는 명령(Task)을 반환
   - 리듀서는 여전히 순수함수로 유지 (상태만 변경하고, 이펙트를 기술만 함)
@@ -138,13 +138,13 @@ func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
 }
 ```
 
-5. Once the mutation is done and the reducer returned the effect, the view will render the update in the screen. 
-5. 변형(mutation)이 완료되고 리듀서가 효과를 반환하면 뷰는 화면에 업데이트를 렌더링합니다. 
+5. Once the mutation is done and the reducer returned the effect, the view will render the update in the screen.
+<br>변형(mutation)이 완료되고 리듀서가 효과를 반환하면 뷰는 화면에 업데이트를 렌더링합니다. 
 <!-- [-] 1 [+] -->
 <img src="./Images/viewUpdateDemo1.png" width="30%" height="30%">
 
-6. To observe state changes in TCA, we need an object called `viewStore`, that in this example is wrapped within WithViewStore view. We can send an action from the view to the store using `viewStore.send()` and an `Action` value. 
-6. TCA에서 상태 변경을 관찰하려면 `viewStore`라는 객체가 필요합니다. 이 예제에서는 이 객체가 WithViewStore 뷰로 래핑됩니다. `viewStore.send()`와 `Action` 값을 사용하여 뷰에서 스토어로 액션을 전송할 수 있습니다. 
+6. To observe state changes in TCA, we need an object called `viewStore`, that in this example is wrapped within WithViewStore view. We can send an action from the view to the store using `viewStore.send()` and an `Action` value.
+<br>TCA에서 상태 변경을 관찰하려면 `viewStore`라는 객체가 필요합니다. 이 예제에서는 이 객체가 WithViewStore 뷰로 래핑됩니다. `viewStore.send()`와 `Action` 값을 사용하여 뷰에서 스토어로 액션을 전송할 수 있습니다. 
 
 ```swift
 struct ContentView: View {
@@ -183,8 +183,8 @@ struct ContentView: View {
 }
 ```
 
-7. View is initialized by a `Store` object. 
-7. View는 `Store` 객체에 의해 초기화됩니다. 
+7. View is initialized by a `Store` object.
+<br>View는 `Store` 객체에 의해 초기화됩니다. 
 
 ```swift
 ContentView(
@@ -195,3 +195,588 @@ ContentView(
 )
 ```
 
+## Composition (구성, 조립)
+
+Composition refers to the process of building complex software systems by combining smaller, reusable software components. Take a look to this image:  
+구성(Composition)은 작고 재사용 가능한 소프트웨어 구성 요소를 결합하여 복잡한 소프트웨어 시스템을 구축하는 과정을 말합니다. 다음 이미지를 살펴보세요.  
+
+<!-- 카운터와 Add to Cart 버튼, 상품 사진, 상품명 컴포넌트를 조합해서 앱을 구성하는 사진 -->
+<img src="./Images/composition2.png" width="80%" height="80%">
+
+We started with a simple button counter, then we add an extra state to display text, next we put the whole button in a Product cell, and finally, each product cell will be part of a Product list. That is composition!  
+간단한 버튼 카운터로 시작해서 텍스트를 표시할 상태를 추가하고, 그다음 버튼 전체를 제품 셀에 배치하고, 마지막으로 각 제품 셀을 제품 목록의 일부로 만듭니다. 이것이 바로 구성입니다!  
+
+### Body to compose multiple Reducers
+
+In the previous example, we demonstrated the usage of `reduce(into:action:)` to create our reducer function and define how state will be modified for each action. However, it's important to note that this method is suitable only for leaf components, which refer to the smallest components in your application.  
+이전 예제에서는 `reduce(into:action:)`를 사용하여 리듀서 함수를 생성하고 각 액션의 상태를 어떻게 수정할지 정의하는 방법을 살펴보았습니다. 하지만 이 메서드는 애플리케이션에서 가장 작은 구성 요소를 가리키는 리프 구성 요소에만 적합하다는 점에 유의해야 합니다.  
+
+For larger components, we can leverage the `body` property provided by the `ReducerProtocol`. This property enables you to combine multiple reducers, facilitating the creation of more comprehensive components. By utilizing the `body` property, you can effectively compose and manage the state mutations of these larger components.  
+더 큰 컴포넌트의 경우, `ReducerProtocol`에서 제공하는 `body` 속성을 활용할 수 있습니다. 이 속성을 사용하면 여러 리듀서를 결합하여 더욱 포괄적인 컴포넌트를 쉽게 만들 수 있습니다. `body` 속성을 활용하면 이러한 더 큰 컴포넌트의 상태 변경을 효과적으로 구성하고 관리할 수 있습니다.  
+
+```swift
+var body: some ReducerProtocol<State, Action> {
+    ChildReducer1()
+    Reduce { state, action in
+        switch action {
+        case .increaseCounter:
+            state.counter += 1
+            return .none
+        case .decreaseCounter:
+            state.counter -= 1
+            return .none
+        }
+    }
+    ChildReducer2()
+}
+```
+
+`Reduce` 클로저는 항상 부모 도메인의 로직을 캡슐화합니다. 추가 구성 요소를 결합하는 방법을 알아보려면 아래 내용을 계속 읽어보세요.  
+
+> Compared to the previous version of TCA without `ReducerProtocol`, the order of child reducers will not affect the result. Parent Reducer (`Reduce`) will be always executed at the end.<br>`ReducerProtocol`이 없는 이전 버전의 TCA와 비교했을 때, 자식 리듀서의 순서는 결과에 영향을 미치지 않습니다. 부모 리듀서(`Reduce`)는 항상 마지막에 실행됩니다.  
+
+### Single state operators
+
+For single states (all except collections/lists), TCA provides operators to glue the components and make bigger ones.  
+단일 상태(컬렉션/목록 제외)의 경우 TCA는 구성 요소를 연결하고 더 큰 구성 요소를 만드는 연산자를 제공합니다.  
+
+#### store.scope(state:action:) 
+
+`store.scope` is an operator used in views to get the child domain's (`AddToCartDomain`) state and action from parent domain (`ProductDomain`) to initialize subviews.  
+`store.scope`는 자식 도메인(`AddToCartDomain`)의 상태와 부모 도메인(`ProductDomain`)의 작업을 가져와서 하위 뷰를 초기화하는 데 사용되는 연산자입니다.  
+
+For example, the `ProductDomain` below contains two properties as part of its state: `product` and `addToCartState`.  
+예를 들어, 아래의 `ProductDomain`에는 상태의 일부로 `product`와 `addToCartState`라는 두 가지 속성이 포함되어 있습니다.  
+
+```swift
+struct ProductDomain: ReducerProtocol {
+    struct State: Equatable, Identifiable {
+        let product: Product
+        // 서브도메인 AddToCartDomain의 상태를 초기화
+        // 서브도메인의 상태도 포함
+        var addToCartState = AddToCartDomain.State() 
+    }
+    // ...
+```
+
+ - 장바구니에 담기 기능의 상태, 액션, 리듀서는 `AddToCartDomain` 안에 완전히 캡슐화
+ - `ProductDomain`은 `AddToCartDomain`을 자식처럼 포함시켜서 연결만 해주면 됨
+ - 관심사의 분리(ProductDomain은 제품 화면만, AddCart... 는 장바구니 액션만 관리), 재사용성 증가, 유지보수성 향상 
+
+Furthermore, we utilize an action with an associated value that encapsulates all actions from the child domain, providing a comprehensive and cohesive approach.  
+더욱이 우리는 자식 도메인의 모든 동작을 캡슐화하는 연관된 값(associated value)이 있는 동작(action)을 활용하여 포괄적이고 응집력 있는(comprehensive and cohesive) 접근 방식을 제공합니다.  
+
+```swift
+struct ProductDomain: ReducerProtocol {
+    // State ...
+
+    enum Action {
+        case addToCart(AddToCartDomain.Action)
+    }
+    // ...
+```
+
+
+Let's consider the scenario where we need to configure the `ProductCell` view below.  
+아래에서 `ProductCell` 뷰를 구성해야 하는 시나리오를 고려해 보겠습니다.  
+
+The `ProductCell` is designed to handle the `ProductDomain`, while we need to provide some information to initialize the `AddToCartButton`. 
+ `ProductCell`은 `ProductDomain`을 처리하도록 설계되었지만, `AddToCartButton`을 초기화하기 위한 정보를 제공해야 합니다.  
+ 
+However, the `AddToCartButton` is only aware of its own domain, `AddToCartDomain`, and not the `ProductDomain`.  
+그러나 `AddToCartButton`은 자체 도메인인 `AddToCartDomain`만 인식하고 `ProductDomain`은 인식하지 못합니다.  
+
+To address this, we can use the `scope` method from `store` to get the child's state and action from parent domain.  
+이 문제를 해결하기 위해 `store`의 `scope` 메서드를 사용하여 부모 도메인에서 자식 도메인의 상태와 동작을 가져올 수 있습니다. 
+ 
+This enables us to narrow down the scope of the button to focus solely on its own functionality.  
+이렇게 하면 버튼의 범위를 좁혀 버튼 자체 기능에만 집중할 수 있습니다.  
+
+```swift
+struct ProductCell: View {
+    let store: Store<ProductDomain.State, ProductDomain.Action>
+    
+    var body: some View {
+        WithViewStore(self.store) { viewStore in
+            // More views here ...
+            AddToCartButton(
+                store: self.store.scope( // store의 scope 메서드: 부모 도메인(Product...)에서 자식 도메인(AddToCart...)의 상태와 동작을 가져올 수 있음
+                    state: \.addToCartState,
+                    action: ProductDomain.Action.addToCart
+                )
+            )
+        }
+    }
+```
+
+By employing this approach, the `AddToCartDomain` will solely possess knowledge of its own state and remain unaware of any product-related information.  
+이 접근 방식을 사용하면 `AddToCartDomain`은 자체 상태에 대한 지식(장바구니 추가 관련)만 가지게 되고 제품 관련 정보(Product 관련)는 전혀 알 수 없게 됩니다.  
+
+
+#### Scope in Reducers
+
+`Scope` is utilized within the `body` to seamlessly transform the child reducer (`AddToCart`) into a compatible form that aligns with the parent reducer (`Product`). This allows for smooth integration and interaction between the two.  
+`body` 내에서 `Scope`를 활용하여 자식 리듀서(`AddToCart`)를 부모 리듀서(`Product`)와 일치하는 호환 가능한 형태로 원활하게 변환합니다. 이를 통해 두 리듀서 간의 원활한 통합과 상호작용이 가능합니다.  
+
+```swift
+var body: some ReducerProtocol<State, Action> {
+    // /ProductDo... : case path 문법: enum 열거형에서 특정 Value를 꺼내거나 넣을 수 있는 경로
+    // enum Action { case addToCart(AddToCartDomain.Action) } 에서 안의 값 AddToCartDomain.Action을 꺼내기 위함
+    Scope(state: \.addToCartState, action: /ProductDomain.Action.addToCart) {
+        AddToCartDomain()
+    }
+    Reduce { state, action in
+        // Parent Reducer logic ...
+    }
+}
+```
+
+This transformation becomes highly valuable when combining multiple reducers to construct a more complex component.  
+이러한 변환은 여러 개의 리듀서를 결합하여 더 복잡한 구성요소를 구성할 때 매우 귀중해집니다.  
+
+> 이전 버전에서는 `pullback` 및 `combine` 연산자를 사용하여 동일한 연산을 수행했습니다. 이 [동영상](https://youtu.be/Zf2pFEa3uew)을 시청할 수 있습니다.
+
+### Collection of states
+
+Are you looking to manage a collection of states? TCA offers excellent support for that as well!  
+여러 상태를 관리하고 싶으신가요? TCA가 훌륭한 지원을 제공해 드립니다!  
+
+In this particular example, instead of using a regular array, TCA requires a list of (`Product`) states, which can be achieved by utilizing `IdentifiedArray`:  
+이 특정 예에서 TCA는 일반 배열을 사용하는 대신 `IdentifiedArray`를 활용하여 달성할 수 있는 (`Product`) 상태 목록을 요구합니다.  
+```swift
+struct ProductListDomain: ReducerProtocol {
+    struct State: Equatable {
+        var productList: IdentifiedArrayOf<ProductDomain.State> = []
+        // ...    
+    }
+    // ...
+}
+```
+
+#### forEach in Reducer
+
+The `forEach` operator functions similarly to the [`Scope`](#scope-in-reducers) operator, with the distinction that it operates on a collection of states. It effectively transforms the child reducers into compatible forms that align with the parent reducer.  
+`forEach` 연산자는 [`Scope`](#scope-in-reducers) 연산자와 유사하게 동작하지만, 상태 컬렉션에 대해 동작한다는 차이점이 있습니다. 이 연산자는 자식 리듀서를 부모 리듀서와 호환되는 형태로 효과적으로 변환합니다.  
+
+```swift
+struct ProductListDomain: ReducerProtocol {
+    // State and Actions ...
+    
+    var body: some ReducerProtocol<State, Action> {
+        Reduce { state, action in
+            // Parent Reducer...
+        }
+        .forEach(
+            \.productList, 
+            action: /ProductListDomain.Action.product(id:action:)
+        ) {
+            ProductDomain()
+        }
+    }
+}
+```
+
+Subsequently, in the user interface, we employ `ForEachStore` and `store.scope` to iterate through all the (`Product`) states and actions. This enables us to send actions to the corresponding cell and modify its state accordingly.  
+이후 사용자 인터페이스에서 `ForEachStore`와 `store.scope`를 사용하여 모든 (`Product`) 상태와 동작을 반복합니다. 이를 통해 해당 셀에 동작을 전송하고 그에 따라 상태를 수정할 수 있습니다.  
+
+```swift
+List {
+    ForEachStore(
+        self.store.scope(
+            state: \.productListState,
+            action: ProductListDomain.Action
+                .product(id: action:)
+        )
+    ) {
+        ProductCell(store: $0)
+    }
+}
+```
+
+> 레거시 `forEach` 연산자가 있습니다. 자세히 알아보려면 이 [비디오](https://youtu.be/sid-zfggYhQ)를 확인하세요.
+
+## Dependencies
+
+In previous iterations of TCA, `Environment` played a crucial role in consolidating all the dependencies utilized by a domain.  
+이전 버전의 TCA에서는 `환경`이 도메인에서 사용되는 모든 종속성을 통합하는 데 중요한 역할을 했습니다.  
+
+With the introduction of the [`ReducerProtocol`](https://www.pointfree.co/blog/posts/81-announcing-the-reducer-protocol), we have eliminated the concept of `Environment`. As a result, dependencies now reside directly within the domain.  
+[`ReducerProtocol`](https://www.pointfree.co/blog/posts/81-announcing-the-reducer-protocol)의 도입으로 `환경`이라는 개념이 사라졌습니다. 그 결과, 종속성(도메인 로직(예: 리듀서)이 외부 세계와 상호작용하기 위해 의존하는 기능이나 객체)은 이제 도메인 내에 직접 존재합니다.  
+
+도메인 로직은 이 종속성들을 함수로 주입받아 사용함으로써:
+ - 외부 시스템에 의존은 하되,
+ - 직접 호출하지 않고,
+ - 테스트 가능하고 유연하게 작성할 수 있게 됩니다.
+
+```swift
+struct ProductListDomain: ReducerProtocol {
+    // State ...
+
+    // Actions...
+
+    var fetchProducts: () async throws -> [Product] // 네트워크에서 제품 목록 가져오기 -> 도메인이 스스로 못함
+    var sendOrder: ([CartItem]) async throws -> String // 장바구니 항목을 서버로 전송
+    var uuid: () -> UUID // UUID 생성 -> 테스트 시 고정값으로 대체 가능
+
+    // Reducer ...
+}
+```
+
+Nevertheless, we have the option to leverage the [Dependencies Framework](https://github.com/pointfreeco/swift-dependencies) to achieve a more enhanced approach in managing our dependencies:  
+그럼에도 불구하고, 우리는 종속성을 관리하는 데 있어 보다 향상된 접근 방식을 얻기 위해 [종속성 프레임워크](https://github.com/pointfreeco/swift-dependencies)를 활용할 수 있는 옵션이 있습니다.  
+
+```swift
+struct ProductListDomain: ReducerProtocol {
+    // State ...
+
+    // Actions...
+
+    @Dependency(\.apiClient.fetchProducts) var fetchProducts
+    @Dependency(\.apiClient.sendOrder) var sendOrder
+    @Dependency(\.uuid) var uuid
+
+    // Reducer ...
+}
+```
+
+> TCA에서 Environment 객체가 작동하는 방식에 대해 자세히 알아보려면 이 [비디오](https://youtu.be/sid-zfggYhQ?list=PLHWvYoDHvsOVo4tklgLW1g7gy4Kmk4kjw&t=103)를 시청하세요.
+
+## Side Effects
+
+A side effect refers to an observable change that arises when executing a function or method. This encompasses actions such as modifying state outside the function, performing I/O operations to a file or making network requests. TCA facilitates the encapsulation of such side effects through the use of `EffectTask` objects.  
+부작용은 함수나 메서드를 실행할 때 발생하는 관찰 가능한 변화를 의미합니다. 여기에는 함수 외부에서 상태를 수정하거나, 파일에 I/O 작업을 수행하거나, 네트워크 요청을 하는 등의 동작이 포함됩니다. TCA는 `EffectTask` 객체를 사용하여 이러한 부작용을 캡슐화합니다.  
+
+<img src="./Images/sideEffects1.png" width="80%" height="80%">
+
+> If you want to learn more about side effects, check out this [video](https://youtu.be/t3HHam3GYkU)
+
+### Network calls
+
+Network calls are a fundamental aspect of mobile development, and TCA offers robust tools to handle them efficiently. As network calls are considered external interactions or [side effects](#side-effects), TCA utilizes the `EffectTask` object to encapsulate these calls. Specifically, network calls are encapsulated within the `EffectTask.task` construct, allowing for streamlined management of asynchronous operations within the TCA framework.
+네트워크 호출은 모바일 개발의 기본적인 측면이며, TCA는 이를 효율적으로 처리할 수 있는 강력한 도구를 제공합니다. 네트워크 호출은 외부 상호작용 또는 [부작용](#side-effects)으로 간주되므로 TCA는 `EffectTask` 객체를 사용하여 이러한 호출을 캡슐화합니다. 특히, 네트워크 호출은 `EffectTask.task` 구조 내에 캡슐화되어 TCA 프레임워크 내에서 비동기 작업을 효율적으로 관리할 수 있습니다.  
+
+However, it's important to note that the task operator alone is responsible for making the web API call. To obtain the actual response, an additional action needs to be implemented, which will capture and store the result within a `TaskResult` object.
+하지만 웹 API 호출은 작업 연산자(task operator)만 담당한다는 점에 유의해야 합니다. 실제 응답을 얻으려면 결과를 캡처하여 `TaskResult` 객체에 저장하는 추가 액션을 구현해야 합니다.  
+
+```
+enum TaskResult<Success> {
+  case success(Success)
+  case failure(Error)
+}
+```
+
+```swift
+struct ProductListDomain: ReducerProtocol {
+    // State and more ...
+    
+    enum Action: Equatable {
+        case fetchProducts
+        case fetchProductsResponse(TaskResult<[Product]>)
+    }
+   
+    var fetchProducts: () async throws -> [Product]
+    var uuid: () -> UUID
+    
+    var body: some ReducerProtocol<State, Action> {
+        // Other child reducers...
+        Reduce { state, action in
+            switch action {
+            case .fetchProducts:
+                return .task {
+                    // Just making the call 
+                    await .fetchProductsResponse(
+                        TaskResult { try await fetchProducts() }
+                    )
+                }
+            case .fetchProductsResponse(.success(let products)):
+                // Getting the success response
+                // IdentifiedArray:  Identifiable 프로토콜을 따르는 요소를 효율적으로 다룰 수 있게 해줍니다. (ID 접근 가능, 순서 보존, 중복 없음)
+                // 비동기로 받아온 상품 목록을, 각각 식별 가능한 상태 객체로 변환하고 리스트에 반영하는 부분입니다.
+                state.productListState = IdentifiedArrayOf(
+                    uniqueElements: products.map {
+                        ProductDomain.State(
+                            id: uuid(),
+                            product: $0
+                        )
+                    }
+                )
+                return .none
+            case .fetchProductsResponse(.failure(let error)):
+                // Getting an error from the web API
+                print("Error getting products, try again later.", error)
+                return .none
+            }
+        }
+    }
+}
+```
+
+> To learn more about network requests in TCA, I recommend watching this insightful [video](https://youtu.be/sid-zfggYhQ?list=PLHWvYoDHvsOVo4tklgLW1g7gy4Kmk4kjw&t=144) that explains asynchronous requests. Additionally, you can refer to this informative [video](https://youtu.be/j2qymM6i9n4) that demonstrates the configuration of a real web API call, providing practical insights into the process.
+
+## Navigation
+
+ Navigation is a huge and complex topic. Navigation are alerts, confirmation dialogs, sheets, popovers and links. Also, you can add a custom navigations if you want. In this project you will see alerts and sheets.  
+탐색은 방대하고 복잡한 주제입니다. 탐색에는 알림(alerts), 확인 대화상자, 시트, 팝오버, 링크가 포함됩니다. 원하는 경우 사용자 지정 탐색을 추가할 수도 있습니다. 이 프로젝트에서는 알림과 시트를 살펴보겠습니다.  
+
+### Alerts
+
+TCA 라이브러리는 `AlertView`를 지원하여 TCA 아키텍처를 벗어나지 않고도 사용자 지정 상태 추가 및 일관된 UI 구축 방식을 지원합니다. TCA를 사용하여 나만의 알림을 만들려면 다음 단계를 따르세요.  
+
+1. Create the alert actions inside of the Action enum of the reducer. The recommended way is create a nested enum inside the action.
+<br>리듀서의 Action 열거형 내부에 알림 액션을 생성합니다. 권장하는 방법은 액션 내부에 중첩된 열거형을 생성하는 것입니다.  
+
+```swift
+enum Action: Equatable {
+    enum Alert {
+        case alertAction1
+        case alertAction2
+        ....
+    }
+}
+```
+
+2. Next, create a case alert and use `PresentationAction`.
+<br>다음으로, case alert을 만들고 `PresentationAction`을 사용합니다.
+
+```swift
+enum Action: Equatable {
+    case alert(PresentationAction<Alert>)
+    case alertButtonTapped
+
+    enum Alert {
+        case alertAction1
+        case alertAction2
+        ....
+    }
+}
+```
+
+`PresentationAction` is a generic that represents the presented actions and an special action named dismiss. This is very useful case because with the dismiss action, the reducer can manage if a side effect is running and remove to the system. More information about effect cancelling in navigations [here](https://www.pointfree.co/collections/composable-architecture/navigation/ep225-composable-navigation-behavior).
+<br>`PresentationAction`은 제시된 액션과 'dismiss'라는 특수 액션을 나타내는 제네릭 액션입니다. 이 액션은 리듀서가 이 액션을 통해 사이드 이펙트 실행 여부를 관리하고 시스템에서 제거할 수 있기 때문에 매우 유용합니다.
+
+```swift
+public enum PresentationAction<Action> {
+  /// An action sent to `nil` out the associated presentation state.
+  case dismiss
+
+  /// An action sent to the associated, non-`nil` presentation state.
+  /// indirect는 Swift의 열거형(enum)에서 자기 자신을 재귀적으로 참조할 수 있게 해주는 키워드입니다. (힙 메모리에 할당)
+  indirect case presented(Action)
+}
+```
+
+3. Create an alert state inside of the reducer.
+<br>리듀서 내부에 알림 상태를 생성합니다.
+
+```swift
+@Presents var alert: AlertState<Action.Alert>?
+```
+
+`@Presents` is a property wrapper that you need to use when creates a navigation state in the reducer. The reason to use `@Presents` is when composing a lots of features together, the root state could overflow the stack. More information [here](https://www.pointfree.co/collections/composable-architecture/navigation/ep230-composable-navigation-stack-vs-heap).  
+`@Presents`는 리듀서에서 탐색 상태를 생성할 때 사용해야 하는 속성 래퍼입니다. `@Presents`를 사용하는 이유는 여러 기능을 함께 구성할 때 루트 상태가 스택을 오버플로할 수 있기 때문입니다. 
+
+4. Extent `AlertState` and create as many alerts as you want. You can create a property wrapper or a function if you need some dynamic information.
+<br>`AlertState`의 범위를 지정하고 원하는 만큼 알림을 생성하세요. 동적 정보가 필요한 경우 속성 래퍼나 함수를 생성할 수 있습니다.
+
+```swift
+extension AlertState where Action == CartListDomain.Action.Alert {
+    static var successAlert: AlertState {
+        AlertState {
+            TextState("Thank you!")
+        } actions: {
+            ButtonState(action: .dismissSuccessAlert, label: { TextState("Done") })
+            ButtonState(role: .cancel, action: .didCancelConfirmation, label: { TextState("Cancel") })
+        } message: {
+            TextState("Your order is in process.")
+        }
+    }
+
+    static func confirmationAlert(totalPriceString: String) -> AlertState {
+        AlertState {
+            TextState("Confirm your purchase")
+        } actions: {
+            ButtonState(action: .didConfirmPurchase, label: { TextState("Pay \(totalPriceString)") })
+            ButtonState(role: .cancel, action: .didCancelConfirmation, label: { TextState("Cancel") })
+        } message: {
+            TextState("Do you want to proceed with your purchase of \(totalPriceString)?")
+        }
+    }
+}
+```
+
+5. Inside of the body of the reducer you can set the alert. As the state is an optional value, you need to implement `ifLet` in the reducer. This is a particular modifier that not need a reducer like a tipical `ifLet` reducer.
+<br>리듀서 본문 내에서 알림을 설정할 수 있습니다. state는 선택 사항이므로 리듀서에 `ifLet`을 구현해야 합니다. 이는 일반적인 `ifLet` 리듀서처럼 리듀서가 필요하지 않은 특수한 수정자입니다.
+<br><br>
+Another question is when you use a reducer for navigation, you will use the binding operator `$` in the state. This is because navigation modifiers in SwiftUI use a binding for presenting, usually the `isPresented` boolean. In this case, in order to manage when the alert is presented or no, you use a binding state in the reducer. Now, the reducer is fully synchronized with the view.
+<br>또 다른 질문은 탐색에 리듀서를 사용할 때 상태에 바인딩 연산자 `$`를 사용하게 된다는 것입니다. SwiftUI의 탐색 수정자는 일반적으로 `isPresented` 부울 값을 사용하여 표시를 위한 바인딩을 사용하기 때문입니다. 이 경우, 알림 표시 여부를 관리하기 위해 리듀서에서 바인딩 상태를 사용합니다. 이제 리듀서는 뷰와 완전히 동기화됩니다.
+
+```swift
+var body: some ReducerOf<Self> {
+        Reduce { state, action in
+            switch action {
+                case .alert:
+                    return .none
+                case .alertButtonTapped:
+                    state.alert = .successAlert
+                    return .none
+            }
+        }
+        .ifLet(
+            \.$alert, 
+            action: \.alert
+        )
+}
+```
+
+<details>
+<summary>See Alerts in previous versions of TCA</summary>
+
+The TCA library also offers support for `AlertView`, enabling the addition of custom state and a consistent UI building approach without deviating from the TCA architecture. To create your own alert using TCA, follow these steps:  
+TCA 라이브러리는 `AlertView`도 지원하여 TCA 아키텍처를 벗어나지 않고도 사용자 지정 상태 추가 및 일관된 UI 구축 방식을 구현할 수 있습니다. TCA를 사용하여 나만의 알림을 만들려면 다음 단계를 따르세요.  
+
+1. Create an `AlertState` with actions of your own domain.
+2. Create the actions that will trigger events for the alert:
+    - Initialize AlertState (`didPressPayButton`)
+    - Dismiss the alert (`didCancelConfirmation`)
+    - Execute the alert's handler (`didConfirmPurchase`)
+
+```swift
+struct CartListDomain: ReducerProtocol {
+    struct State: Equatable {
+        var confirmationAlert: AlertState<CartListDomain.Action>?
+        
+        // More properties ...
+    }
+    
+    enum Action: Equatable {
+        case didPressPayButton
+        case didCancelConfirmation
+        case didConfirmPurchase
+        
+        // More actions ...
+    }
+    
+    var body: some ReducerProtocol<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case .didCancelConfirmation:
+                state.confirmationAlert = nil
+                return .none
+            case .didConfirmPurchase:
+                // Sent order and Pay ...
+            case .didPressPayButton:
+                state.confirmationAlert = AlertState(
+                    title: TextState("Confirm your purchase"),
+                    message: TextState("Do you want to proceed with your purchase of \(state.totalPriceString)?"),
+                    buttons: [
+                        .default(
+                            TextState("Pay \(state.totalPriceString)"),
+                            action: .send(.didConfirmPurchase)),
+                        .cancel(TextState("Cancel"), action: .send(.didCancelConfirmation))
+                    ]
+                )
+                return .none
+            // More actions ...
+            }
+        }
+        .forEach(\.cartItems, action: /Action.cartItem(id:action:)) {
+            CartItemDomain()
+        }
+    }
+}              
+```
+</details>
+
+### Sheets
+
+Other type of navigation are sheets. To create your own alert using TCA, follow these steps:  
+다른 유형의 탐색으로는 시트가 있습니다. TCA를 사용하여 나만의 알림을 만들려면 다음 단계를 따르세요.  
+
+1. As the alerts, create the state. You use `@Presents` to avoid accidentally overflow the stack.
+<br>알림과 함께 상태를 생성합니다. `@Presents`를 사용하면 실수로 스택 오버플로를 방지할 수 있습니다.
+
+```swift
+@Presents var cartState: CartListDomain.State?
+```
+
+2. Next, create the action. Remember to use PresentationAction inside the case of the sheet.
+<br>다음으로, 액션을 만듭니다. 시트의 `case` 안에서 PresentationAction을 사용하는 것을 잊지 마세요.
+
+```swift
+case cart(PresentationAction<CartListDomain.Action>)
+```
+
+3. Create the `ifLet` in the reducer. Here, you need to define the reducer of the destination.
+<br>리듀서에 `ifLet`을 생성합니다. 여기서는 대상 리듀서를 정의해야 합니다.
+
+```swift
+.ifLet(\.$cartState, action: \.cart) {
+    CartListDomain()
+}
+```
+
+4. Finally, in the view, you can define the sheet operator like this.
+<br>마지막으로 뷰에서 시트 연산자를 이렇게 정의할 수 있습니다.
+
+```swift
+.sheet(
+  item: $store.scope(
+    state: \.cartState,
+    action: \.cart
+  )
+) { store in
+  CartListView(store: store)
+}
+```
+
+<details>
+<summary>See Sheets in previous versions of TCA</summary>
+### Opening Modal Views
+
+If you require to open a view modally in SwiftUI, you will need to use `sheet` modifier and provide a binding parameter:
+```swift
+func sheet<Content>(
+    isPresented: Binding<Bool>,
+    onDismiss: (() -> Void)? = nil, @ViewBuilder content: @escaping () -> Content
+) -> some View where Content : View
+```
+
+To utilize this modifier (or any modifier with binding parameters) in TCA, it is necessary to employ the `binding` operator from `viewStore` and supply two parameters:
+
+1. The state property that will undergo mutation.
+2. The action that will trigger the mutation.
+
+```swift
+// Domain:
+struct Domain: ReducerProtocol {
+    struct State {
+        var shouldOpenModal = false
+    }
+    enum Action {
+        case setCartView(isPresented: Bool)
+    }
+
+    var body: some ReducerProtocol<State, Action> {
+        Reduce { state, action in
+            switch action {
+                case .setCartView(let isPresented):
+                    state.shouldOpenModal = isPresented
+            }
+        }
+    }
+}
+
+// UI:
+Text("Parent View")
+.sheet(
+    isPresented: viewStore.binding(
+        get: \.shouldOpenModal,
+        send: Action.setModalView(isPresented:)
+    )
+) {
+    Text("I'm a Modal View!")
+}
+```
+
+> If you want to lean more about Binding with TCA and SwiftUI, take a look to this [video](https://youtu.be/Ilr8AsoggIY).
+</details>

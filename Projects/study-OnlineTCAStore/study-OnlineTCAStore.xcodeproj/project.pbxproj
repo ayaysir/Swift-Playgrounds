@@ -11,7 +11,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		44D8A3522E0427BE002C34E3 /* study-OnlineTCAStore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "study-OnlineTCAStore.app"; path = "/Users/yoonbumtae/Desktop/Xcode Project/Xcode Practice/Playgrounds/Projects/study-OnlineTCAStore/build/Debug-iphoneos/study-OnlineTCAStore.app"; sourceTree = "<absolute>"; };
+		441C56812E05823300873A9E /* study-OnlineTCAStore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "study-OnlineTCAStore.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		44D8A3612E042AEF002C34E3 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -51,6 +51,7 @@
 				44D8A3602E042AE8002C34E3 /* Document */,
 				44D8A3542E0427BE002C34E3 /* study-OnlineTCAStore */,
 				441BC9AA2E0432C100956DB8 /* Images */,
+				441C56812E05823300873A9E /* study-OnlineTCAStore.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -78,7 +79,7 @@
 			packageProductDependencies = (
 			);
 			productName = "study-OnlineTCAStore";
-			productReference = 44D8A3522E0427BE002C34E3 /* study-OnlineTCAStore.app */;
+			productReference = 441C56812E05823300873A9E /* study-OnlineTCAStore.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
