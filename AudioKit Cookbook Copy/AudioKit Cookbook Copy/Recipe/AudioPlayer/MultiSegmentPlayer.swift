@@ -78,6 +78,7 @@ class MultiSegmentPlayerConductor: ObservableObject, HasAudioEngine {
   }
   
   func setAudioSessionCategoriesWithOptions() {
+#if os(iOS)
     do {
       try AudioKit.Settings.session.setCategory(
         .playAndRecord,
@@ -90,6 +91,9 @@ class MultiSegmentPlayerConductor: ObservableObject, HasAudioEngine {
     } catch {
       assertionFailure(error.localizedDescription)
     }
+#elseif os(macOS)
+    Log("macOS에서는 AVAudioSession 설정이 필요하지 않음")
+#endif
   }
   
   func routeAudioToOutput() {

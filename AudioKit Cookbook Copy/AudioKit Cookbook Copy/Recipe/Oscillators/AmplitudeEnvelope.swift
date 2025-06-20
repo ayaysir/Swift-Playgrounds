@@ -73,6 +73,7 @@ struct AmplitudeEnvelopeView: View {
       Text("Attack, Decay 부분은 오른쪽 가장자리를 드래그하여 조절하고, Sustain, Release 부분은 왼쪽 가장자리를 드래그하여 높이를 조절합니다.")
         .font(.caption2)
       
+      #if os(iOS)
       ADSRWidget { a, d, s, r in
         conductor.envelope.attackDuration = a
         conductor.envelope.decayDuration = d
@@ -80,6 +81,10 @@ struct AmplitudeEnvelopeView: View {
         conductor.envelope.releaseDuration = r
       }
       .frame(maxWidth: UIScreen.main.bounds.width)
+      #elseif os(macOS)
+      Text("⚠️ macOS에서는 ADSRWidget을 지원하지 않습니다.")
+        .frame(height: 200)
+      #endif
       
       HStack {
         Text("Attack")

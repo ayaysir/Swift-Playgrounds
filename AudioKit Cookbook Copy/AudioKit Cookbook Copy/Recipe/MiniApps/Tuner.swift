@@ -63,11 +63,14 @@ class TunerConductor: ObservableObject, HasAudioEngine {
 #if DEBUG
     let input = engine.input
     Log("input is \(input == nil ? "nil" : "not nil")")
+#if os(iOS)
     let device = engine.inputDevice
-    Log("device is \(device == nil ? "nil" : "not nil")")
-    
     initialDevice = device ?? .init(name: "Void 1", deviceID: UUID().uuidString)
-    
+#elseif os(macOS)
+    let device = engine.input
+    Log("device is \(device == nil ? "nil" : "not nil")")
+    initialDevice = .init(name: "macOS 1", deviceID: UInt32.random(in: 100...999))
+#endif
     mic = input ?? .init()
 #else
     guard let input = engine.input else { fatalError() }
@@ -131,9 +134,13 @@ struct InputDevicePicker: View {
   
   var body: some View {
     Picker("Input: \(device.deviceID)", selection: $device) {
+      #if os(iOS)
       ForEach(getDevices(), id: \.self) {
         Text($0.deviceID)
       }
+      #elseif os(macOS)
+      Text("System device")
+      #endif
     }
     .pickerStyle(.menu)
     .onChange(of: device) {
@@ -146,11 +153,13 @@ struct InputDevicePicker: View {
   }
 
   func setInputDevice(to device: Device) {
+    #if os(iOS)
     do {
       try AudioEngine.setInputDevice(device)
     } catch {
       print(#function, error)
     }
+    #endif
   }
 }
 

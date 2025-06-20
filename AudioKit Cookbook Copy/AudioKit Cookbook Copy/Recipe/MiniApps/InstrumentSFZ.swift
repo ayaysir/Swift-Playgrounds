@@ -124,14 +124,12 @@ struct InstrumentSFZView: View {
     GeometryReader { proxy in
       VStack {
         if horizontalSizeClass == .compact {
-          // ScrollView {
-          //   paramRows(chunked: instrumentParamsChunked)
-          // }
-          
           TabView(selection: $currentPage) {
             paramRowsForPage(chunked: instrumentParamsChunked, rowsInPage: rowsInPage)
           }
+          #if os(iOS)
           .indexViewStyle(.page(backgroundDisplayMode: .interactive))
+          #endif
           
           pageNavigator(chunkedCount: instrumentParamsChunked.count)
         } else {

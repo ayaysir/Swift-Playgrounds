@@ -39,7 +39,15 @@ struct ReverbView: View {
   }
   
   var cellHeight: CGFloat {
-    UIScreen.main.bounds.width / CGFloat(columnsCount) - columnsMargin - 30
+    let screenWidth: CGFloat
+
+    #if os(iOS)
+    screenWidth = UIScreen.main.bounds.width
+    #elseif os(macOS)
+    screenWidth = NSScreen.main?.frame.width ?? 800 // macOS 기본값 fallback
+    #endif
+
+    return screenWidth / CGFloat(columnsCount) - columnsMargin - 30
   }
   
   var body: some View {

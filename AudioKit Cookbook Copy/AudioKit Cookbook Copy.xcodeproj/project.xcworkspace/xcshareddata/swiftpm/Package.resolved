@@ -1,5 +1,5 @@
 {
-  "originHash" : "f9a20c72293f17c6d20fe0e157ea731ab77e005308b7b9fec309a58f66f010d4",
+  "originHash" : "aa7f701406302c75e2d13e403163e336b4629deabfa064576ab165d58c9f4e7c",
   "pins" : [
     {
       "identity" : "audiokit",
@@ -71,6 +71,15 @@
       "state" : {
         "revision" : "dd0636e151724b8ba2e0908eba4d99a6ff24d00c",
         "version" : "1.0.0"
+      }
+    },
+    {
+      "identity" : "pianoroll",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/AudioKit/PianoRoll.git",
+      "state" : {
+        "revision" : "49e5b619ffbd581431b5baa99054fa1a6982c404",
+        "version" : "1.0.7"
       }
     },
     {

@@ -105,7 +105,9 @@ struct ListView: View {
       }
     }
     .navigationTitle("AudioKit Cookbook")
+    #if os(iOS)
     .navigationBarTitleDisplayMode(.inline)
+    #endif
   }
 }
 
@@ -124,6 +126,9 @@ struct ViewDicts {
     "Controls": Lazy(V(ControlsView())),
     "Flow": Lazy(V(FlowView())),
     "Keyboard": Lazy(V(KeyboardView())),
+    "Piano Roll": Lazy(V(PianoRollView())),
+    "Synthesis Toolkit (STK)": Lazy(V(STKView())),
+    "Waveform": Lazy(V(WaveformView())),
   ]
   
   static let audioPlayers: ViewDict = [

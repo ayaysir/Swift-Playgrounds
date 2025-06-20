@@ -116,7 +116,9 @@ struct FiltersView: View {
         FilterListArea
           .tag(1)
       }
+      #if os(iOS)
       .tabViewStyle(.page)
+      #endif
     }
     .padding(10)
     .navigationTitle(navTitle.spacedCamelCase)

@@ -70,12 +70,18 @@ struct CompressorView: View {
         ResizableImageView(image: Image(.imageParameterOfCompressor))
       }
       .padding(.horizontal, 10)
+#if os(iOS)
       .tabViewStyle(.page)
+#endif
       .onAppear {
+#if os(iOS)
         UIPageControl.appearance().isHidden = true
+#endif
       }
       .onDisappear {
+#if os(iOS)
         UIPageControl.appearance().isHidden = false
+#endif
       }
     }
     .navigationTitle("Compressor")

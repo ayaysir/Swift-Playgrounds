@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		440908552DE5C27F009D8AA3 /* STKAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 440908542DE5C27F009D8AA3 /* STKAudioKit */; };
+		441C55762E05228D00873A9E /* PianoRoll in Frameworks */ = {isa = PBXBuildFile; productRef = 441C55752E05228D00873A9E /* PianoRoll */; };
 		4423049C2DC4D4690035FF91 /* SporthAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4423049B2DC4D4690035FF91 /* SporthAudioKit */; };
 		44E6A3D82DBEA8FA0009500A /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 44E6A3D72DBEA8FA0009500A /* AudioKit */; };
 		44E6A3DB2DBF48150009500A /* AudioKitEX in Frameworks */ = {isa = PBXBuildFile; productRef = 44E6A3DA2DBF48150009500A /* AudioKitEX */; };
@@ -54,6 +55,7 @@
 				44E6A3E72DBF49900009500A /* Flow in Frameworks */,
 				44E6A3F02DBF4A5D0009500A /* Waveform in Frameworks */,
 				44E6A3D82DBEA8FA0009500A /* AudioKit in Frameworks */,
+				441C55762E05228D00873A9E /* PianoRoll in Frameworks */,
 				44E6A3DE2DBF48570009500A /* AudioKitUI in Frameworks */,
 				44E6A3EA2DBF49A80009500A /* Keyboard in Frameworks */,
 				44E6A3F32DBF4B090009500A /* Tonic in Frameworks */,
@@ -114,6 +116,7 @@
 				44E6A3F22DBF4B090009500A /* Tonic */,
 				4423049B2DC4D4690035FF91 /* SporthAudioKit */,
 				440908542DE5C27F009D8AA3 /* STKAudioKit */,
+				441C55752E05228D00873A9E /* PianoRoll */,
 			);
 			productName = "AudioKit Cookbook Copy";
 			productReference = 44E6A3A92DBE87030009500A /* AudioKit Cookbook Copy.app */;
@@ -156,6 +159,7 @@
 				44E6A3F12DBF4B090009500A /* XCRemoteSwiftPackageReference "Tonic" */,
 				4423049A2DC4D4690035FF91 /* XCRemoteSwiftPackageReference "SporthAudioKit" */,
 				440908532DE5C27F009D8AA3 /* XCRemoteSwiftPackageReference "STKAudioKit" */,
+				441C55742E05228D00873A9E /* XCRemoteSwiftPackageReference "PianoRoll" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 44E6A3AA2DBE87030009500A /* Products */;
@@ -421,6 +425,14 @@
 				minimumVersion = 5.5.4;
 			};
 		};
+		441C55742E05228D00873A9E /* XCRemoteSwiftPackageReference "PianoRoll" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/PianoRoll.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.7;
+			};
+		};
 		4423049A2DC4D4690035FF91 /* XCRemoteSwiftPackageReference "SporthAudioKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AudioKit/SporthAudioKit.git";
@@ -516,6 +528,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 440908532DE5C27F009D8AA3 /* XCRemoteSwiftPackageReference "STKAudioKit" */;
 			productName = STKAudioKit;
+		};
+		441C55752E05228D00873A9E /* PianoRoll */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 441C55742E05228D00873A9E /* XCRemoteSwiftPackageReference "PianoRoll" */;
+			productName = PianoRoll;
 		};
 		4423049B2DC4D4690035FF91 /* SporthAudioKit */ = {
 			isa = XCSwiftPackageProductDependency;

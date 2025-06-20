@@ -29,6 +29,7 @@ struct PlayerControlsII: View {
   @State var source: GlobalSource = .drums
   @State var isShowingSources = false
   @State private var dragOver = false
+  @State var bufferChangeHandler: (() -> Void)? = nil
   
   var body: some View {
     HStack(spacing: 10) {
@@ -160,6 +161,8 @@ extension PlayerControlsII {
     if isPlaying {
       conductor.player.play()
     }
+    
+    bufferChangeHandler?()
   }
 }
 

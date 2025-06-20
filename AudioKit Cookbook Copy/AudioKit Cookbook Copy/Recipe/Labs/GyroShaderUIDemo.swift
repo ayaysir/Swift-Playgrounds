@@ -5,7 +5,10 @@
 //  Created by 윤범태 on 6/12/25.
 //
 
+
 import SwiftUI
+
+#if os(iOS)
 import CoreMotion
 
 class MotionManager: ObservableObject {
@@ -67,6 +70,14 @@ struct ExtendedRangeBackground: UIViewRepresentable {
 #Preview {
   GyroShaderUIDemoView()
 }
+
+#elseif os(macOS)
+struct GyroShaderUIDemoView: View {
+  var body: some View {
+    Text("macOS에서는 지원하지 않습니다.")
+  }
+}
+#endif
 
 /*
  https://www.notion.so/UI-20c6402b0516805a9ec5f4222d1645db

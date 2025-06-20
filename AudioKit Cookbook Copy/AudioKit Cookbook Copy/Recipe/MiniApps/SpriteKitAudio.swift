@@ -10,6 +10,12 @@ import SpriteKit
 import AudioKit
 import AVFoundation
 
+#if os(iOS)
+typealias PlatformColor = UIColor
+#elseif os(macOS)
+typealias PlatformColor = NSColor
+#endif
+
 // MARK: - SpriteKit
 
 // SKPhysicsContactDelegate는 SpriteKit에서 물리적인 충돌 이벤트(접촉)를 처리할 수 있게 해주는 델리게이트(위임) 프로토콜입니다.
@@ -60,40 +66,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
   }
   
+  #if os(iOS)
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    guard let touch = touches.first else { return }
-    
-    let location = touch.location(in: self)
-    // 시각적 표현 (화면에 보임)
-    let box = SKShapeNode(circleOfRadius: 5)
-    let boxColor: UIColor = [
-      .red,
-      .green,
-      .yellow,
-      .orange,
-      .magenta,
-      .cyan,
-      .systemOrange,
-      .systemPink,
-      .systemTeal,
-      .systemMint,
-    ].randomElement()!
-    box.fillColor = boxColor
-    box.strokeColor = boxColor
-    // 터치 위치에 공 떨어트림
-    box.position = location
-    // 물리적 충돌/중력 등 물리 시뮬레이션 대상 (화면에 보이지 않음)
-    box.physicsBody = SKPhysicsBody(circleOfRadius: 5)
-    // 물리 바디에 **탄성 계수 (restitution)**를 설정: 충돌 시 반사(튕김) 정도
-    // 0.0(전혀 튕김 없음) ~ 1.0(완전 탄성)
-    box.physicsBody?.restitution = 0.55
-    box.physicsBody?.categoryBitMask = 2
-    box.physicsBody?.contactTestBitMask = 2
-    box.physicsBody?.affectedByGravity = true
-    box.physicsBody?.isDynamic = true
-    box.name = "ball"
-    addChild(box)
+    guard let location = touches.first?.location(in: self) else { return }
+    spawnBall(at: location)
   }
+  #elseif os(macOS)
+  override func mouseDown(with event: NSEvent) {
+    let location = event.location(in: self)
+    spawnBall(at: location)
+  }
+  #endif
   
   func didBegin(_ contact: SKPhysicsContact) {
     if contact.nodesContainsName("platform1") {
@@ -118,6 +101,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
       conductor.instrument.stop(noteNumber: noteNumber, channel: 0)
     }
+  }
+  
+  private func spawnBall(at location: CGPoint) {
+    let ball = SKShapeNode(circleOfRadius: 5)
+
+    // 플랫폼 공통 색상 배열
+    let colorList: [PlatformColor] = [
+      .red, .green, .yellow, .orange, .magenta, .cyan,
+      .systemOrange, .systemPink, .systemTeal, .systemMint
+    ]
+
+    ball.fillColor = colorList.randomElement()!
+    ball.strokeColor = ball.fillColor
+    // 터치 위치에 공 떨어트림
+    ball.position = location
+    // 물리적 충돌/중력 등 물리 시뮬레이션 대상 (화면에 보이지 않음)
+    ball.physicsBody = SKPhysicsBody(circleOfRadius: 5)
+    // 물리 바디에 **탄성 계수 (restitution)**를 설정: 충돌 시 반사(튕김) 정도
+    // 0.0(전혀 튕김 없음) ~ 1.0(완전 탄성)
+    ball.physicsBody?.restitution = 0.55
+    ball.physicsBody?.categoryBitMask = 2
+    ball.physicsBody?.contactTestBitMask = 2
+    ball.physicsBody?.affectedByGravity = true
+    ball.physicsBody?.isDynamic = true
+    ball.name = "ball"
+    addChild(ball)
   }
 }
 
