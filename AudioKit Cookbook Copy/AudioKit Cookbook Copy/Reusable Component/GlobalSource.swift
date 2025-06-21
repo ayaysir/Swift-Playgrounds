@@ -57,6 +57,14 @@ enum GlobalSource: CaseIterable, Identifiable, Hashable {
     return url.absoluteString
   }
   
+  var url: URL? {
+    guard case .custom(let url) = self else {
+      return Bundle.main.url(forResource: filePath, withExtension: "")
+    }
+
+    return url
+  }
+  
   var fileName: String {
     switch self {
     case .baseSynth:

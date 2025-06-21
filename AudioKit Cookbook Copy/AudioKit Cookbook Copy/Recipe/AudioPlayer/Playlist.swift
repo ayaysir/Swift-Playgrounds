@@ -84,7 +84,7 @@ class PlaylistConductor: ObservableObject, HasAudioEngine {
   private func loadStartPlayback(of audioFile: AudioFile) {
     do {
       try player.load(url: audioFile.url)
-      player.play(from: 10)
+      player.play()
       loadedFile = audioFile
     } catch {
       Log(error.localizedDescription, type: .error)
