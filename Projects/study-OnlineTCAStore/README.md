@@ -1,8 +1,8 @@
 # 목표
 
-- https://github.com/pitt500/OnlineStoreTCA 베끼기
-- 1주일(2025.06.19 ~ 2025.06.26)동안 학습
-- README.md 번역
+- [ ] https://github.com/pitt500/OnlineStoreTCA 베끼기
+- [ ] 1주일(2025.06.19 ~ 2025.06.26)동안 학습
+- [x] README.md 번역
 
 ---
 
@@ -780,3 +780,407 @@ Text("Parent View")
 
 > If you want to lean more about Binding with TCA and SwiftUI, take a look to this [video](https://youtu.be/Ilr8AsoggIY).
 </details>
+
+## Testing
+
+### Testing Basics
+
+Testing is a crucial part of software development. TCA has its own tools to test reducers in a very simple way.  
+테스트는 소프트웨어 개발의 중요한 부분입니다. TCA는 매우 간단한 방식으로 리듀서를 테스트할 수 있는 자체 도구를 제공합니다.  
+
+When you test a reducer, you will use a TestStore class passing an initial state and a reducer like the store that you are using in the production code.  
+리듀서를 테스트할 때는 `TestStore` 클래스를 사용하여 초기 상태와 프로덕션 코드에서 사용하는 스토어와 같은 리듀서를 전달합니다.  
+
+Next, you can send an action but, in this case, send receive a closure that you need to expect the result of this action. For example, when you send increseCounter action, you expect that count is equal to 1 if previously, your state counter is 0.  
+다음으로, 액션을 전송할 수 있지만, 이 경우에는 해당 액션의 결과를 기대하는 클로저를 전송하고 수신합니다. 예를 들어, `increseCounter` 액션을 전송할 때, 이전에 상태 카운터가 0이었다면 count가 1이 되어야 합니다.  
+
+Finally, you send a decreaseCounter and the expectation of this action is count state equal to 0 because previously count was setted to 1.  
+마지막으로 `decreaseCounter`를 보내면 이 동작에 대한 기대는 count 상태가 0이 되는 것입니다. 이전에 count가 1로 설정되었기 때문입니다.  
+
+```swift
+@MainActor
+class CounterDomainTest: XCTestCase {
+    func testHappyPath() {
+        let store = TestStore(
+            initialState: CounterDomain.State(),
+            reducer: { CounterDomain() }
+        )
+
+        await store.send(.increaseCounter) {
+            $0.count = 1
+        }
+
+        await store.send(.decreaseCounter) {
+            $0.count = 0
+        }
+    }
+}
+```
+
+### Testing Side effects
+
+The first thing is the ability to mock every side effect of the system. To do that TestStore has a closure for this purpose.  
+첫 번째는 시스템의 모든 부작용(side effect)을 모의(mock)할 수 있는 기능입니다. TestStore에는 이를 위한 클로저가 있습니다.  
+
+Notice that `fetchProducts` action has a side effect. When it finishes, send an action `fetchProductsResponse` back to the system. When you test this, you will use `store.receive` for response actions.  
+`fetchProducts` 액션에는 side effect가 있습니다. 작업이 완료되면 `fetchProductsResponse` 액션을 시스템으로 다시 보냅니다. 이 액션을 테스트할 때는 응답 액션으로 `store.receive`를 사용합니다.  
+
+```swift
+@MainActor
+class ProductListDomainTest: XCTestCase {
+    func testSideEffects() {
+        let products: [Product] = ...
+        let store = TestStore(
+            initialState: ProductListDomain.State(),
+            reducer: { ProductListDomain() }
+        ) {
+            $0.apiClient.fetchProducts = { products }
+        }
+
+         await store.send(.fetchProducts) {
+            $0.dataLoadingStatus = .loading
+        }
+        
+        await store.receive(.fetchProductsResponse(.success(products))) {
+            $0.products = products
+            $0.dataLoadingStatus = .success
+        }
+    }
+}
+```
+
+### Testing CasePathable
+
+CasePathable is a nice macro that it has a lot of useful tips. One of those is using keypaths for testing actions. For example, if you have this test.  
+CasePathable은 유용한 팁이 많은 훌륭한 매크로입니다. 그중 하나는 액션 테스트를 위해 키패스를 사용하는 것입니다. 예를 들어, 다음과 같은 테스트가 있다고 가정해 보겠습니다.  
+
+```swift
+await store.send(
+            .cartItem(
+                .element(
+                    id: cartItemId1,
+                    action: .deleteCartItem(product: Product.sample[0]))
+            )
+        ) {
+            ...
+        }
+```
+
+We can update this with:  
+다음을 사용하여 업데이트할 수 있습니다.  
+
+```swift
+await store.send(\.cartItem[id: cartItemId1].deleteCartItem, Product.sample[0]) {
+    ...
+}
+```
+
+Another example:  
+
+```swift
+await store.send(.alert(.presented(.didConfirmPurchase)))
+```
+
+를  
+
+```swift
+await store.send(\.alert.didConfirmPurchase)
+```
+
+## Other topics
+
+### Optional States
+
+By default, TCA keeps a state in memory throughout the entire lifecycle of an app. However, in certain scenarios, maintaining a state can be resource-intensive and unnecessary. One such case is when dealing with modal views that are displayed for a short duration. In these situations, it is more efficient to use optional states.  
+기본적으로 TCA는 앱의 전체 수명 주기 동안 상태를 메모리에 보관합니다. 하지만 특정 상황에서는 상태를 유지하는 것이 리소스를 많이 소모하고 불필요할 수 있습니다. 예를 들어, 짧은 시간 동안 표시되는 모달 뷰를 처리하는 경우가 그렇습니다. 이러한 상황에서는 선택적 상태를 사용하는 것이 더 효율적입니다.  
+
+Creating an optional state in TCA follows the same approach as declaring any optional value in Swift. Simply define the property within the parent state, but instead of assigning a default value, declare it as optional. For instance, in the provided example, the `cartState` property holds an optional state for a Cart List.  
+TCA에서 선택적(optional) 상태를 생성하는 것은 Swift에서 옵셔널 값을 선언하는 것과 동일한 접근 방식을 따릅니다. 부모 상태 내에 속성을 정의하고, 기본값을 할당하는 대신 옵셔널 상태로 선언하면 됩니다. 예를 들어, 제공된 예시에서 `cartState` 속성은 장바구니 목록의 옵셔널 상태를 가지고 있습니다.  
+
+```swift
+struct ProductListDomain: ReducerProtocol {
+    struct State: Equatable {
+        var productListState: IdentifiedArrayOf<ProductDomain.State> = []
+        var shouldOpenCart = false
+        var cartState: CartListDomain.State? // optional state
+        
+        // More properties...
+    }
+}
+```
+
+Now, in the `Reduce` function, we can utilize the `ifLet` operator to transform the child reducer (`CartListDomain`) into one that is compatible with the parent reducer (`ProductList`).  
+이제 `Reduce` 함수에서 `ifLet` 연산자를 사용하여 자식 리듀서(`CartListDomain`)를 부모 리듀서(`ProductList`)와 호환되는 리듀서로 변환할 수 있습니다.  
+
+In the provided example, the `CartListDomain` will be evaluated only if the `cartState` is non-nil. To assign a new non-optional state, the parent reducer will need to initialize the property (`cartState`) when a specific action (`setCartView`) is triggered.  
+제공된 예에서 `CartListDomain`은 `cartState`가 nil이 아닌 경우에만 평가(evaluated)됩니다. optional state가 아닌 새로운 non-optional state를 할당하려면 부모 리듀서가 특정 액션(`setCartView`)이 트리거될 때 속성(`cartState`)을 초기화해야 합니다.  
+
+This approach ensures that the optional state is properly handled within the TCA framework and allows for seamless state management between the parent and the optional child reducers.  
+이러한 접근 방식은 선택적 상태가 TCA 프레임워크 내에서 적절하게 처리되도록 보장하고 부모와 선택적 자식 리듀서 간의 원활한 상태 관리를 허용합니다.  
+
+```swift
+struct ProductListDomain: ReducerProtocol {
+    // State and Actions ...
+    
+    var body: some ReducerProtocol<State, Action> {
+        Reduce { state, action in
+            switch action {
+            //  More cases ...
+            case .setCartView(let isPresented):
+                state.shouldOpenCart = isPresented
+                state.cartState = isPresented
+                ? CartListDomain.State(...)
+                : nil
+                return .none
+            }
+        }
+        .ifLet(\.cartState, action: /ProductListDomain.Action.cart) {
+            CartListDomain()
+        }
+    }
+}
+```
+
+Lastly, in the view, you can employ `IfLetStore` to unwrap a store with optional state. This allows you to conditionally display the corresponding view that operates with that particular state.  
+마지막으로, 뷰에서 `IfLetStore`를 사용하여 선택적 상태를 가진 스토어를 언래핑할 수 있습니다. 이를 통해 특정 상태에 따라 동작하는 해당 뷰를 조건부로 표시할 수 있습니다.  
+
+```swift
+List {
+    ForEachStore(
+        self.store.scope(
+            state: \.productListState,
+            action: ProductListDomain.Action
+                .product(id: action:)
+        )
+    ) {
+        ProductCell(store: $0)
+    }
+}
+.sheet(
+    isPresented: viewStore.binding(
+        get: \.shouldOpenCart,
+        send: ProductListDomain.Action.setCartView(isPresented:)
+    )
+) {
+    IfLetStore(
+        self.store.scope(
+            state: \.cartState,
+            action: ProductListDomain.Action.cart
+        )
+    ) {
+        CartListView(store: $0)
+    }
+}
+```
+
+> If you want to learn more about optional states, check out this [video](https://youtu.be/AV0laQw2OjM).
+
+### Private Actions
+
+By default, when you declare an action in a TCA domain, it is accessible to other reducers as well. However, there are situations where an action is intended to be specific to a particular reducer and does not need to be exposed outside of it.  
+기본적으로 TCA 도메인에서 액션을 선언하면 다른 리듀서에서도 해당 액션에 접근할 수 있습니다. 하지만 액션이 특정 리듀서에만 적용되어야 하며, 외부에 노출될 필요가 없는 경우도 있습니다.  
+
+In such cases, you can simply declare private functions to encapsulate those actions within the domain's scope. This approach ensures that the actions remain private and only accessible within the intended context, enhancing the encapsulation and modularity of your TCA implementation:  
+이러한 경우, 도메인 범위 내에서 해당 동작을 캡슐화하기 위해 private 함수를 선언하면 됩니다. 이렇게 하면 동작이 private 상태로 유지되고 의도한 컨텍스트 내에서만 접근 가능하므로 TCA 구현의 캡슐화 및 모듈화가 향상됩니다.
+
+```swift
+var body: some ReducerProtocol<State, Action>
+    // More reducers ...
+    Reduce { state, action in
+        switch action {
+        // More actions ...
+        case .cart(let action):
+            switch action {
+            case .didPressCloseButton:
+                return closeCart(state: &state)
+            case .dismissSuccessAlert:
+                resetProductsToZero(state: &state)
+
+                return .task {
+                    .closeCart
+                }
+            }
+        case .closeCart:
+            return closeCart(state: &state)
+        }
+    }
+}
+
+private func closeCart(
+        state: inout State
+) -> Effect<Action, Never> {
+    state.shouldOpenCart = false
+    state.cartState = nil
+
+    return .none
+}
+
+private func resetProductsToZero(
+    state: inout State
+) {
+    for id in state.productListState.map(\.id)
+    where state.productListState[id: id]?.count != 0  {
+        state.productListState[id: id]?.addToCartState.count = 0
+    }
+}
+```
+
+> For more about private actions, check out this [video](https://youtu.be/7BkZX_7z-jw).
+
+### Invoke the UI
+
+<!-- 232.84달러의 구입을 확정하겠습니까 confirm alert 창 -->
+<img src="./Images/alertView1.png" width="50%" height="50%">
+
+```swift
+let store: Store<CartListDomain.State, CartListDomain.Action>
+
+Text("Parent View")
+.alert(
+    self.store.scope(state: \.confirmationAlert, action: { $0 }),
+    dismiss: .didCancelConfirmation
+)
+
+> Explicit action is always needed for `store.scope`. Check out this commit to learn more: [store.scope](https://github.com/pointfreeco/swift-composable-architecture/commit/da205c71ae72081647dfa1442c811a57181fb990)<br>This [video](https://youtu.be/U3EMduy-DhE) explains more about AlertView in SwiftUI and TCA.
+
+### Making a Root Domain with Tab View
+
+Creating a Root Domain in TCA is similar to creating any other domain. In this case, each property within the state will correspond to a complex substate. To handle tab logic, we can include an enum that represents each tab item, providing a structured approach to managing the different tabs:  
+TCA에서 루트 도메인을 만드는 것은 다른 도메인을 만드는 것과 비슷합니다. 이 경우 상태 내의 각 속성은 복잡한 하위 상태에 해당합니다. 탭 로직을 처리하기 위해 각 탭 항목을 나타내는 열거형을 포함하여 다양한 탭을 체계적으로 관리할 수 있습니다.  
+
+```swift
+struct RootDomain: ReducerProtocol {
+    struct State: Equatable {
+        var selectedTab = Tab.products // 현재 선택된 탭
+        var productListState = ProductListDomain.State() // ProductListDomain이 관리하는 복잡한 상태
+        var profileState = ProfileDomain.State() // profileState: ProfileDomain이 관리하는 복잡한 상태
+    }
+    
+    enum Tab {
+        case products
+        case profile
+    }
+    
+    enum Action: Equatable {
+        case tabSelected(Tab) // 탭이 전환될 때 상태 변경
+        case productList(ProductListDomain.Action) // ProductListDomain.Action을 포함하여 위임 처리
+        case profile(ProfileDomain.Action) // profile: ProfileDomain.Action을 포함하여 위임 처리
+    }
+    
+    // Dependencies (도메인이 수행할 수 없는 작업을 함수형으로 주입)
+    var fetchProducts: @Sendable () async throws -> [Product]
+    var sendOrder:  @Sendable ([CartItem]) async throws -> String
+    var fetchUserProfile:  @Sendable () async throws -> UserProfile
+    var uuid: @Sendable () -> UUID
+    
+    static let live = Self(
+        fetchProducts: APIClient.live.fetchProducts,
+        sendOrder: APIClient.live.sendOrder,
+        fetchUserProfile: APIClient.live.fetchUserProfile,
+        uuid: { UUID() }
+    )
+    
+    var body: some ReducerProtocol<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case .productList:
+                return .none
+            case .tabSelected(let tab):
+                state.selectedTab = tab
+                return .none
+            case .profile:
+                return .none
+            }
+        }
+        
+        // Scope는 루트 도메인의 상태와 액션을 하위 도메인과 연결
+        // \.는 KeyPath, /RootDomain.Action.caseName은 CasePath
+        // 이 둘을 조합해 “루트에서 하위 도메인을 스코프(scope)“함
+        // 이렇게 하면 ProductListDomain, ProfileDomain이 자신의 상태와 액션만 알면 되며, 루트 도메인의 상태/액션은 자동 연결됨
+        Scope(state: \.productListState, action: /RootDomain.Action.productList) {
+            ProductListDomain(
+                fetchProducts: fetchProducts,
+                sendOrder: sendOrder,
+                uuid: uuid
+            )
+        }
+        Scope(state:  \.profileState, action: /RootDomain.Action.profile) {
+            ProfileDomain(fetchUserProfile: fetchUserProfile)
+        }
+    }
+}
+```
+
+When it comes to the UI implementation, it closely resembles the standard SwiftUI approach, with a small difference. Instead of using a regular property, we hold the `store` property to manage the currently selected tab:  
+UI 구현 측면에서는 표준 SwiftUI 방식과 매우 유사하지만, 약간의 차이가 있습니다. 일반 속성을 사용하는 대신, 현재 선택된 탭을 관리하기 위해 `store` 속성을 사용합니다.  
+
+```swift
+struct RootView: View {
+    // 모든 상태 및 액션을 중앙에서 관리하는 객체, 루트 도메인의 상태(RootDomain.State)와 액션(RootDomain.Action)을 담고 있음, 각 뷰는 store를 통해 상태를 읽고, 액션을 보냄
+    let store: Store<RootDomain.State, RootDomain.Action>
+    
+    var body: some View {
+        // WithViewStore: 상태를 구독하고 액션을 보내기 위한 뷰 레벨 wrapper, 내부에서 viewStore를 통해 상태를 읽고, 액션을 전송할 수 있음,  뷰와 TCA 상태 간의 양방향 바인딩을 만들 수 있습니다.
+        WithViewStore(self.store) { viewStore in
+            TabView(
+                selection: viewStore.binding(
+                    get: \.selectedTab, // 탭 변경시 (상태 가져옴)
+                    send: RootDomain.Action.tabSelected // 액션 전송 (값 변경)
+                )
+            ) {
+                ProductListView(
+                    store: self.store.scope( // 하위 도메인의 store를 만듭니다.
+                        state: \.productListState,
+                        action: RootDomain.Action
+                            .productList // (하위 액션)
+                    )
+                )
+                .tabItem {
+                    Image(systemName: "list.bullet")
+                    Text("Products")
+                }
+                .tag(RootDomain.Tab.products)
+                ProfileView(
+                    store: self.store.scope(
+                        state: \.profileState,
+                        action: RootDomain.Action.profile
+                    )
+                )
+                .tabItem {
+                    Image(systemName: "person.fill")
+                    Text("Profile")
+                }
+                .tag(RootDomain.Tab.profile)
+            }
+        }
+    }
+}
+```
+
+To call RootView, we provide the initial domain state and the reducer:  
+RootView를 호출하려면 초기 도메인 상태와 리듀서를 제공합니다.  
+
+To instantiate the `RootView`, you need to provide two parameters: the initial domain state and the reducer:  
+`RootView`를 인스턴스화하려면 초기 도메인 상태와 리듀서라는 두 가지 매개변수를 제공해야 합니다.  
+
+```swift
+@main
+struct OnlineStoreTCAApp: App {
+    var body: some Scene {
+        WindowGroup {
+            RootView(
+                store: Store(
+                    initialState: RootDomain.State(),
+                    reducer: RootDomain.live
+                )
+            )
+        }
+    }
+}
+```
+
+These elements enable the proper initialization and functioning of the `RootView` within the TCA architecture.  
+이러한 요소는 TCA 아키텍처 내에서 `RootView`의 적절한 초기화와 기능을 가능하게 합니다.  
+
+> For a comprehensive understanding of this implementation, I recommend checking out this [video](https://youtu.be/a_FwMVIhCHY).
+
