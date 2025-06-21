@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		445586162E070306003AB4C9 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 445586152E070306003AB4C9 /* ComposableArchitecture */; };
 		44D8A3622E042AF4002C34E3 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 44D8A3612E042AEF002C34E3 /* README.md */; };
 /* End PBXBuildFile section */
 
@@ -14,6 +15,26 @@
 		441C56812E05823300873A9E /* study-OnlineTCAStore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "study-OnlineTCAStore.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		44D8A3612E042AEF002C34E3 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		4455863B2E071205003AB4C9 /* Exceptions for "Document" folder in "study-OnlineTCAStore" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Reduce_vs_Body.md,
+			);
+			target = 44D8A3512E0427BE002C34E3 /* study-OnlineTCAStore */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		4455863C2E071205003AB4C9 /* Exceptions for "Document" folder in "Compile Sources" phase from "study-OnlineTCAStore" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 44D8A34E2E0427BE002C34E3 /* Sources */;
+			membershipExceptions = (
+				Reduce_vs_Body.md,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		441BC9AA2E0432C100956DB8 /* Images */ = {
@@ -28,6 +49,10 @@
 		};
 		44D8A3602E042AE8002C34E3 /* Document */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				4455863B2E071205003AB4C9 /* Exceptions for "Document" folder in "study-OnlineTCAStore" target */,
+				4455863C2E071205003AB4C9 /* Exceptions for "Document" folder in "Compile Sources" phase from "study-OnlineTCAStore" target */,
+			);
 			path = Document;
 			sourceTree = "<group>";
 		};
@@ -38,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				445586162E070306003AB4C9 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +103,7 @@
 			);
 			name = "study-OnlineTCAStore";
 			packageProductDependencies = (
+				445586152E070306003AB4C9 /* ComposableArchitecture */,
 			);
 			productName = "study-OnlineTCAStore";
 			productReference = 441C56812E05823300873A9E /* study-OnlineTCAStore.app */;
@@ -106,6 +133,9 @@
 			);
 			mainGroup = 44D8A3492E0427BE002C34E3;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				445586142E070306003AB4C9 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 44D8A3492E0427BE002C34E3;
 			projectDirPath = "";
@@ -337,6 +367,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		445586142E070306003AB4C9 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.20.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		445586152E070306003AB4C9 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 445586142E070306003AB4C9 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 44D8A34A2E0427BE002C34E3 /* Project object */;
 }

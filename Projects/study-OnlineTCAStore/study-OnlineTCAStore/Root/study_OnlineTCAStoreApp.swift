@@ -6,12 +6,18 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 @main
 struct study_OnlineTCAStoreApp: App {
   var body: some Scene {
     WindowGroup {
-      ContentView()
+      RootView(
+        store: Store(
+          initialState: RootDomain.State(),
+          reducer: { RootDomain() }
+        )
+      )
     }
   }
 }
