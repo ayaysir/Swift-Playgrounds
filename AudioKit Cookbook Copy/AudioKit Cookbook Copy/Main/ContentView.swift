@@ -31,6 +31,8 @@ struct ListView: View {
   @State private var expandOscillators = false
   @State private var expandAudioPlayers = false
   @State private var expandAdditionalPackages = false
+  @State private var expandUnrcategorizedDemos = false
+  @State private var expandWIPs = true
   @State private var expandLabs = false
   
   var body: some View {
@@ -98,9 +100,15 @@ struct ListView: View {
           }
         }
         
-        DisclosureGroup("Uncategorized Demos", isExpanded: .constant(true)) {
+        DisclosureGroup("Uncategorized Demos", isExpanded: $expandUnrcategorizedDemos) {
           ForEach(ViewDicts.uncategorizedDemos.keys.sorted(), id: \.self) { title in
             Link(title, viewDict: ViewDicts.uncategorizedDemos)
+          }
+        }
+        
+        DisclosureGroup("WIPs", isExpanded: $expandWIPs) {
+          ForEach(ViewDicts.wips.keys.sorted(), id: \.self) { title in
+            Link(title, viewDict: ViewDicts.wips)
           }
         }
         
@@ -128,6 +136,10 @@ struct ViewDicts {
   private init() {}
   
   // MARK: - View Dictionaries
+  
+  static let wips: ViewDict = [
+    "Base Tap for Speech Recognition": Lazy(V(BaseTapForSpeechRecognitionView())),
+  ]
   
   static let uncategorizedDemos: ViewDict = [
     "Audio Files": Lazy(V(AudioFilesView())),
