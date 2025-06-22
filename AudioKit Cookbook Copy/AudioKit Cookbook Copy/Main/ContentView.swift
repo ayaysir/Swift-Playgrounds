@@ -139,6 +139,8 @@ struct ViewDicts {
   
   static let wips: ViewDict = [
     "Base Tap for Speech Recognition": Lazy(V(BaseTapForSpeechRecognitionView())),
+    "Channel/Device Routing": Lazy(V(ChannelDeviceRoutingView())),
+    "Dunne Synth": Lazy(V(DunneSynthView())),
   ]
   
   static let uncategorizedDemos: ViewDict = [
