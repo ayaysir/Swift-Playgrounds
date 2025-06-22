@@ -144,6 +144,7 @@ struct ViewDicts {
     "Roland TB303 Filter": Lazy(V(RolandTB303FilterView())),
     "Polyphonic Oscillator": Lazy(V(PolyphonicOscillatorView())),
     "Polyphonic STK + MIDIKit": Lazy(V(PolyphonicSTKView())),
+    "MIDI Port Test (with Virtual MIDI Host)": Lazy(V(MIDIPortTestView())),
   ]
   
   static let uncategorizedDemos: ViewDict = [
