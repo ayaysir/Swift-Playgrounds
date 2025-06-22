@@ -10,6 +10,13 @@
 		440908552DE5C27F009D8AA3 /* STKAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 440908542DE5C27F009D8AA3 /* STKAudioKit */; };
 		441C55762E05228D00873A9E /* PianoRoll in Frameworks */ = {isa = PBXBuildFile; productRef = 441C55752E05228D00873A9E /* PianoRoll */; };
 		4423049C2DC4D4690035FF91 /* SporthAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4423049B2DC4D4690035FF91 /* SporthAudioKit */; };
+		4455864F2E08022A003AB4C9 /* MIDIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4455864E2E08022A003AB4C9 /* MIDIKit */; };
+		445586512E08022A003AB4C9 /* MIDIKitControlSurfaces in Frameworks */ = {isa = PBXBuildFile; productRef = 445586502E08022A003AB4C9 /* MIDIKitControlSurfaces */; };
+		445586532E08022A003AB4C9 /* MIDIKitCore in Frameworks */ = {isa = PBXBuildFile; productRef = 445586522E08022A003AB4C9 /* MIDIKitCore */; };
+		445586552E08022A003AB4C9 /* MIDIKitIO in Frameworks */ = {isa = PBXBuildFile; productRef = 445586542E08022A003AB4C9 /* MIDIKitIO */; };
+		445586572E08022A003AB4C9 /* MIDIKitSMF in Frameworks */ = {isa = PBXBuildFile; productRef = 445586562E08022A003AB4C9 /* MIDIKitSMF */; };
+		445586592E08022A003AB4C9 /* MIDIKitSync in Frameworks */ = {isa = PBXBuildFile; productRef = 445586582E08022A003AB4C9 /* MIDIKitSync */; };
+		4455865B2E08022A003AB4C9 /* MIDIKitUI in Frameworks */ = {isa = PBXBuildFile; productRef = 4455865A2E08022A003AB4C9 /* MIDIKitUI */; };
 		44E6A3D82DBEA8FA0009500A /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 44E6A3D72DBEA8FA0009500A /* AudioKit */; };
 		44E6A3DB2DBF48150009500A /* AudioKitEX in Frameworks */ = {isa = PBXBuildFile; productRef = 44E6A3DA2DBF48150009500A /* AudioKitEX */; };
 		44E6A3DE2DBF48570009500A /* AudioKitUI in Frameworks */ = {isa = PBXBuildFile; productRef = 44E6A3DD2DBF48570009500A /* AudioKitUI */; };
@@ -53,13 +60,20 @@
 				440908552DE5C27F009D8AA3 /* STKAudioKit in Frameworks */,
 				44E6A3ED2DBF49D10009500A /* SoundpipeAudioKit in Frameworks */,
 				44E6A3E72DBF49900009500A /* Flow in Frameworks */,
+				445586552E08022A003AB4C9 /* MIDIKitIO in Frameworks */,
 				44E6A3F02DBF4A5D0009500A /* Waveform in Frameworks */,
 				44E6A3D82DBEA8FA0009500A /* AudioKit in Frameworks */,
+				445586592E08022A003AB4C9 /* MIDIKitSync in Frameworks */,
+				4455865B2E08022A003AB4C9 /* MIDIKitUI in Frameworks */,
+				445586572E08022A003AB4C9 /* MIDIKitSMF in Frameworks */,
+				4455864F2E08022A003AB4C9 /* MIDIKit in Frameworks */,
 				441C55762E05228D00873A9E /* PianoRoll in Frameworks */,
 				44E6A3DE2DBF48570009500A /* AudioKitUI in Frameworks */,
 				44E6A3EA2DBF49A80009500A /* Keyboard in Frameworks */,
+				445586512E08022A003AB4C9 /* MIDIKitControlSurfaces in Frameworks */,
 				44E6A3F32DBF4B090009500A /* Tonic in Frameworks */,
 				44E6A3DB2DBF48150009500A /* AudioKitEX in Frameworks */,
+				445586532E08022A003AB4C9 /* MIDIKitCore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,6 +131,13 @@
 				4423049B2DC4D4690035FF91 /* SporthAudioKit */,
 				440908542DE5C27F009D8AA3 /* STKAudioKit */,
 				441C55752E05228D00873A9E /* PianoRoll */,
+				4455864E2E08022A003AB4C9 /* MIDIKit */,
+				445586502E08022A003AB4C9 /* MIDIKitControlSurfaces */,
+				445586522E08022A003AB4C9 /* MIDIKitCore */,
+				445586542E08022A003AB4C9 /* MIDIKitIO */,
+				445586562E08022A003AB4C9 /* MIDIKitSMF */,
+				445586582E08022A003AB4C9 /* MIDIKitSync */,
+				4455865A2E08022A003AB4C9 /* MIDIKitUI */,
 			);
 			productName = "AudioKit Cookbook Copy";
 			productReference = 44E6A3A92DBE87030009500A /* AudioKit Cookbook Copy.app */;
@@ -160,6 +181,7 @@
 				4423049A2DC4D4690035FF91 /* XCRemoteSwiftPackageReference "SporthAudioKit" */,
 				440908532DE5C27F009D8AA3 /* XCRemoteSwiftPackageReference "STKAudioKit" */,
 				441C55742E05228D00873A9E /* XCRemoteSwiftPackageReference "PianoRoll" */,
+				4455864D2E08022A003AB4C9 /* XCRemoteSwiftPackageReference "MIDIKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 44E6A3AA2DBE87030009500A /* Products */;
@@ -441,6 +463,14 @@
 				minimumVersion = 5.5.1;
 			};
 		};
+		4455864D2E08022A003AB4C9 /* XCRemoteSwiftPackageReference "MIDIKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/orchetect/MIDIKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.10.2;
+			};
+		};
 		44E6A3D62DBEA8FA0009500A /* XCRemoteSwiftPackageReference "AudioKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AudioKit/AudioKit.git";
@@ -538,6 +568,41 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4423049A2DC4D4690035FF91 /* XCRemoteSwiftPackageReference "SporthAudioKit" */;
 			productName = SporthAudioKit;
+		};
+		4455864E2E08022A003AB4C9 /* MIDIKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4455864D2E08022A003AB4C9 /* XCRemoteSwiftPackageReference "MIDIKit" */;
+			productName = MIDIKit;
+		};
+		445586502E08022A003AB4C9 /* MIDIKitControlSurfaces */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4455864D2E08022A003AB4C9 /* XCRemoteSwiftPackageReference "MIDIKit" */;
+			productName = MIDIKitControlSurfaces;
+		};
+		445586522E08022A003AB4C9 /* MIDIKitCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4455864D2E08022A003AB4C9 /* XCRemoteSwiftPackageReference "MIDIKit" */;
+			productName = MIDIKitCore;
+		};
+		445586542E08022A003AB4C9 /* MIDIKitIO */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4455864D2E08022A003AB4C9 /* XCRemoteSwiftPackageReference "MIDIKit" */;
+			productName = MIDIKitIO;
+		};
+		445586562E08022A003AB4C9 /* MIDIKitSMF */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4455864D2E08022A003AB4C9 /* XCRemoteSwiftPackageReference "MIDIKit" */;
+			productName = MIDIKitSMF;
+		};
+		445586582E08022A003AB4C9 /* MIDIKitSync */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4455864D2E08022A003AB4C9 /* XCRemoteSwiftPackageReference "MIDIKit" */;
+			productName = MIDIKitSync;
+		};
+		4455865A2E08022A003AB4C9 /* MIDIKitUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4455864D2E08022A003AB4C9 /* XCRemoteSwiftPackageReference "MIDIKit" */;
+			productName = MIDIKitUI;
 		};
 		44E6A3D72DBEA8FA0009500A /* AudioKit */ = {
 			isa = XCSwiftPackageProductDependency;

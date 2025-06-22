@@ -141,6 +141,9 @@ struct ViewDicts {
     "Base Tap for Speech Recognition": Lazy(V(BaseTapForSpeechRecognitionView())),
     "Channel/Device Routing": Lazy(V(ChannelDeviceRoutingView())),
     "Dunne Synth": Lazy(V(DunneSynthView())),
+    "Roland TB303 Filter": Lazy(V(RolandTB303FilterView())),
+    "Polyphonic Oscillator": Lazy(V(PolyphonicOscillatorView())),
+    "Polyphonic STK + MIDIKit": Lazy(V(PolyphonicSTKView())),
   ]
   
   static let uncategorizedDemos: ViewDict = [

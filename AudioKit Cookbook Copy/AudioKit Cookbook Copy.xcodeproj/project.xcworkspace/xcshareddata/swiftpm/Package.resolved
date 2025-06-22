@@ -1,5 +1,5 @@
 {
-  "originHash" : "aa7f701406302c75e2d13e403163e336b4629deabfa064576ab165d58c9f4e7c",
+  "originHash" : "3a3c58fc9d8670a2f6c913695c7881cdfc69dfbd66e35212ef88c145f97cb782",
   "pins" : [
     {
       "identity" : "audiokit",
@@ -74,6 +74,15 @@
       }
     },
     {
+      "identity" : "midikit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/orchetect/MIDIKit",
+      "state" : {
+        "revision" : "f92addd6c9a3370f87c0ec9f0ee47614b556a2d8",
+        "version" : "0.10.2"
+      }
+    },
+    {
       "identity" : "pianoroll",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/AudioKit/PianoRoll.git",
@@ -107,6 +116,15 @@
       "state" : {
         "revision" : "e6af9e24eb599d4ff34d5776b0801cf0068142bc",
         "version" : "5.5.4"
+      }
+    },
+    {
+      "identity" : "timecodekit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/orchetect/TimecodeKit",
+      "state" : {
+        "revision" : "1014b5723a7eaa93eeb2ea2f52dfd9ea6eb6be0d",
+        "version" : "2.3.3"
       }
     },
     {
