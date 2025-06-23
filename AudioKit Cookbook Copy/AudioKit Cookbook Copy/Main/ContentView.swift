@@ -32,7 +32,7 @@ struct ListView: View {
   @State private var expandAudioPlayers = false
   @State private var expandAdditionalPackages = false
   @State private var expandUnrcategorizedDemos = false
-  @State private var expandWIPs = true
+  @State private var expandWIPs = false
   @State private var expandLabs = false
   
   var body: some View {
@@ -262,6 +262,7 @@ struct ViewDicts {
   
   static let labs: ViewDict = [
     "Gyro": Lazy(V(GyroShaderUIDemoView())),
+    "MultiTrack MIDI Player": Lazy(V(MultitrackMIDIPlayerView())),
   ]
 }
 

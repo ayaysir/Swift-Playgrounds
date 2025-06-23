@@ -229,7 +229,7 @@ extension MIDIPortTestConductor {
   }
 }
 
-extension MIDIPortTestConductor:MIDIListener {
+extension MIDIPortTestConductor: MIDIListener {
   func receivedMIDINoteOn(
     noteNumber: AudioKit.MIDINoteNumber,
     velocity: AudioKit.MIDIVelocity,
