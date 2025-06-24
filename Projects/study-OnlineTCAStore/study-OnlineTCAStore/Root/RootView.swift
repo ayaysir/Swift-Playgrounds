@@ -17,12 +17,17 @@ struct RootView: View {
   var body: some View {
     WithPerceptionTracking {
       TabView(selection: $store.selectedTab.sending(\.tabSelected)) {
-        Text("ProductListView")
-          .tabItem {
-            Image(systemName: "list.bullet")
-            Text("Products")
-          }
-          .tag(RootDomain.Tab.products)
+        ProductListView(
+          store: self.store.scope(
+            state: \.productListState,
+            action: \.productList
+          )
+        )
+        .tabItem {
+          Image(systemName: "list.bullet")
+          Text("Products")
+        }
+        .tag(RootDomain.Tab.products)
         
         Text("ProfileView")
           .tabItem {
@@ -42,6 +47,10 @@ struct RootView: View {
       reducer: { RootDomain() },
       withDependencies: { dependencyValue in
         // apiClient, uuid, etc.
+        dependencyValue.apiClient.fetchProducts = { Product.sample }
+        dependencyValue.apiClient.sendOrder = { _ in "OK" }
+        dependencyValue.apiClient.fetchUserProfile = { UserProfile.sample }
+        dependencyValue.uuid = .incrementing
       }
     )
   )

@@ -14,7 +14,18 @@ struct CartListDomain {
   struct State: Equatable {
     @Presents var alert: AlertState<Action.Alert>?
     var dataLoadingStatus = DataLoadingStatus.notStarted
-    // ...
+    var cartItems: IdentifiedArrayOf<CartItemDomain.State> = []
+    var totalPrice: Double = 0.0
+    var isPayButtonDisable = false
+    
+    var totalPriceString: String {
+      let roundedValue = round(totalPrice * 100) / 100.0
+      return "$\(roundedValue)"
+    }
+    
+    var isRequestInProcess: Bool {
+      dataLoadingStatus == .loading
+    }
   }
   
   enum Action: Equatable {
