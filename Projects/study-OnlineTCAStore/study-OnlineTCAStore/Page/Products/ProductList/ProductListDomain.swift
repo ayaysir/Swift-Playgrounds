@@ -190,7 +190,7 @@ extension ProductListDomain {
       }
     
     case .cartItem(.element(id: _, action: let action)):
-      switch action {
+      switch action { // CartItemDomain.Action
       case .deleteCartItem(let product):
         return .send(.resetProduct(product: product))
       }

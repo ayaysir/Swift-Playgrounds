@@ -29,9 +29,12 @@ struct ProductCell: View {
         VStack(alignment: .leading) {
           Text(store.product.title)
             .font(.headline)
+          Text(store.product.description)
+            .font(.caption)
+          Divider()
           HStack {
-            Text(store.product.description)
-              .font(.caption)
+            Text("$\(store.product.price.description)")
+              .font(.system(size: 25, weight: .medium))
             Spacer()
             AddToCartButton(
               store: store.scope(

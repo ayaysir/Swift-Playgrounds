@@ -15,32 +15,34 @@ struct ProductListView: View {
   var body: some View {
     // WithPerceptionTracking: 뷰 상태 추적기 (@Bindable store 사용)
     WithPerceptionTracking {
-      NavigationView {
-        if store.isLoading {
-          ProgressView()
-            .frame(width: 100, height: 100)
-        } else if store.shouldShowError {
-          ErrorView(
-            message: "Oops, we couldn't fetch product list",
-            retryAction: { store.send(.fetchProducts) }
-          )
-        } else {
-          ProductListArea
-        }
-      }
-      .task { store.send(.fetchProducts) }
-      .navigationTitle("Products")
-      .toolbar {
-        ToolbarItem(placement: .topBarTrailing) {
-          Button {
-            store.send(.setCartView(isPresented: true)) // ProductListDomain.Action에 있음
-          } label: {
-            Text("Go to Cart")
+      NavigationStack {
+        Group {
+          if store.isLoading {
+            ProgressView()
+              .frame(width: 100, height: 100)
+          } else if store.shouldShowError {
+            ErrorView(
+              message: "Oops, we couldn't fetch product list",
+              retryAction: { store.send(.fetchProducts) }
+            )
+          } else {
+            ProductListArea
           }
         }
-      }
-      .sheet(item: $store.scope(state: \.cartState, action: \.cart)) { store in
-        CartListView(store: store)
+        .task { store.send(.fetchProducts) }
+        .navigationTitle("Products")
+        .toolbar {
+          ToolbarItem(placement: .topBarTrailing) {
+            Button {
+              store.send(.setCartView(isPresented: true)) // ProductListDomain.Action에 있음
+            } label: {
+              Text("Go to Cart")
+            }
+          }
+        }
+        .sheet(item: $store.scope(state: \.cartState, action: \.cart)) { store in
+          CartListView(store: store)
+        }
       }
     }
   }
