@@ -18,9 +18,9 @@ struct RootView: View {
     WithPerceptionTracking {
       TabView(selection: $store.selectedTab.sending(\.tabSelected)) {
         ProductListView(
-          store: self.store.scope(
-            state: \.productListState,
-            action: \.productList
+          store: store.scope(
+            state: \.productListState, // RootDomain, ProductListDomain.State()
+            action: \.productList // RootDomain, productList(ProductListDomain.Action)
           )
         )
         .tabItem {
@@ -29,12 +29,28 @@ struct RootView: View {
         }
         .tag(RootDomain.Tab.products)
         
-        Text("ProfileView")
-          .tabItem {
-            Image(systemName: "person.fill")
-            Text("Profile")
-          }
-          .tag(RootDomain.Tab.profile)
+        // // Cannot convert value of type 'KeyPath<RootDomain.State, ProductListDomain.State>'
+        // // to expected argument type 'KeyPath<RootDomain.State, ProfileDomain.State>'
+        // ProfileView(
+        //   store: store.scope(
+        //     state: \.productListState,
+        //     action: \.productList
+        //   )
+        // )
+        
+        ProfileView(
+          // 이 도메인(RootView)의 store: StoreOf<RootDomain>
+          // 대상 store: StoreOf<ProfileDomain>
+          store: store.scope(
+            state: \.profileState, // RootDomain.State에 정의됨
+            action: \.profile // RootDomain.Action에 정의됨
+          )
+        )
+        .tabItem {
+          Image(systemName: "person.fill")
+          Text("Profile")
+        }
+        .tag(RootDomain.Tab.profile)
       }
     }
   }

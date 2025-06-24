@@ -11,7 +11,7 @@ import ComposableArchitecture
 @Reducer
 struct ProfileDomain {
   @ObservableState
-  struct state: Equatable {
+  struct State: Equatable {
     var profile: UserProfile = .default
     fileprivate var dataState = DataState.notStarted
     var isLoading: Bool {
@@ -31,17 +31,35 @@ struct ProfileDomain {
     // case fetchUserProfileResponse(Result<UserProfile, Never>)
   }
   
-  // func reduce(into state: inout State, action: Action) -> Effect<Action> {
-  //   switch action {
-  //   case .fetchUserProfile:
-  //     if state.dataState == .complete || state.dataState == DataState.loading {
-  //       return .none
-  //     }
-  //     
-  //     state.dataState == .loading
-  //   case .fetchUserProfileResponse(let result):
-  //     return .none
-  //   }
-  // }
+  @Dependency(\.apiClient.fetchUserProfile) var fetchUserProfile
+  
+  func reduce(into state: inout State, action: Action) -> Effect<Action> {
+    switch action {
+    case .fetchUserProfile:
+      if state.dataState == .complete || state.dataState == .loading {
+        return .none
+      }
+      
+      state.dataState = .loading
+      // 비동기 작업 실행
+      return Effect.run { send in
+        // 결과(fetched UserProfile)를 다음 액션(fetchUserProfileResp...success...profile)에 보냄
+        await send(.fetchUserProfileResponse(
+          TaskResult {
+            try await self.fetchUserProfile()
+          }
+        ))
+      }
+    case .fetchUserProfileResponse(.success(let profile)):
+      // fetchUserProfile에서 fetch 성공한 경우 여기서 처리
+      state.dataState = .complete
+      state.profile = profile
+      return .none
+    case .fetchUserProfileResponse(.failure(let error)):
+      state.dataState = .complete
+      print("fetchUserProfileResponse Error: \(error)")
+      return .none
+    }
+  }
 }
 
