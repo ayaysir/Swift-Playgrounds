@@ -28,15 +28,6 @@ extension Product: Decodable {
     case image
   }
   
-  enum CodingKeys: CodingKey {
-    case id
-    case title
-    case price
-    case description
-    case category
-    case imageString
-  }
-  
   init(from decoder: any Decoder) throws {
     let container = try decoder.container(keyedBy: ProductKeys.self)
     self.id = try container.decode(Int.self, forKey: .id)

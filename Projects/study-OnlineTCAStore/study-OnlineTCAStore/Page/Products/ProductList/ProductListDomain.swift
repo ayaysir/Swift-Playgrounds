@@ -74,8 +74,7 @@ struct ProductListDomain {
         return .none
         
       case .cart(.presented(let action)):
-        // return cartCaseAction(cartAction: action)
-        return .none
+        return switchCartPresentedAction(state: &state, cartAction: action)
         
       case .cart(.dismiss):
         return .none
@@ -142,14 +141,20 @@ extension ProductListDomain {
     return .none
   }
   
+  private func resetProductsToZero(
+      state: inout State
+  ) {
+      for id in state.productList.map(\.id) {
+          state.productList[id: id]?.count = 0
+      }
+  }
+  
   private func setCartViewAction(
     state: inout ProductListDomain.State,
     isPresented: Bool
   ) -> Effect<Action> {
     state.cartState = if isPresented {
-      CartListDomain.State(
-        cartItems: makeCartItems(from: state.productList)
-      )
+      CartListDomain.State(cartItems: makeCartItems(from: state.productList))
     } else {
       nil
     }
@@ -169,28 +174,29 @@ extension ProductListDomain {
     )
   }
   
-  private func cartCaseAction(cartAction action: CartListDomain.Action) -> Effect<Action> {
-    // switch action {
-    // case .didPressCloseButton:
-    //   return closeCart(state: &state)
-    //
-    // case .alert(.presented(.dismissSuccessAlert)):
-    //   resetProductsToZero(state: &state)
-    //
-    //   return .run { send in
-    //     await send(.closeCart)
-    //   }
-    //
-    // case .cartItem(.element(id: _, action: let action)):
-    //   switch action {
-    //   case .deleteCartItem(let product):
-    //     return .send(.resetProduct(product: product))
-    //   }
-    //
-    // default:
-    //   return .none
-    // }
+  private func switchCartPresentedAction(
+    state: inout Self.State,
+    cartAction action: CartListDomain.Action
+  ) -> Effect<Action> {
+    switch action {
+    case .didPressCloseButton:
+      return closeCart(state: &state)
     
-    // return .none
+    case .alert(.presented(.dismissSuccessAlert)):
+      resetProductsToZero(state: &state)
+    
+      return .run { send in
+        await send(.closeCart)
+      }
+    
+    case .cartItem(.element(id: _, action: let action)):
+      switch action {
+      case .deleteCartItem(let product):
+        return .send(.resetProduct(product: product))
+      }
+    
+    default:
+      return .none
+    }
   }
 }

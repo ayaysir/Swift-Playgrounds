@@ -33,9 +33,12 @@ struct ProductCell: View {
             Text(store.product.description)
               .font(.caption)
             Spacer()
-            // AddToCartButton
-            Button("AddToCart") {}
-              .buttonStyle(.bordered)
+            AddToCartButton(
+              store: store.scope(
+                state: \.addToCartState,
+                action: \.addToCart
+              )
+            )
           }
         }
       }
@@ -45,15 +48,17 @@ struct ProductCell: View {
 }
 
 #Preview(traits: .fixedLayout(width: 300, height: 300)) {
-  ProductCell(
-    store: Store(
-      initialState: ProductDomain.State(
-        id: UUID(),
-        product: Product.sample[0]
-      ),
-      reducer: { ProductDomain() }
+  List {
+    ProductCell(
+      store: Store(
+        initialState: ProductDomain.State(
+          id: UUID(),
+          product: Product.sample[0]
+        ),
+        reducer: { ProductDomain() }
+      )
     )
-  )
+  }
 }
 
 /*
