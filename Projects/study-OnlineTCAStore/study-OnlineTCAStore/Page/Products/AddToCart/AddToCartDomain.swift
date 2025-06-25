@@ -30,9 +30,13 @@ struct AddToCartDomain {
       state.count += 1
       return .none
     case .didTapMinusButton:
-      if state.count > 0 {
-        state.count -= 1
-      }
+      // ProductDomain.Reduce.didTapMinusButton 에서 0 미만 안되도록 처리
+      // ProductDomain에도 count가 있으며
+      // get { addToCartState.count } 이런 식으로 하위 도메인의 상태에서 가져옴
+      // if state.count > 0 {
+      //   state.count -= 1
+      // }
+      state.count -= 1
       return .none
     }
   }

@@ -40,8 +40,11 @@ struct ProductDomain {
     Reduce { state, action in
       switch action {
       case .addToCart(.didTapPlusButton):
+        // 나머지는 하위 어쩌구가 할것임
         return .none
       case .addToCart(.didTapMinusButton):
+        // 마이너스 1은 AddToCartDomain에서 적용됨
+        state.addToCartState.count = max(0, state.addToCartState.count)
         return .none
       }
     }
