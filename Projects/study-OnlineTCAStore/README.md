@@ -1,7 +1,7 @@
 # 목표
 
-- [ ] https://github.com/pitt500/OnlineStoreTCA 베끼기
-- [ ] 1주일(2025.06.19 ~ 2025.06.26)동안 학습
+- [x] https://github.com/pitt500/OnlineStoreTCA 베끼기
+- [x] 1주일(2025.06.19 ~ 2025.06.26)동안 학습
 - [x] README.md 번역
 
 ---
