@@ -28,9 +28,18 @@ struct CourseDomain {
     }
     
     Reduce { state, action in
+      let maxLevel = state.course.effects.count
+      
       switch action {
+      case .adjustLevel(.didTapPlusButton):
+        state.adjustLevelState.level = min(state.adjustLevelState.level, maxLevel)
+        return .none
+
+      case .adjustLevel(.didTapMinusButton):
+        state.adjustLevelState.level = max(state.adjustLevelState.level, 0)
+        return .none
+
       case .adjustLevel:
-        state.adjustLevelState.level = max(0, state.adjustLevelState.level)
         return .none
       }
     }

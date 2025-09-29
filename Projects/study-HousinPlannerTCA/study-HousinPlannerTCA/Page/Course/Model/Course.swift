@@ -53,7 +53,17 @@ extension Course {
       descJa: "キュートアイドルのアイドルが獲得するファン数がxxアップ",
       titleKo: "큐트 아이돌 팬 획득 증가",
       descKo: "큐트 아이돌이 획득하는 팬 수가 xx 증가",
-      effects: [CourseEffect.samples[0], CourseEffect.samples[1]]
+      effects: [.samples[0], .samples[1]]
+    ),
+    .init(
+      id: "test1b",
+      category: "idol",
+      subcategory: "",
+      titleJa: "特技レベルアップ確率アップ",
+      descJa: "レッスン時の特技レベルアップ確率がxxアップ",
+      titleKo: "특기 레벨업 확률 증가",
+      descKo: "레슨 시 특기 레벨업 확률이 xx 증가",
+      effects: [.samples[2], .samples[3]]
     ),
     .init(
       id: "test2",
@@ -63,7 +73,7 @@ extension Course {
       descJa: "営業で追加報酬が獲得できるようになる。",
       titleKo: "영업 추가 아이템 획득",
       descKo: "영업에서 추가 보상을 획득할 수 있게 됨",
-      effects: [CourseEffect.samples[2]]
+      effects: [.samples[4]]
     )
   ]
 }

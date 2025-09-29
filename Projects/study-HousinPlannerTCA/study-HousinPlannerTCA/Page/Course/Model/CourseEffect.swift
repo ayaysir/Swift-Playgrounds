@@ -58,6 +58,22 @@ extension CourseEffect {
       ),
       .init(
         id: "3",
+        courseId: "test1b",
+        level: 1,
+        valueEffect: 20,
+        pointEach: 5000,
+        pointCumulative: 5000
+      ),
+      .init(
+        id: "4",
+        courseId: "test1b",
+        level: 2,
+        valueEffect: 50,
+        pointEach: 2000,
+        pointCumulative: 7000
+      ),
+      .init(
+        id: "5",
         courseId: "test2",
         level: 1,
         valueEffect: nil,

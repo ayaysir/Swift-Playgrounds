@@ -129,31 +129,28 @@ struct ProductListDomain {
       CartListDomain()
     }
   }
-
 }
 
 extension ProductListDomain {
-  private func closeCart(
-    state: inout State
-  ) -> Effect<Action> {
+  private func closeCart(state: inout State) -> Effect<Action> {
     state.cartState = nil
-    
     return .none
   }
   
-  private func resetProductsToZero(
-      state: inout State
-  ) {
-      for id in state.productList.map(\.id) {
-          state.productList[id: id]?.count = 0
-      }
+  private func resetProductsToZero(state: inout State) {
+    for id in state.productList.map(\.id) {
+      state.productList[id: id]?.count = 0
+    }
   }
   
+  /// 장바구니 뷰에 대한 액션:
+  /// - Parameter isPresented: 장바구니를 열면 `true`, 아니면 `false`
   private func setCartViewAction(
     state: inout ProductListDomain.State,
     isPresented: Bool
   ) -> Effect<Action> {
     state.cartState = if isPresented {
+      // makeCartItems 함수가 product.addToCartState.count > 0인 애들만 뽑아서 CartItem으로 변환 → 여기서 장바구니 화면에 보이게 됨
       CartListDomain.State(cartItems: makeCartItems(from: state.productList))
     } else {
       nil
@@ -162,7 +159,10 @@ extension ProductListDomain {
     return .none
   }
   
-  private func makeCartItems(from products: IdentifiedArrayOf<ProductDomain.State>) -> IdentifiedArrayOf<CartItemDomain.State> {
+  /// products(ProductDomain.State)에서 장바구니 수량이 0 초과인 상품들을 표시
+  private func makeCartItems(
+    from products: IdentifiedArrayOf<ProductDomain.State>
+  ) -> IdentifiedArrayOf<CartItemDomain.State> {
     IdentifiedArrayOf(
       uniqueElements: products.compactMap {
         guard $0.count > 0 else { return nil }
@@ -183,6 +183,7 @@ extension ProductListDomain {
       return closeCart(state: &state)
     
     case .alert(.presented(.dismissSuccessAlert)):
+      // .dismissSuccessAlert ('구입에 성공했습니다' 경고창이 닫혔을 때)
       resetProductsToZero(state: &state)
     
       return .run { send in

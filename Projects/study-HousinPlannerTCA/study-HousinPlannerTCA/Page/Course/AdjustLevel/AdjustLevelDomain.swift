@@ -13,6 +13,7 @@ struct AdjustLevelDomain {
   @ObservableState
   struct State: Equatable {
     var level: Int = 0
+    var maxLevel: Int = 10
   }
   
   enum Action: Equatable {

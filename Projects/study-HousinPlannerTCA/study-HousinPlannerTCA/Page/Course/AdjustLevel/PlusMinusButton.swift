@@ -21,6 +21,7 @@ struct PlusMinusButton: View {
           size: .init(width: 5, height: 5)
         )
       }
+      .disabled(store.level <= 0)
       
       Text(store.level.description)
         .font(.system(size: 14))
@@ -33,6 +34,7 @@ struct PlusMinusButton: View {
           size: .init(width: 5, height: 5)
         )
       }
+      .disabled(store.level >= store.maxLevel)
     }
     .buttonStyle(.plain)
   }
@@ -41,7 +43,7 @@ struct PlusMinusButton: View {
 #Preview {
   PlusMinusButton(
     store: .init(
-      initialState: AdjustLevelDomain.State(),
+      initialState: AdjustLevelDomain.State(maxLevel: 15),
       reducer: { AdjustLevelDomain() }
     )
   )

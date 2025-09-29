@@ -11,6 +11,8 @@ import DependenciesMacros
 
 extension DependencyValues {
   /*
+   사용방법 예)
+   
    @Dependency(\.apiClient) var apiClient
 
    func reduce(...) -> Effect<Action> {

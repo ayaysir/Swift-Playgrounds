@@ -31,17 +31,31 @@ struct CourseView: View {
       
       HStack {
         FragRoundedLabel("方針Lv")
-        PlusMinusButton(store: store.scope(state: \.adjustLevelState, action: \.adjustLevel))
+        
+        PlusMinusButton(
+          store: store.scope(
+            state: \.adjustLevelState,
+            action: \.adjustLevel
+          )
+        )
         Spacer()
         FragRoundedLabel("場数pt")
         Text("---")
       }
       
       HStack {
-        FragProgressBar(accomplishedCount: 1, totalCount: store.course.effects.count)
+        FragProgressBar(
+          accomplishedCount: store.adjustLevelState.level,
+          totalCount: store.course.effects.count
+        )
         Spacer()
         Button(action: {}) {
-          Text("Detail")
+          Text("詳細")
+            .font(.system(size: 14))
+            .padding(.horizontal, 10)
+            .padding(.vertical, 2.5)
+            .background(.gray.opacity(0.3))
+            .clipShape(.buttonBorder)
         }
         .buttonStyle(.plain)
       }
@@ -83,15 +97,19 @@ extension CourseView {
 
 #Preview {
   List {
-    CourseView(
-      store: Store(
-        initialState: CourseDomain.State(
-          id: UUID(),
-          course: .samples[0]
-        ),
-        reducer: { CourseDomain() }
-      )
-    )
+    ForEach(0..<2) { i in
+      Section {
+        CourseView(
+          store: Store(
+            initialState: CourseDomain.State(
+              id: UUID(),
+              course: .samples[i]
+            ),
+            reducer: { CourseDomain() }
+          )
+        )
+      }
+    }
   }
 }
 
@@ -101,7 +119,7 @@ extension CourseView {
       store: Store(
         initialState: CourseDomain.State(
           id: UUID(),
-          course: .samples[1]
+          course: .samples[2]
         ),
         reducer: { CourseDomain() }
       )
