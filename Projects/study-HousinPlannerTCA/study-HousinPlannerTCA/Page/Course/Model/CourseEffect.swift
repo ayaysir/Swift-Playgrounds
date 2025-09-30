@@ -11,7 +11,7 @@ struct CourseEffect: Equatable, Identifiable {
   let id: String
   let courseId: String
   let level: Int
-  let valueEffect: Int?
+  let valueEffect: Int
   let pointEach: Int
   let pointCumulative: Int
 }
@@ -28,10 +28,15 @@ extension CourseEffect: Decodable {
   
   init(from decoder: any Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
-    self.id = try container.decode(String.self, forKey: .id)
+    // 숫자든 문자열이든 String으로 변환
+    if let intId = try? container.decode(Int.self, forKey: .id) {
+      id = String(intId)
+    } else {
+      id = try container.decode(String.self, forKey: .id)
+    }
     self.courseId = try container.decode(String.self, forKey: .courseId)
     self.level = try container.decode(Int.self, forKey: .level)
-    self.valueEffect = try container.decodeIfPresent(Int.self, forKey: .valueEffect)
+    self.valueEffect = try container.decode(Int.self, forKey: .valueEffect)
     self.pointEach = try container.decode(Int.self, forKey: .pointEach)
     self.pointCumulative = try container.decode(Int.self, forKey: .pointCumulative)
   }
@@ -76,7 +81,7 @@ extension CourseEffect {
         id: "5",
         courseId: "test2",
         level: 1,
-        valueEffect: nil,
+        valueEffect: -1,
         pointEach: 6000,
         pointCumulative: 6000
       ),

@@ -1,0 +1,1410 @@
+[
+ {
+   "id": 1,
+   "course_id": "idol1",
+   "level": 1,
+   "value_effect": 8,
+   "point_each": 2000,
+   "point_cumulative": 2000
+ },
+ {
+   "id": 2,
+   "course_id": "idol1",
+   "level": 2,
+   "value_effect": 16,
+   "point_each": 2000,
+   "point_cumulative": 4000
+ },
+ {
+   "id": 3,
+   "course_id": "idol1",
+   "level": 3,
+   "value_effect": 24,
+   "point_each": 2000,
+   "point_cumulative": 6000
+ },
+ {
+   "id": 4,
+   "course_id": "idol1",
+   "level": 4,
+   "value_effect": 32,
+   "point_each": 2000,
+   "point_cumulative": 8000
+ },
+ {
+   "id": 5,
+   "course_id": "idol1",
+   "level": 5,
+   "value_effect": 42,
+   "point_each": 2000,
+   "point_cumulative": 10000
+ },
+ {
+   "id": 6,
+   "course_id": "idol1",
+   "level": 6,
+   "value_effect": 52,
+   "point_each": 2000,
+   "point_cumulative": 12000
+ },
+ {
+   "id": 7,
+   "course_id": "idol1",
+   "level": 7,
+   "value_effect": 64,
+   "point_each": 2000,
+   "point_cumulative": 14000
+ },
+ {
+   "id": 8,
+   "course_id": "idol1",
+   "level": 8,
+   "value_effect": 76,
+   "point_each": 2000,
+   "point_cumulative": 16000
+ },
+ {
+   "id": 9,
+   "course_id": "idol1",
+   "level": 9,
+   "value_effect": 88,
+   "point_each": 2000,
+   "point_cumulative": 18000
+ },
+ {
+   "id": 10,
+   "course_id": "idol1",
+   "level": 10,
+   "value_effect": 100,
+   "point_each": 2000,
+   "point_cumulative": 20000
+ },
+ {
+   "id": 11,
+   "course_id": "idol2",
+   "level": 1,
+   "value_effect": 8,
+   "point_each": 2000,
+   "point_cumulative": 2000
+ },
+ {
+   "id": 12,
+   "course_id": "idol2",
+   "level": 2,
+   "value_effect": 16,
+   "point_each": 2000,
+   "point_cumulative": 4000
+ },
+ {
+   "id": 13,
+   "course_id": "idol2",
+   "level": 3,
+   "value_effect": 24,
+   "point_each": 2000,
+   "point_cumulative": 6000
+ },
+ {
+   "id": 14,
+   "course_id": "idol2",
+   "level": 4,
+   "value_effect": 32,
+   "point_each": 2000,
+   "point_cumulative": 8000
+ },
+ {
+   "id": 15,
+   "course_id": "idol2",
+   "level": 5,
+   "value_effect": 42,
+   "point_each": 2000,
+   "point_cumulative": 10000
+ },
+ {
+   "id": 16,
+   "course_id": "idol2",
+   "level": 6,
+   "value_effect": 52,
+   "point_each": 2000,
+   "point_cumulative": 12000
+ },
+ {
+   "id": 17,
+   "course_id": "idol2",
+   "level": 7,
+   "value_effect": 64,
+   "point_each": 2000,
+   "point_cumulative": 14000
+ },
+ {
+   "id": 18,
+   "course_id": "idol2",
+   "level": 8,
+   "value_effect": 76,
+   "point_each": 2000,
+   "point_cumulative": 16000
+ },
+ {
+   "id": 19,
+   "course_id": "idol2",
+   "level": 9,
+   "value_effect": 88,
+   "point_each": 2000,
+   "point_cumulative": 18000
+ },
+ {
+   "id": 20,
+   "course_id": "idol2",
+   "level": 10,
+   "value_effect": 100,
+   "point_each": 2000,
+   "point_cumulative": 20000
+ },
+ {
+   "id": 21,
+   "course_id": "idol3",
+   "level": 1,
+   "value_effect": 8,
+   "point_each": 2000,
+   "point_cumulative": 2000
+ },
+ {
+   "id": 22,
+   "course_id": "idol3",
+   "level": 2,
+   "value_effect": 16,
+   "point_each": 2000,
+   "point_cumulative": 4000
+ },
+ {
+   "id": 23,
+   "course_id": "idol3",
+   "level": 3,
+   "value_effect": 24,
+   "point_each": 2000,
+   "point_cumulative": 6000
+ },
+ {
+   "id": 24,
+   "course_id": "idol3",
+   "level": 4,
+   "value_effect": 32,
+   "point_each": 2000,
+   "point_cumulative": 8000
+ },
+ {
+   "id": 25,
+   "course_id": "idol3",
+   "level": 5,
+   "value_effect": 42,
+   "point_each": 2000,
+   "point_cumulative": 10000
+ },
+ {
+   "id": 26,
+   "course_id": "idol3",
+   "level": 6,
+   "value_effect": 52,
+   "point_each": 2000,
+   "point_cumulative": 12000
+ },
+ {
+   "id": 27,
+   "course_id": "idol3",
+   "level": 7,
+   "value_effect": 64,
+   "point_each": 2000,
+   "point_cumulative": 14000
+ },
+ {
+   "id": 28,
+   "course_id": "idol3",
+   "level": 8,
+   "value_effect": 76,
+   "point_each": 2000,
+   "point_cumulative": 16000
+ },
+ {
+   "id": 29,
+   "course_id": "idol3",
+   "level": 9,
+   "value_effect": 88,
+   "point_each": 2000,
+   "point_cumulative": 18000
+ },
+ {
+   "id": 30,
+   "course_id": "idol3",
+   "level": 10,
+   "value_effect": 100,
+   "point_each": 2000,
+   "point_cumulative": 20000
+ },
+ {
+   "id": 31,
+   "course_id": "idol4",
+   "level": 1,
+   "value_effect": 20,
+   "point_each": 5000,
+   "point_cumulative": 5000
+ },
+ {
+   "id": 32,
+   "course_id": "idol4",
+   "level": 2,
+   "value_effect": 50,
+   "point_each": 2000,
+   "point_cumulative": 7000
+ },
+ {
+   "id": 33,
+   "course_id": "idol4",
+   "level": 3,
+   "value_effect": 90,
+   "point_each": 2000,
+   "point_cumulative": 9000
+ },
+ {
+   "id": 34,
+   "course_id": "idol4",
+   "level": 4,
+   "value_effect": 140,
+   "point_each": 2000,
+   "point_cumulative": 11000
+ },
+ {
+   "id": 35,
+   "course_id": "idol4",
+   "level": 5,
+   "value_effect": 200,
+   "point_each": 2000,
+   "point_cumulative": 13000
+ },
+ {
+   "id": 36,
+   "course_id": "live1",
+   "level": 1,
+   "value_effect": 8,
+   "point_each": 700,
+   "point_cumulative": 700
+ },
+ {
+   "id": 37,
+   "course_id": "live1",
+   "level": 2,
+   "value_effect": 16,
+   "point_each": 700,
+   "point_cumulative": 1400
+ },
+ {
+   "id": 38,
+   "course_id": "live1",
+   "level": 3,
+   "value_effect": 24,
+   "point_each": 700,
+   "point_cumulative": 2100
+ },
+ {
+   "id": 39,
+   "course_id": "live1",
+   "level": 4,
+   "value_effect": 32,
+   "point_each": 700,
+   "point_cumulative": 2800
+ },
+ {
+   "id": 40,
+   "course_id": "live1",
+   "level": 5,
+   "value_effect": 42,
+   "point_each": 700,
+   "point_cumulative": 3500
+ },
+ {
+   "id": 41,
+   "course_id": "live1",
+   "level": 6,
+   "value_effect": 52,
+   "point_each": 700,
+   "point_cumulative": 4200
+ },
+ {
+   "id": 42,
+   "course_id": "live1",
+   "level": 7,
+   "value_effect": 64,
+   "point_each": 700,
+   "point_cumulative": 4900
+ },
+ {
+   "id": 43,
+   "course_id": "live1",
+   "level": 8,
+   "value_effect": 76,
+   "point_each": 700,
+   "point_cumulative": 5600
+ },
+ {
+   "id": 44,
+   "course_id": "live1",
+   "level": 9,
+   "value_effect": 88,
+   "point_each": 700,
+   "point_cumulative": 6300
+ },
+ {
+   "id": 45,
+   "course_id": "live1",
+   "level": 10,
+   "value_effect": 100,
+   "point_each": 700,
+   "point_cumulative": 7000
+ },
+ {
+   "id": 46,
+   "course_id": "live2",
+   "level": 1,
+   "value_effect": 3,
+   "point_each": 600,
+   "point_cumulative": 600
+ },
+ {
+   "id": 47,
+   "course_id": "live2",
+   "level": 2,
+   "value_effect": 6,
+   "point_each": 600,
+   "point_cumulative": 1200
+ },
+ {
+   "id": 48,
+   "course_id": "live2",
+   "level": 3,
+   "value_effect": 9,
+   "point_each": 600,
+   "point_cumulative": 1800
+ },
+ {
+   "id": 49,
+   "course_id": "live2",
+   "level": 4,
+   "value_effect": 14,
+   "point_each": 600,
+   "point_cumulative": 2400
+ },
+ {
+   "id": 50,
+   "course_id": "live2",
+   "level": 5,
+   "value_effect": 19,
+   "point_each": 600,
+   "point_cumulative": 3000
+ },
+ {
+   "id": 51,
+   "course_id": "live2",
+   "level": 6,
+   "value_effect": 24,
+   "point_each": 600,
+   "point_cumulative": 3600
+ },
+ {
+   "id": 52,
+   "course_id": "live2",
+   "level": 7,
+   "value_effect": 29,
+   "point_each": 600,
+   "point_cumulative": 4200
+ },
+ {
+   "id": 53,
+   "course_id": "live2",
+   "level": 8,
+   "value_effect": 36,
+   "point_each": 600,
+   "point_cumulative": 4800
+ },
+ {
+   "id": 54,
+   "course_id": "live2",
+   "level": 9,
+   "value_effect": 43,
+   "point_each": 600,
+   "point_cumulative": 5400
+ },
+ {
+   "id": 55,
+   "course_id": "live2",
+   "level": 10,
+   "value_effect": 50,
+   "point_each": 600,
+   "point_cumulative": 6000
+ },
+ {
+   "id": 56,
+   "course_id": "live3",
+   "level": 1,
+   "value_effect": 3,
+   "point_each": 500,
+   "point_cumulative": 500
+ },
+ {
+   "id": 57,
+   "course_id": "live3",
+   "level": 2,
+   "value_effect": 6,
+   "point_each": 500,
+   "point_cumulative": 1000
+ },
+ {
+   "id": 58,
+   "course_id": "live3",
+   "level": 3,
+   "value_effect": 9,
+   "point_each": 500,
+   "point_cumulative": 1500
+ },
+ {
+   "id": 59,
+   "course_id": "live3",
+   "level": 4,
+   "value_effect": 14,
+   "point_each": 500,
+   "point_cumulative": 2000
+ },
+ {
+   "id": 60,
+   "course_id": "live3",
+   "level": 5,
+   "value_effect": 19,
+   "point_each": 500,
+   "point_cumulative": 2500
+ },
+ {
+   "id": 61,
+   "course_id": "live3",
+   "level": 6,
+   "value_effect": 24,
+   "point_each": 500,
+   "point_cumulative": 3000
+ },
+ {
+   "id": 62,
+   "course_id": "live3",
+   "level": 7,
+   "value_effect": 29,
+   "point_each": 500,
+   "point_cumulative": 3500
+ },
+ {
+   "id": 63,
+   "course_id": "live3",
+   "level": 8,
+   "value_effect": 36,
+   "point_each": 500,
+   "point_cumulative": 4000
+ },
+ {
+   "id": 64,
+   "course_id": "live3",
+   "level": 9,
+   "value_effect": 43,
+   "point_each": 500,
+   "point_cumulative": 4500
+ },
+ {
+   "id": 65,
+   "course_id": "live3",
+   "level": 10,
+   "value_effect": 50,
+   "point_each": 500,
+   "point_cumulative": 5000
+ },
+ {
+   "id": 66,
+   "course_id": "live4",
+   "level": 1,
+   "value_effect": 1,
+   "point_each": 10000,
+   "point_cumulative": 10000
+ },
+ {
+   "id": 67,
+   "course_id": "live4",
+   "level": 2,
+   "value_effect": 2,
+   "point_each": 5000,
+   "point_cumulative": 15000
+ },
+ {
+   "id": 68,
+   "course_id": "live4",
+   "level": 3,
+   "value_effect": 3,
+   "point_each": 5000,
+   "point_cumulative": 20000
+ },
+ {
+   "id": 69,
+   "course_id": "live5",
+   "level": 1,
+   "value_effect": 5,
+   "point_each": 10000,
+   "point_cumulative": 10000
+ },
+ {
+   "id": 70,
+   "course_id": "live5",
+   "level": 2,
+   "value_effect": 10,
+   "point_each": 10000,
+   "point_cumulative": 20000
+ },
+ {
+   "id": 71,
+   "course_id": "live5",
+   "level": 3,
+   "value_effect": 15,
+   "point_each": 10000,
+   "point_cumulative": 30000
+ },
+ {
+   "id": 72,
+   "course_id": "event1",
+   "level": 1,
+   "value_effect": 3,
+   "point_each": 400,
+   "point_cumulative": 400
+ },
+ {
+   "id": 73,
+   "course_id": "event1",
+   "level": 2,
+   "value_effect": 6,
+   "point_each": 400,
+   "point_cumulative": 800
+ },
+ {
+   "id": 74,
+   "course_id": "event1",
+   "level": 3,
+   "value_effect": 9,
+   "point_each": 400,
+   "point_cumulative": 1200
+ },
+ {
+   "id": 75,
+   "course_id": "event1",
+   "level": 4,
+   "value_effect": 14,
+   "point_each": 400,
+   "point_cumulative": 1600
+ },
+ {
+   "id": 76,
+   "course_id": "event1",
+   "level": 5,
+   "value_effect": 19,
+   "point_each": 400,
+   "point_cumulative": 2000
+ },
+ {
+   "id": 77,
+   "course_id": "event1",
+   "level": 6,
+   "value_effect": 24,
+   "point_each": 400,
+   "point_cumulative": 2400
+ },
+ {
+   "id": 78,
+   "course_id": "event1",
+   "level": 7,
+   "value_effect": 29,
+   "point_each": 400,
+   "point_cumulative": 2800
+ },
+ {
+   "id": 79,
+   "course_id": "event1",
+   "level": 8,
+   "value_effect": 36,
+   "point_each": 400,
+   "point_cumulative": 3200
+ },
+ {
+   "id": 80,
+   "course_id": "event1",
+   "level": 9,
+   "value_effect": 43,
+   "point_each": 400,
+   "point_cumulative": 3600
+ },
+ {
+   "id": 81,
+   "course_id": "event1",
+   "level": 10,
+   "value_effect": 50,
+   "point_each": 400,
+   "point_cumulative": 4000
+ },
+ {
+   "id": 82,
+   "course_id": "event2",
+   "level": 1,
+   "value_effect": 100,
+   "point_each": 500,
+   "point_cumulative": 500
+ },
+ {
+   "id": 83,
+   "course_id": "event3",
+   "level": 1,
+   "value_effect": 100,
+   "point_each": 500,
+   "point_cumulative": 500
+ },
+ {
+   "id": 84,
+   "course_id": "event4",
+   "level": 1,
+   "value_effect": 100,
+   "point_each": 500,
+   "point_cumulative": 500
+ },
+ {
+   "id": 85,
+   "course_id": "event5",
+   "level": 1,
+   "value_effect": 100,
+   "point_each": 500,
+   "point_cumulative": 500
+ },
+ {
+   "id": 86,
+   "course_id": "event6",
+   "level": 1,
+   "value_effect": 15,
+   "point_each": 200,
+   "point_cumulative": 200
+ },
+ {
+   "id": 87,
+   "course_id": "event6",
+   "level": 2,
+   "value_effect": 30,
+   "point_each": 200,
+   "point_cumulative": 400
+ },
+ {
+   "id": 88,
+   "course_id": "event6",
+   "level": 3,
+   "value_effect": 50,
+   "point_each": 200,
+   "point_cumulative": 600
+ },
+ {
+   "id": 89,
+   "course_id": "event6",
+   "level": 4,
+   "value_effect": 75,
+   "point_each": 200,
+   "point_cumulative": 800
+ },
+ {
+   "id": 90,
+   "course_id": "event6",
+   "level": 5,
+   "value_effect": 100,
+   "point_each": 200,
+   "point_cumulative": 1000
+ },
+ {
+   "id": 91,
+   "course_id": "event7",
+   "level": 1,
+   "value_effect": 15,
+   "point_each": 300,
+   "point_cumulative": 300
+ },
+ {
+   "id": 92,
+   "course_id": "event7",
+   "level": 2,
+   "value_effect": 30,
+   "point_each": 300,
+   "point_cumulative": 600
+ },
+ {
+   "id": 93,
+   "course_id": "event7",
+   "level": 3,
+   "value_effect": 50,
+   "point_each": 300,
+   "point_cumulative": 900
+ },
+ {
+   "id": 94,
+   "course_id": "event7",
+   "level": 4,
+   "value_effect": 75,
+   "point_each": 300,
+   "point_cumulative": 1200
+ },
+ {
+   "id": 95,
+   "course_id": "event7",
+   "level": 5,
+   "value_effect": 100,
+   "point_each": 300,
+   "point_cumulative": 1500
+ },
+ {
+   "id": 96,
+   "course_id": "event8",
+   "level": 1,
+   "value_effect": 15,
+   "point_each": 100,
+   "point_cumulative": 100
+ },
+ {
+   "id": 97,
+   "course_id": "event8",
+   "level": 2,
+   "value_effect": 30,
+   "point_each": 100,
+   "point_cumulative": 200
+ },
+ {
+   "id": 98,
+   "course_id": "event8",
+   "level": 3,
+   "value_effect": 50,
+   "point_each": 100,
+   "point_cumulative": 300
+ },
+ {
+   "id": 99,
+   "course_id": "event8",
+   "level": 4,
+   "value_effect": 75,
+   "point_each": 100,
+   "point_cumulative": 400
+ },
+ {
+   "id": 100,
+   "course_id": "event8",
+   "level": 5,
+   "value_effect": 100,
+   "point_each": 100,
+   "point_cumulative": 500
+ },
+ {
+   "id": 101,
+   "course_id": "event9",
+   "level": 1,
+   "value_effect": 15,
+   "point_each": 200,
+   "point_cumulative": 200
+ },
+ {
+   "id": 102,
+   "course_id": "event9",
+   "level": 2,
+   "value_effect": 30,
+   "point_each": 200,
+   "point_cumulative": 400
+ },
+ {
+   "id": 103,
+   "course_id": "event9",
+   "level": 3,
+   "value_effect": 50,
+   "point_each": 200,
+   "point_cumulative": 600
+ },
+ {
+   "id": 104,
+   "course_id": "event9",
+   "level": 4,
+   "value_effect": 75,
+   "point_each": 200,
+   "point_cumulative": 800
+ },
+ {
+   "id": 105,
+   "course_id": "event9",
+   "level": 5,
+   "value_effect": 100,
+   "point_each": 200,
+   "point_cumulative": 1000
+ },
+ {
+   "id": 106,
+   "course_id": "event10",
+   "level": 1,
+   "value_effect": 15,
+   "point_each": 100,
+   "point_cumulative": 100
+ },
+ {
+   "id": 107,
+   "course_id": "event10",
+   "level": 2,
+   "value_effect": 30,
+   "point_each": 100,
+   "point_cumulative": 200
+ },
+ {
+   "id": 108,
+   "course_id": "event10",
+   "level": 3,
+   "value_effect": 50,
+   "point_each": 100,
+   "point_cumulative": 300
+ },
+ {
+   "id": 109,
+   "course_id": "event10",
+   "level": 4,
+   "value_effect": 75,
+   "point_each": 100,
+   "point_cumulative": 400
+ },
+ {
+   "id": 110,
+   "course_id": "event10",
+   "level": 5,
+   "value_effect": 100,
+   "point_each": 100,
+   "point_cumulative": 500
+ },
+ {
+   "id": 111,
+   "course_id": "event11",
+   "level": 1,
+   "value_effect": 100,
+   "point_each": 1500,
+   "point_cumulative": 1500
+ },
+ {
+   "id": 112,
+   "course_id": "sales1",
+   "level": 1,
+   "value_effect": 1,
+   "point_each": 8000,
+   "point_cumulative": 8000
+ },
+ {
+   "id": 113,
+   "course_id": "sales2",
+   "level": 1,
+   "value_effect": 5,
+   "point_each": 800,
+   "point_cumulative": 800
+ },
+ {
+   "id": 114,
+   "course_id": "sales2",
+   "level": 2,
+   "value_effect": 10,
+   "point_each": 800,
+   "point_cumulative": 1600
+ },
+ {
+   "id": 115,
+   "course_id": "sales2",
+   "level": 3,
+   "value_effect": 15,
+   "point_each": 800,
+   "point_cumulative": 2400
+ },
+ {
+   "id": 116,
+   "course_id": "sales2",
+   "level": 4,
+   "value_effect": 20,
+   "point_each": 800,
+   "point_cumulative": 3200
+ },
+ {
+   "id": 117,
+   "course_id": "sales2",
+   "level": 5,
+   "value_effect": 25,
+   "point_each": 800,
+   "point_cumulative": 4000
+ },
+ {
+   "id": 118,
+   "course_id": "sales2",
+   "level": 6,
+   "value_effect": 30,
+   "point_each": 800,
+   "point_cumulative": 4800
+ },
+ {
+   "id": 119,
+   "course_id": "sales2",
+   "level": 7,
+   "value_effect": 35,
+   "point_each": 800,
+   "point_cumulative": 5600
+ },
+ {
+   "id": 120,
+   "course_id": "sales2",
+   "level": 8,
+   "value_effect": 40,
+   "point_each": 800,
+   "point_cumulative": 6400
+ },
+ {
+   "id": 121,
+   "course_id": "sales2",
+   "level": 9,
+   "value_effect": 45,
+   "point_each": 800,
+   "point_cumulative": 7200
+ },
+ {
+   "id": 122,
+   "course_id": "sales2",
+   "level": 10,
+   "value_effect": 50,
+   "point_each": 800,
+   "point_cumulative": 8000
+ },
+ {
+   "id": 123,
+   "course_id": "sales3",
+   "level": 1,
+   "value_effect": 8,
+   "point_each": 700,
+   "point_cumulative": 700
+ },
+ {
+   "id": 124,
+   "course_id": "sales3",
+   "level": 2,
+   "value_effect": 16,
+   "point_each": 700,
+   "point_cumulative": 1400
+ },
+ {
+   "id": 125,
+   "course_id": "sales3",
+   "level": 3,
+   "value_effect": 24,
+   "point_each": 700,
+   "point_cumulative": 2100
+ },
+ {
+   "id": 126,
+   "course_id": "sales3",
+   "level": 4,
+   "value_effect": 32,
+   "point_each": 700,
+   "point_cumulative": 2800
+ },
+ {
+   "id": 127,
+   "course_id": "sales3",
+   "level": 5,
+   "value_effect": 42,
+   "point_each": 700,
+   "point_cumulative": 3500
+ },
+ {
+   "id": 128,
+   "course_id": "sales3",
+   "level": 6,
+   "value_effect": 52,
+   "point_each": 700,
+   "point_cumulative": 4200
+ },
+ {
+   "id": 129,
+   "course_id": "sales3",
+   "level": 7,
+   "value_effect": 64,
+   "point_each": 700,
+   "point_cumulative": 4900
+ },
+ {
+   "id": 130,
+   "course_id": "sales3",
+   "level": 8,
+   "value_effect": 76,
+   "point_each": 700,
+   "point_cumulative": 5600
+ },
+ {
+   "id": 131,
+   "course_id": "sales3",
+   "level": 9,
+   "value_effect": 88,
+   "point_each": 700,
+   "point_cumulative": 6300
+ },
+ {
+   "id": 132,
+   "course_id": "sales3",
+   "level": 10,
+   "value_effect": 100,
+   "point_each": 700,
+   "point_cumulative": 7000
+ },
+ {
+   "id": 133,
+   "course_id": "sales4",
+   "level": 1,
+   "value_effect": 3,
+   "point_each": 600,
+   "point_cumulative": 600
+ },
+ {
+   "id": 134,
+   "course_id": "sales4",
+   "level": 2,
+   "value_effect": 6,
+   "point_each": 600,
+   "point_cumulative": 1200
+ },
+ {
+   "id": 135,
+   "course_id": "sales4",
+   "level": 3,
+   "value_effect": 9,
+   "point_each": 600,
+   "point_cumulative": 1800
+ },
+ {
+   "id": 136,
+   "course_id": "sales4",
+   "level": 4,
+   "value_effect": 14,
+   "point_each": 600,
+   "point_cumulative": 2400
+ },
+ {
+   "id": 137,
+   "course_id": "sales4",
+   "level": 5,
+   "value_effect": 19,
+   "point_each": 600,
+   "point_cumulative": 3000
+ },
+ {
+   "id": 138,
+   "course_id": "sales4",
+   "level": 6,
+   "value_effect": 24,
+   "point_each": 600,
+   "point_cumulative": 3600
+ },
+ {
+   "id": 139,
+   "course_id": "sales4",
+   "level": 7,
+   "value_effect": 29,
+   "point_each": 600,
+   "point_cumulative": 4200
+ },
+ {
+   "id": 140,
+   "course_id": "sales4",
+   "level": 8,
+   "value_effect": 36,
+   "point_each": 600,
+   "point_cumulative": 4800
+ },
+ {
+   "id": 141,
+   "course_id": "sales4",
+   "level": 9,
+   "value_effect": 43,
+   "point_each": 600,
+   "point_cumulative": 5400
+ },
+ {
+   "id": 142,
+   "course_id": "sales4",
+   "level": 10,
+   "value_effect": 50,
+   "point_each": 600,
+   "point_cumulative": 6000
+ },
+ {
+   "id": 143,
+   "course_id": "sales5",
+   "level": 1,
+   "value_effect": -1,
+   "point_each": 6000,
+   "point_cumulative": 6000
+ },
+ {
+   "id": 144,
+   "course_id": "etc1",
+   "level": 1,
+   "value_effect": 5,
+   "point_each": 200,
+   "point_cumulative": 200
+ },
+ {
+   "id": 145,
+   "course_id": "etc1",
+   "level": 2,
+   "value_effect": 10,
+   "point_each": 200,
+   "point_cumulative": 400
+ },
+ {
+   "id": 146,
+   "course_id": "etc1",
+   "level": 3,
+   "value_effect": 15,
+   "point_each": 200,
+   "point_cumulative": 600
+ },
+ {
+   "id": 147,
+   "course_id": "etc1",
+   "level": 4,
+   "value_effect": 20,
+   "point_each": 200,
+   "point_cumulative": 800
+ },
+ {
+   "id": 148,
+   "course_id": "etc1",
+   "level": 5,
+   "value_effect": 25,
+   "point_each": 200,
+   "point_cumulative": 1000
+ },
+ {
+   "id": 149,
+   "course_id": "etc1",
+   "level": 6,
+   "value_effect": 30,
+   "point_each": 200,
+   "point_cumulative": 1200
+ },
+ {
+   "id": 150,
+   "course_id": "etc1",
+   "level": 7,
+   "value_effect": 35,
+   "point_each": 200,
+   "point_cumulative": 1400
+ },
+ {
+   "id": 151,
+   "course_id": "etc1",
+   "level": 8,
+   "value_effect": 40,
+   "point_each": 200,
+   "point_cumulative": 1600
+ },
+ {
+   "id": 152,
+   "course_id": "etc1",
+   "level": 9,
+   "value_effect": 45,
+   "point_each": 200,
+   "point_cumulative": 1800
+ },
+ {
+   "id": 153,
+   "course_id": "etc1",
+   "level": 10,
+   "value_effect": 50,
+   "point_each": 200,
+   "point_cumulative": 2000
+ },
+ {
+   "id": 154,
+   "course_id": "etc2",
+   "level": 1,
+   "value_effect": 8,
+   "point_each": 200,
+   "point_cumulative": 200
+ },
+ {
+   "id": 155,
+   "course_id": "etc2",
+   "level": 2,
+   "value_effect": 16,
+   "point_each": 200,
+   "point_cumulative": 400
+ },
+ {
+   "id": 156,
+   "course_id": "etc2",
+   "level": 3,
+   "value_effect": 24,
+   "point_each": 200,
+   "point_cumulative": 600
+ },
+ {
+   "id": 157,
+   "course_id": "etc2",
+   "level": 4,
+   "value_effect": 32,
+   "point_each": 200,
+   "point_cumulative": 800
+ },
+ {
+   "id": 158,
+   "course_id": "etc2",
+   "level": 5,
+   "value_effect": 42,
+   "point_each": 200,
+   "point_cumulative": 1000
+ },
+ {
+   "id": 159,
+   "course_id": "etc2",
+   "level": 6,
+   "value_effect": 52,
+   "point_each": 200,
+   "point_cumulative": 1200
+ },
+ {
+   "id": 160,
+   "course_id": "etc2",
+   "level": 7,
+   "value_effect": 64,
+   "point_each": 200,
+   "point_cumulative": 1400
+ },
+ {
+   "id": 161,
+   "course_id": "etc2",
+   "level": 8,
+   "value_effect": 76,
+   "point_each": 200,
+   "point_cumulative": 1600
+ },
+ {
+   "id": 162,
+   "course_id": "etc2",
+   "level": 9,
+   "value_effect": 88,
+   "point_each": 200,
+   "point_cumulative": 1800
+ },
+ {
+   "id": 163,
+   "course_id": "etc2",
+   "level": 10,
+   "value_effect": 100,
+   "point_each": 200,
+   "point_cumulative": 2000
+ },
+ {
+   "id": 164,
+   "course_id": "etc3",
+   "level": 1,
+   "value_effect": 400000,
+   "point_each": 100,
+   "point_cumulative": 100
+ },
+ {
+   "id": 165,
+   "course_id": "etc3",
+   "level": 2,
+   "value_effect": 500000,
+   "point_each": 100,
+   "point_cumulative": 200
+ },
+ {
+   "id": 166,
+   "course_id": "etc3",
+   "level": 3,
+   "value_effect": 600000,
+   "point_each": 100,
+   "point_cumulative": 300
+ },
+ {
+   "id": 167,
+   "course_id": "etc4",
+   "level": 1,
+   "value_effect": 8,
+   "point_each": 700,
+   "point_cumulative": 700
+ },
+ {
+   "id": 168,
+   "course_id": "etc4",
+   "level": 2,
+   "value_effect": 16,
+   "point_each": 700,
+   "point_cumulative": 1400
+ },
+ {
+   "id": 169,
+   "course_id": "etc4",
+   "level": 3,
+   "value_effect": 24,
+   "point_each": 700,
+   "point_cumulative": 2100
+ },
+ {
+   "id": 170,
+   "course_id": "etc4",
+   "level": 4,
+   "value_effect": 32,
+   "point_each": 700,
+   "point_cumulative": 2800
+ },
+ {
+   "id": 171,
+   "course_id": "etc4",
+   "level": 5,
+   "value_effect": 42,
+   "point_each": 700,
+   "point_cumulative": 3500
+ },
+ {
+   "id": 172,
+   "course_id": "etc4",
+   "level": 6,
+   "value_effect": 52,
+   "point_each": 700,
+   "point_cumulative": 4200
+ },
+ {
+   "id": 173,
+   "course_id": "etc4",
+   "level": 7,
+   "value_effect": 64,
+   "point_each": 700,
+   "point_cumulative": 4900
+ },
+ {
+   "id": 174,
+   "course_id": "etc4",
+   "level": 8,
+   "value_effect": 76,
+   "point_each": 700,
+   "point_cumulative": 5600
+ },
+ {
+   "id": 175,
+   "course_id": "etc4",
+   "level": 9,
+   "value_effect": 88,
+   "point_each": 700,
+   "point_cumulative": 6300
+ },
+ {
+   "id": 176,
+   "course_id": "etc4",
+   "level": 10,
+   "value_effect": 100,
+   "point_each": 700,
+   "point_cumulative": 7000
+ }
+]

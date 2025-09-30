@@ -25,6 +25,7 @@ struct APIClient {
   // var fetchProducts:  @Sendable () async throws -> [Product]
   // var sendOrder:  @Sendable ([CartItem]) async throws -> String
   // var fetchUserProfile:  @Sendable () async throws -> UserProfile
+  var fetchCourses: @Sendable () async throws -> [Course]
   
   struct Failure: Error, Equatable {}
 }
@@ -40,31 +41,56 @@ extension APIClient: TestDependencyKey {
 // main feature doesn't need to compile it.
 // 주요 기능에서 컴파일할 필요가 없습니다.
 
-// extension APIClient: DependencyKey {
-//   static let liveValue = Self(
-//     fetchProducts: {
-//       let (data, _) = try await URLSession.shared
-//         .data(from: URL(string: "https://fakestoreapi.com/products")!)
-//       return try JSONDecoder().decode([Product].self, from: data)
-//     },
-//     sendOrder: { cartItems in
-//       let payload = try JSONEncoder().encode(cartItems)
-//       var urlRequest = URLRequest(url: URL(string: "https://fakestoreapi.com/carts")!)
-//       urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-//       urlRequest.httpMethod = "POST"
-//       
-//       let (data, response) = try await URLSession.shared.upload(for: urlRequest, from: payload)
-//       
-//       guard let httpResponse = response as? HTTPURLResponse else {
-//         throw Failure() // APIClient.Failure(Error,Equatable)
-//       }
-//       
-//       return "Status: \(httpResponse.statusCode)"
-//     },
-//     fetchUserProfile: {
-//       let (data, _) = try await URLSession.shared
-//         .data(from: URL(string: "https://fakestoreapi.com/users/1")!)
-//       return try JSONDecoder().decode(UserProfile.self, from: data)
-//     }
-//   )
-// }
+extension APIClient: DependencyKey {
+  static let liveValue = Self(
+    fetchCourses: {
+      do {
+        guard let coursesURL = Bundle.main.url(forResource: "Courses", withExtension: "json") else {
+          throw APIClient.Failure()
+        }
+        let coursesData = try Data(contentsOf: coursesURL)
+        var courses = try JSONDecoder().decode([Course].self, from: coursesData)
+        
+        guard let effectsURL = Bundle.main.url(forResource: "CourseEffects", withExtension: "json") else {
+          throw APIClient.Failure()
+        }
+        let effectsData = try Data(contentsOf: effectsURL)
+        let courseEffects = try JSONDecoder().decode([CourseEffect].self, from: effectsData)
+        
+        for index in courses.indices {
+          let matchedEffects = courseEffects.filter { $0.courseId == courses[index].id }
+          courses[index].effects = matchedEffects
+        }
+        
+        return courses
+      } catch {
+        print(error)
+        throw APIClient.Failure()
+      }
+    }
+    // fetchProducts: {
+    //   let (data, _) = try await URLSession.shared
+    //     .data(from: URL(string: "https://fakestoreapi.com/products")!)
+    //   return try JSONDecoder().decode([Product].self, from: data)
+    // },
+    // sendOrder: { cartItems in
+    //   let payload = try JSONEncoder().encode(cartItems)
+    //   var urlRequest = URLRequest(url: URL(string: "https://fakestoreapi.com/carts")!)
+    //   urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+    //   urlRequest.httpMethod = "POST"
+    //   
+    //   let (data, response) = try await URLSession.shared.upload(for: urlRequest, from: payload)
+    //   
+    //   guard let httpResponse = response as? HTTPURLResponse else {
+    //     throw Failure() // APIClient.Failure(Error,Equatable)
+    //   }
+    //   
+    //   return "Status: \(httpResponse.statusCode)"
+    // },
+    // fetchUserProfile: {
+    //   let (data, _) = try await URLSession.shared
+    //     .data(from: URL(string: "https://fakestoreapi.com/users/1")!)
+    //   return try JSONDecoder().decode(UserProfile.self, from: data)
+    // }
+  )
+}

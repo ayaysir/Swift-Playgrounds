@@ -15,7 +15,9 @@ struct Course: Equatable, Identifiable {
   let descJa: String
   let titleKo: String
   let descKo: String
-  let effects: [CourseEffect]
+  
+  // JSON에는 없음. 나중에 코드에서 수동으로 채워 넣음
+  var effects: [CourseEffect] = []
 }
 
 extension Course: Decodable {
@@ -27,7 +29,7 @@ extension Course: Decodable {
     case descJa = "desc_ja"
     case titleKo = "title_ko"
     case descKo = "desc_ko"
-    case effects = "effects"
+    // case effects = "effects"
   }
   
   init(from decoder: any Decoder) throws {
@@ -39,7 +41,7 @@ extension Course: Decodable {
     self.descJa = try container.decode(String.self, forKey: .descJa)
     self.titleKo = try container.decode(String.self, forKey: .titleKo)
     self.descKo = try container.decode(String.self, forKey: .descKo)
-    self.effects = try container.decode([CourseEffect].self, forKey: .effects)
+    // self.effects = try container.decode([CourseEffect].self, forKey: .effects)
   }
 }
 

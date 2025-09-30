@@ -59,6 +59,20 @@ struct CourseView: View {
         }
         .buttonStyle(.plain)
       }
+      .onAppear {
+        Task {
+          do {
+            let apiClient = APIClient.liveValue
+            let courses = try await apiClient.fetchCourses()
+            
+            for course in courses {
+              print("코스: \(course.titleKo) / 효과 개수: \(course.effects.count)")
+            }
+          } catch {
+            print("❌ 실패:", error)
+          }
+        }
+      }
     }
   }
 }
