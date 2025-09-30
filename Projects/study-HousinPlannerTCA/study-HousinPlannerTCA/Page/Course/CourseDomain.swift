@@ -15,6 +15,8 @@ struct CourseDomain {
     let id: UUID
     let course: Course
     var adjustLevelState = AdjustLevelDomain.State()
+    var effectValueText: String = ""
+    var requireSheetsPointText: String = "---"
   }
   
   enum Action {
@@ -33,13 +35,21 @@ struct CourseDomain {
       switch action {
       case .adjustLevel(.didTapPlusButton):
         state.adjustLevelState.level = min(state.adjustLevelState.level, maxLevel)
-        return .none
+        fallthrough
 
       case .adjustLevel(.didTapMinusButton):
         state.adjustLevelState.level = max(state.adjustLevelState.level, 0)
-        return .none
+        fallthrough
 
       case .adjustLevel:
+        let currentDesc = state.course.descJa
+        if let currentEffect = state.course.effects.first(where: { state.adjustLevelState.level == $0.level }) {
+          state.effectValueText = currentDesc.replacingOccurrences(of: "xx", with: currentEffect.valueEffect.description)
+          state.requireSheetsPointText = "\(currentEffect.pointCumulative)"
+        } else {
+          state.effectValueText = currentDesc.replacingOccurrences(of: "xx", with: "0")
+          state.requireSheetsPointText = "---"
+        }
         return .none
       }
     }

@@ -50,16 +50,16 @@ extension CourseEffect {
         courseId: "test1",
         level: 1,
         valueEffect: 8,
-        pointEach: 2000,
-        pointCumulative: 2000
+        pointEach: 20000,
+        pointCumulative: 20000
       ),
       .init(
         id: "2",
         courseId: "test1",
         level: 2,
         valueEffect: 16,
-        pointEach: 2000,
-        pointCumulative: 4000
+        pointEach: 100000,
+        pointCumulative: 120000
       ),
       .init(
         id: "3",

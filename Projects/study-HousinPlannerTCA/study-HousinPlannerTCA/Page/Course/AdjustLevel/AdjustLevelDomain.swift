@@ -19,6 +19,7 @@ struct AdjustLevelDomain {
   enum Action: Equatable {
     case didTapPlusButton
     case didTapMinusButton
+    case setInitLevel(Int)
   }
   
   var body: some ReducerOf<Self> {
@@ -31,6 +32,9 @@ struct AdjustLevelDomain {
         return .none
       case .didTapMinusButton:
         state.level -= 1
+        return .none
+      case .setInitLevel(let initLevel):
+        state.level = initLevel
         return .none
       }
     }

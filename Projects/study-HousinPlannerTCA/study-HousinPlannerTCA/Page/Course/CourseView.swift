@@ -24,7 +24,10 @@ struct CourseView: View {
       .padding(.horizontal, 0)
       .padding(.vertical, 4)
       
-      Text(verbatim: store.course.descJa)
+      // var effectValueText: String {
+      // => CourseDomain으로 이동
+      // }
+      Text(verbatim: store.effectValueText)
         .font(.system(size: 14, weight: .regular))
       
       Divider()
@@ -40,7 +43,10 @@ struct CourseView: View {
         )
         Spacer()
         FragRoundedLabel("場数pt")
-        Text("---")
+        Text(verbatim: store.requireSheetsPointText)
+          .font(.system(size: 13))
+          .frame(minWidth: 40)
+          .multilineTextAlignment(.trailing)
       }
       
       HStack {
@@ -59,6 +65,9 @@ struct CourseView: View {
         }
         .buttonStyle(.plain)
       }
+    }
+    .task {
+      store.send(.adjustLevel(.setInitLevel(0)))
     }
   }
   

@@ -52,9 +52,9 @@ extension Course {
       category: "idol",
       subcategory: "",
       titleJa: "キュートアイドル獲得ファンアップ",
-      descJa: "キュートアイドルのアイドルが獲得するファン数がxxアップ",
+      descJa: "キュートアイドルのアイドルが獲得するファン数がxx%アップ",
       titleKo: "큐트 아이돌 팬 획득 증가",
-      descKo: "큐트 아이돌이 획득하는 팬 수가 xx 증가",
+      descKo: "큐트 아이돌이 획득하는 팬 수가 xx% 증가",
       effects: [.samples[0], .samples[1]]
     ),
     .init(
@@ -62,9 +62,9 @@ extension Course {
       category: "idol",
       subcategory: "",
       titleJa: "特技レベルアップ確率アップ",
-      descJa: "レッスン時の特技レベルアップ確率がxxアップ",
+      descJa: "レッスン時の特技レベルアップ確率がxx%アップ",
       titleKo: "특기 레벨업 확률 증가",
-      descKo: "레슨 시 특기 레벨업 확률이 xx 증가",
+      descKo: "레슨 시 특기 레벨업 확률이 xx% 증가",
       effects: [.samples[2], .samples[3]]
     ),
     .init(

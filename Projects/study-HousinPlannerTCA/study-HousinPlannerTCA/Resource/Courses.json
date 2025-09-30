@@ -4,63 +4,63 @@
    "category": "idol",
    "subcategory": "",
    "title_ja": "キュートアイドル獲得ファンアップ",
-   "desc_ja": "キュートアイドルのアイドルが獲得するファン数がxxアップ",
+   "desc_ja": "キュートアイドルのアイドルが獲得するファン数がxx%アップ",
    "title_ko": "큐트 아이돌 팬 획득 증가",
-   "desc_ko": "큐트 아이돌이 획득하는 팬 수가 xx 증가"
+   "desc_ko": "큐트 아이돌이 획득하는 팬 수가 xx% 증가"
  },
  {
    "id": "idol2",
    "category": "idol",
    "subcategory": "",
    "title_ja": "クールアイドル獲得ファンアップ",
-   "desc_ja": "クールアイドルのアイドルが獲得するファン数がxxアップ",
+   "desc_ja": "クールアイドルのアイドルが獲得するファン数がxx%アップ",
    "title_ko": "쿨 아이돌 팬 획득 증가",
-   "desc_ko": "쿨 아이돌이 획득하는 팬 수가 xx 증가"
+   "desc_ko": "쿨 아이돌이 획득하는 팬 수가 xx% 증가"
  },
  {
    "id": "idol3",
    "category": "idol",
    "subcategory": "",
    "title_ja": "パッションアイドル獲得ファンアップ",
-   "desc_ja": "パッションのアイドルが獲得するファン数がxxアップ",
+   "desc_ja": "パッションのアイドルが獲得するファン数がxx%アップ",
    "title_ko": "패션 아이돌 팬 획득 증가",
-   "desc_ko": "패션 아이돌이 획득하는 팬 수가 xx 증가"
+   "desc_ko": "패션 아이돌이 획득하는 팬 수가 xx% 증가"
  },
  {
    "id": "idol4",
    "category": "idol",
    "subcategory": "",
    "title_ja": "特技レベルアップ確率アップ",
-   "desc_ja": "レッスン時の特技レベルアップ確率がxxアップ",
+   "desc_ja": "レッスン時の特技レベルアップ確率がxx%アップ",
    "title_ko": "특기 레벨업 확률 증가",
-   "desc_ko": "레슨 시 특기 레벨업 확률이 xx 증가"
+   "desc_ko": "레슨 시 특기 레벨업 확률이 xx% 증가"
  },
  {
    "id": "live1",
    "category": "live",
    "subcategory": "LIVEクリア報酬",
    "title_ja": "獲得プロデューサーExpアップ",
-   "desc_ja": "LIVEで獲得できる、プロデューサーExpがxxアップ！",
+   "desc_ja": "LIVEで獲得できる、プロデューサーExpがxx%アップ！",
    "title_ko": "프로듀서 Exp 획득 증가",
-   "desc_ko": "LIVE에서 획득할 수 있는 프로듀서 Exp가 xx 증가!"
+   "desc_ko": "LIVE에서 획득할 수 있는 프로듀서 Exp가 xx% 증가!"
  },
  {
    "id": "live2",
    "category": "live",
    "subcategory": "LIVEクリア報酬",
    "title_ja": "獲得マニーアップ",
-   "desc_ja": "LIVEで獲得できる、マニーがxxアップ！",
+   "desc_ja": "LIVEで獲得できる、マニーがxx%アップ！",
    "title_ko": "마니 획득 증가",
-   "desc_ko": "LIVE에서 획득할 수 있는 마니가 xx 증가!"
+   "desc_ko": "LIVE에서 획득할 수 있는 마니가 xx% 증가!"
  },
  {
    "id": "live3",
    "category": "live",
    "subcategory": "LIVEクリア報酬",
    "title_ja": "獲得親愛度アップ",
-   "desc_ja": "LIVEで獲得できる、親愛度がxxアップ！",
+   "desc_ja": "LIVEで獲得できる、親愛度がxx%アップ！",
    "title_ko": "친애도 획득 증가",
-   "desc_ko": "LIVE에서 획득할 수 있는 친애도가 xx 증가!"
+   "desc_ko": "LIVE에서 획득할 수 있는 친애도가 xx% 증가!"
  },
  {
    "id": "live4",
@@ -76,108 +76,108 @@
    "category": "live",
    "subcategory": "LIVE支援",
    "title_ja": "LIVE消費スタミナ軽減",
-   "desc_ja": "LIVEをプレイする為に必要なスタミナがxx軽減",
+   "desc_ja": "LIVEをプレイする為に必要なスタミナがxx%軽減",
    "title_ko": "LIVE 소비 스태미너 경감",
-   "desc_ko": "LIVE를 플레이하는 데 필요한 스태미너가 xx 경감"
+   "desc_ko": "LIVE를 플레이하는 데 필요한 스태미너가 xx% 경감"
  },
  {
    "id": "event1",
    "category": "event",
    "subcategory": "LIVE Carnival",
    "title_ja": "獲得カーニバルメダル数アップ",
-   "desc_ja": "獲得できるカーニバルメダルの数がxxアップ！",
+   "desc_ja": "獲得できるカーニバルメダルの数がxx%アップ！",
    "title_ko": "카니발 메달 획득 수 증가",
-   "desc_ko": "획득할 수 있는 카니발 메달 수가 xx 증가!"
+   "desc_ko": "획득할 수 있는 카니발 메달 수가 xx% 증가!"
  },
  {
    "id": "event2",
    "category": "event",
    "subcategory": "LIVE Infinity",
    "title_ja": "課題カウントアップ（キュート楽曲）",
-   "desc_ja": "LIVE Infinityの「キュート楽曲をLIVEで●回クリア」のカウントをxxアップ！",
+   "desc_ja": "LIVE Infinityの「キュート楽曲をLIVEで●回クリア」のカウントをxx%アップ！",
    "title_ko": "과제 카운트업（큐트 악곡）",
-   "desc_ko": "LIVE Infinity의 「큐트 악곡을 LIVE에서 ●회 클리어」 카운트가 xx 증가!"
+   "desc_ko": "LIVE Infinity의 「큐트 악곡을 LIVE에서 ●회 클리어」 카운트가 xx% 증가!"
  },
  {
    "id": "event3",
    "category": "event",
    "subcategory": "LIVE Infinity",
    "title_ja": "課題カウントアップ（クール楽曲）",
-   "desc_ja": "LIVE Infinityの「クール楽曲をLIVEで●回クリア」のカウントをxxアップ！",
+   "desc_ja": "LIVE Infinityの「クール楽曲をLIVEで●回クリア」のカウントをxx%アップ！",
    "title_ko": "과제 카운트업（쿨 악곡）",
-   "desc_ko": "LIVE Infinity의 「쿨 악곡을 LIVE에서 ●회 클리어」 카운트가 xx 증가!"
+   "desc_ko": "LIVE Infinity의 「쿨 악곡을 LIVE에서 ●회 클리어」 카운트가 xx% 증가!"
  },
  {
    "id": "event4",
    "category": "event",
    "subcategory": "LIVE Infinity",
    "title_ja": "課題カウントアップ（パッション楽曲）",
-   "desc_ja": "LIVE Infinityの「パッション楽曲をLIVEで●回クリア」のカウントをxxアップ！",
+   "desc_ja": "LIVE Infinityの「パッション楽曲をLIVEで●回クリア」のカウントをxx%アップ！",
    "title_ko": "과제 카운트업（패션 악곡）",
-   "desc_ko": "LIVE Infinity의 「패션 악곡을 LIVE에서 ●회 클리어」 카운트가 xx 증가!"
+   "desc_ko": "LIVE Infinity의 「패션 악곡을 LIVE에서 ●회 클리어」 카운트가 xx% 증가!"
  },
  {
    "id": "event5",
    "category": "event",
    "subcategory": "LIVE Infinity",
    "title_ja": "課題カウントアップ（全タイプ楽曲）",
-   "desc_ja": "LIVE Infinityの「全タイプ楽曲をLIVEで●回クリア」のカウントをxxアップ！",
+   "desc_ja": "LIVE Infinityの「全タイプ楽曲をLIVEで●回クリア」のカウントをxx%アップ！",
    "title_ko": "과제 카운트업（전 타입 악곡）",
-   "desc_ko": "LIVE Infinity의 「전 타입 악곡을 LIVE에서 ●회 클리어」 카운트가 xx 증가!"
+   "desc_ko": "LIVE Infinity의 「전 타입 악곡을 LIVE에서 ●회 클리어」 카운트가 xx% 증가!"
  },
  {
    "id": "event6",
    "category": "event",
    "subcategory": "LIVE Infinity",
    "title_ja": "課題カウントアップ（合計スコア）",
-   "desc_ja": "LIVE Infinityの「合計スコア●以上」のカウントをxxアップ！",
+   "desc_ja": "LIVE Infinityの「合計スコア●以上」のカウントをxx%アップ！",
    "title_ko": "과제 카운트업（합계 스코어）",
-   "desc_ko": "LIVE Infinity의 「합계 스코어 ● 이상」 카운트가 xx 증가!"
+   "desc_ko": "LIVE Infinity의 「합계 스코어 ● 이상」 카운트가 xx% 증가!"
  },
  {
    "id": "event7",
    "category": "event",
    "subcategory": "LIVE Infinity",
    "title_ja": "課題カウントアップ（MAXコンボ）",
-   "desc_ja": "LIVE Infinityの「MAXコンボ合計数●以上」のカウントをxxアップ！",
+   "desc_ja": "LIVE Infinityの「MAXコンボ合計数●以上」のカウントをxx%アップ！",
    "title_ko": "과제 카운트업（MAX 콤보）",
-   "desc_ko": "LIVE Infinity의 「MAX 콤보 합계 수 ● 이상」 카운트가 xx 증가!"
+   "desc_ko": "LIVE Infinity의 「MAX 콤보 합계 수 ● 이상」 카운트가 xx% 증가!"
  },
  {
    "id": "event8",
    "category": "event",
    "subcategory": "LIVE Infinity",
    "title_ja": "課題カウントアップ（精度判定）",
-   "desc_ja": "LIVE Infinityの「PERFECT、GREATが合計●以上」のカウントをxxアップ！",
+   "desc_ja": "LIVE Infinityの「PERFECT、GREATが合計●以上」のカウントをxx%アップ！",
    "title_ko": "과제 카운트업（정밀 판정）",
-   "desc_ko": "LIVE Infinity의 「PERFECT, GREAT 합계 ● 이상」 카운트가 xx 증가!"
+   "desc_ko": "LIVE Infinity의 「PERFECT, GREAT 합계 ● 이상」 카운트가 xx% 증가!"
  },
  {
    "id": "event9",
    "category": "event",
    "subcategory": "LIVE Infinity",
    "title_ja": "課題カウントアップ（楽曲）",
-   "desc_ja": "LIVE Infinityの「合計楽曲●以上」のカウントをxxアップ！",
+   "desc_ja": "LIVE Infinityの「合計楽曲●以上」のカウントをxx%アップ！",
    "title_ko": "과제 카운트업（악곡 ）",
-   "desc_ko": "LIVE Infinity의 「합계 악곡  ● 이상」 카운트가 xx 증가!"
+   "desc_ko": "LIVE Infinity의 「합계 악곡  ● 이상」 카운트가 xx% 증가!"
  },
  {
    "id": "event10",
    "category": "event",
    "subcategory": "LIVE Infinity",
    "title_ja": "課題カウントアップ（リズムアイコン）",
-   "desc_ja": "LIVE Infinityの「合計リズムアイコン数●以上」のカウントをxxアップ！",
+   "desc_ja": "LIVE Infinityの「合計リズムアイコン数●以上」のカウントをxx%アップ！",
    "title_ko": "과제 카운트업（리듬 아이콘）",
-   "desc_ko": "LIVE Infinity의 「합계 리듬 아이콘 수 ● 이상」 카운트가 xx 증가!"
+   "desc_ko": "LIVE Infinity의 「합계 리듬 아이콘 수 ● 이상」 카운트가 xx% 증가!"
  },
  {
    "id": "event11",
    "category": "event",
    "subcategory": "LIVE Infinity",
    "title_ja": "課題カウントアップ（フルコンボ）",
-   "desc_ja": "LIVE Infinityの「フルコンボを●以上」のカウントをxxアップ！",
+   "desc_ja": "LIVE Infinityの「フルコンボを●以上」のカウントをxx%アップ！",
    "title_ko": "과제 카운트업（풀 콤보）",
-   "desc_ko": "LIVE Infinity의 「풀 콤보 ● 이상」 카운트가 xx 증가!"
+   "desc_ko": "LIVE Infinity의 「풀 콤보 ● 이상」 카운트가 xx% 증가!"
  },
  {
    "id": "sales1",
@@ -193,27 +193,27 @@
    "category": "sales",
    "subcategory": "",
    "title_ja": "営業時間短縮",
-   "desc_ja": "営業にかかる時間がxx短縮",
+   "desc_ja": "営業にかかる時間がxx%短縮",
    "title_ko": "영업 시간 단축",
-   "desc_ko": "영업에 걸리는 시간이 xx 단축"
+   "desc_ko": "영업에 걸리는 시간이 xx% 단축"
  },
  {
    "id": "sales3",
    "category": "sales",
    "subcategory": "",
    "title_ja": "営業獲得プロデューサーExpアップ",
-   "desc_ja": "営業で獲得できるプロデューサーExpがxxアップ！",
+   "desc_ja": "営業で獲得できるプロデューサーExpがxx%アップ！",
    "title_ko": "영업 프로듀서 Exp 획득 증가",
-   "desc_ko": "영업에서 획득할 수 있는 프로듀서 Exp가 xx 증가!"
+   "desc_ko": "영업에서 획득할 수 있는 프로듀서 Exp가 xx% 증가!"
  },
  {
    "id": "sales4",
    "category": "sales",
    "subcategory": "",
    "title_ja": "営業獲得マニーアップ",
-   "desc_ja": "営業で獲得できるマニーがxxアップ！",
+   "desc_ja": "営業で獲得できるマニーがxx%アップ！",
    "title_ko": "영업 마니 획득 증가",
-   "desc_ko": "영업에서 획득할 수 있는 마니가 xx 증가!"
+   "desc_ko": "영업에서 획득할 수 있는 마니가 xx% 증가!"
  },
  {
    "id": "sales5",
@@ -229,18 +229,18 @@
    "category": "etc",
    "subcategory": "",
    "title_ja": "ルームアイテムディスカウント",
-   "desc_ja": "ルームアイテムの購入マニーがxx軽減",
+   "desc_ja": "ルームアイテムの購入マニーがxx%軽減",
    "title_ko": "룸 아이템 할인",
-   "desc_ko": "룸 아이템 구매 시 필요한 마니가 xx 경감"
+   "desc_ko": "룸 아이템 구매 시 필요한 마니가 xx% 경감"
  },
  {
    "id": "etc2",
    "category": "etc",
    "subcategory": "",
    "title_ja": "獲得ゲームメダル数アップ",
-   "desc_ja": "ミニゲームクリア時に獲得できるメダル数xxアップ！",
+   "desc_ja": "ミニゲームクリア時に獲得できるメダル数xx%アップ！",
    "title_ko": "게임 메달 획득 수 증가",
-   "desc_ko": "미니게임 클리어 시 획득할 수 있는 메달 수가 xx 증가!"
+   "desc_ko": "미니게임 클리어 시 획득할 수 있는 메달 수가 xx% 증가!"
  },
  {
    "id": "etc3",
@@ -256,8 +256,8 @@
    "category": "etc",
    "subcategory": "",
    "title_ja": "獲得友情ptアップ",
-   "desc_ja": "LIVEクリア時に獲得できる友情ptxxアップ",
+   "desc_ja": "LIVEクリア時に獲得できる友情ptxx%アップ",
    "title_ko": "우정 pt 획득 증가",
-   "desc_ko": "LIVE 클리어 시 획득할 수 있는 우정 pt가 xx 증가"
+   "desc_ko": "LIVE 클리어 시 획득할 수 있는 우정 pt가 xx% 증가"
  }
 ]
