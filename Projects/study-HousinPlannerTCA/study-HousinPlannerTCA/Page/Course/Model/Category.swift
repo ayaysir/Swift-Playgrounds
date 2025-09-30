@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum Category: String {
+enum Category: String, CaseIterable {
   case idol
   case live
   case event

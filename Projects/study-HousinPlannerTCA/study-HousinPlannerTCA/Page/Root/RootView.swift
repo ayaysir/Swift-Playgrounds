@@ -15,11 +15,16 @@ struct RootView: View {
     // 'WithPerceptionTracking' was deprecated in iOS 17: 'WithPerceptionTracking' is no longer needed in iOS 17+.
     
     TabView(selection: $store.selectedTab.sending(\.selectTab)) {
-      Text("Planner")
-        .tabItem {
-          Label("Planner", systemImage: "list.bullet.indent")
-        }
-        .tag(RootDomain.Tab.planner)
+      PlannerView(
+        store: store.scope(
+          state: \.plannerSt,
+          action: \.plannerAct
+        )
+      )
+      .tabItem {
+        Label("Planner", systemImage: "list.bullet.indent")
+      }
+      .tag(RootDomain.Tab.planner)
 
       Text("ETC")
         .tabItem {

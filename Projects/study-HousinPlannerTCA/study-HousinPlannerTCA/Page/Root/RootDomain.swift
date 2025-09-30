@@ -10,12 +10,16 @@ import ComposableArchitecture
 
 @Reducer
 struct RootDomain {
-  
   // MARK: - State
   
   @ObservableState
   struct State: Equatable {
     var selectedTab: Tab = .planner
+    /*
+     TCA에서 scope를 사용하려면, RootDomain.State 안에 PlannerDomain.State를 포함시키고,
+     RootDomain.Action에도 PlannerFeature.Action을 위임할 케이스를 추가해야 합니다.
+     */
+    var plannerSt = PlannerDomain.State()
   }
   
   // 세부 종류
@@ -29,15 +33,25 @@ struct RootDomain {
   
   enum Action {
     case selectTab(Tab)
+    case plannerAct(PlannerDomain.Action)
   }
   
    // MARK: - Reducer
   
   var body: some ReducerOf<Self> {
+    // PlannerDomain 를 scope로 연결
+    Scope(
+      state: \.plannerSt, // RootDomain.State.plannerSt
+      action: \.plannerAct, // RootDomain.Action.plannerAct
+      child: { PlannerDomain() }
+    )
+    
     Reduce { state, action in
       switch action {
       case .selectTab(let tab):
         state.selectedTab = tab
+        return .none
+      case .plannerAct:
         return .none
       }
     }

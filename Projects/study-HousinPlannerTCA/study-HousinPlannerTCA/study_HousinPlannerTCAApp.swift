@@ -12,27 +12,12 @@ import ComposableArchitecture
 struct study_HousinPlannerTCAApp: App {
   var body: some Scene {
     WindowGroup {
-      // RootView(
-      //   store: Store(
-      //     initialState: RootDomain.State(),
-      //     reducer: { RootDomain() }
-      //   )
-      // )
-      List {
-        ForEach(0..<2) { i in
-          Section {
-            CourseView(
-              store: Store(
-                initialState: CourseDomain.State(
-                  id: UUID(),
-                  course: .samples[i]
-                ),
-                reducer: { CourseDomain() }
-              )
-            )
-          }
-        }
-      }
+      RootView(
+        store: Store(
+          initialState: RootDomain.State(),
+          reducer: { RootDomain() }
+        )
+      )
     }
   }
 }
