@@ -9,17 +9,17 @@ import SwiftUI
 import ComposableArchitecture
 
 struct CourseView: View {
-  let store: StoreOf<CourseDomain>
+  @Bindable var store: StoreOf<CourseDomain>
   
   var body: some View {
     VStack(alignment: .leading) {
       HStack {
-        FragRoundedLabel(
+        CommonFrags.RoundedLabel(
           store.course.category,
           backgroundColor: Category(rawValue: store.course.category)?.bgColor ?? .gray
         )
         Text(verbatim: store.course.titleJa)
-          .font(.system(size: 17, weight: .bold))
+          .font(.system(size: 16.5, weight: .bold))
       }
       .padding(.horizontal, 0)
       .padding(.vertical, 4)
@@ -28,12 +28,13 @@ struct CourseView: View {
       // => CourseDomain으로 이동
       // }
       Text(verbatim: store.effectValueText)
-        .font(.system(size: 14, weight: .regular))
+        .font(.system(size: 13.5, weight: .regular))
       
       Divider()
       
       HStack {
-        FragRoundedLabel("方針Lv")
+        CommonFrags.RoundedLabel("方針Lv")
+          .font(.system(size: 13))
         
         PlusMinusButton(
           store: store.scope(
@@ -42,7 +43,8 @@ struct CourseView: View {
           )
         )
         Spacer()
-        FragRoundedLabel("場数pt")
+        CommonFrags.RoundedLabel("必要場数pt")
+          .font(.system(size: 13))
         Text(verbatim: store.requireSheetsPointText)
           .font(.system(size: 13))
           .frame(minWidth: 40)
@@ -55,19 +57,16 @@ struct CourseView: View {
           totalCount: store.course.effects.count
         )
         Spacer()
-        Button(action: {}) {
-          Text("詳細")
-            .font(.system(size: 14))
-            .padding(.horizontal, 10)
-            .padding(.vertical, 2.5)
-            .background(.gray.opacity(0.3))
-            .clipShape(.buttonBorder)
+        CommonFrags.RoundedButton("詳細") {
+          store.send(.setDetailSheetView(isPresented: true))
         }
-        .buttonStyle(.plain)
       }
     }
     .task {
       store.send(.adjustLevel(.setInitLevel(0)))
+    }
+    .sheet(item: $store.scope(state: \.detailSheetState, action: \.detailSheetAct)) { store in
+      DetailSheetView(store: store)
     }
   }
   
@@ -85,21 +84,7 @@ struct CourseView: View {
   }
 }
 
-extension CourseView {
-  @ViewBuilder private func FragRoundedLabel(
-    _ text: String,
-    backgroundColor: Color = .gray,
-    foregroundColor: Color = .white
-  ) -> some View {
-    Text(verbatim: text)
-      .padding(.horizontal, 10)
-      .padding(.vertical, 1)
-      .background(backgroundColor)
-      .foregroundStyle(foregroundColor)
-      .bold()
-      .clipShape(RoundedRectangle(cornerRadius: 10))
-  }
-  
+extension CourseView {  
   @ViewBuilder private func FragProgressBar(accomplishedCount: Int, totalCount: Int) -> some View {
     HStack {
       let remainingCount = totalCount - accomplishedCount

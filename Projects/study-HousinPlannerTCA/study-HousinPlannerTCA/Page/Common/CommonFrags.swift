@@ -9,7 +9,8 @@ import SwiftUI
 
 struct CommonFrags {
   private init() {}
-  internal static func StyledButtonLabel(
+  
+  static func StyledButtonLabel(
     _ verbatimText: String,
     backgroundColor: Color = .pink,
     foregroundColor: Color = .white,
@@ -22,4 +23,36 @@ struct CommonFrags {
       .foregroundColor(foregroundColor)
       .clipShape(.buttonBorder)
   }
+  
+  @ViewBuilder static func RoundedLabel(
+    _ text: String,
+    backgroundColor: Color = .gray,
+    foregroundColor: Color = .white,
+    horizontalPadding: CGFloat = 10,
+    verticalPadding: CGFloat = 1
+  ) -> some View {
+    Text(verbatim: text)
+      .padding(.horizontal, horizontalPadding)
+      .padding(.vertical, verticalPadding)
+      .background(backgroundColor)
+      .foregroundStyle(foregroundColor)
+      .bold()
+      .clipShape(RoundedRectangle(cornerRadius: 10))
+  }
+  
+  @ViewBuilder static func RoundedButton(
+    _ verbatimText: String,
+    action: (() -> Void)? = nil
+  ) -> some View {
+    Button(action: { action?() }) {
+      Text(verbatim: verbatimText)
+        .font(.system(size: 13))
+        .padding(.horizontal, 10)
+        .padding(.vertical, 2.5)
+        .background(.gray.opacity(0.3))
+        .clipShape(.buttonBorder)
+    }
+    .buttonStyle(.plain)
+  }
+
 }

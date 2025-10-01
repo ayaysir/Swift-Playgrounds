@@ -17,10 +17,15 @@ struct CourseDomain {
     var adjustLevelState = AdjustLevelDomain.State()
     var effectValueText: String = ""
     var requireSheetsPointText: String = "---"
+    
+    @Presents var detailSheetState: DetailSheetDomain.State?
   }
   
   enum Action {
     case adjustLevel(AdjustLevelDomain.Action)
+    case setDetailSheetView(isPresented: Bool)
+    // 프레젠테이션 액션(PresentationAction) 은 시트, 네비게이션, 팝오버 같은 “뷰의 열림/닫힘” 상태를 옵셔널 상태와 액션으로 안전하게 연결하기 위한 특별한 액션 타입
+    case detailSheetAct(PresentationAction<DetailSheetDomain.Action>)
   }
   
   var body: some ReducerOf<Self> {
@@ -50,6 +55,20 @@ struct CourseDomain {
           state.effectValueText = currentDesc.replacingOccurrences(of: "xx", with: "0")
           state.requireSheetsPointText = "---"
         }
+        return .none
+        
+      case .setDetailSheetView(let isPresented):
+        state.detailSheetState = if isPresented {
+          DetailSheetDomain.State(course: state.course)
+        } else {
+          nil
+        }
+        return .none
+      case .detailSheetAct(.presented(.dismiss)):
+        state.detailSheetState = nil
+        return .none
+      case .detailSheetAct(.dismiss):
+        state.detailSheetState = nil
         return .none
       }
     }
