@@ -8,7 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		4498EA162E884D2300EBA487 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 4498EA152E884D2300EBA487 /* ComposableArchitecture */; };
+		4498EAD82E8EEF2F00EBA487 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4498EAD72E8EEF2F00EBA487 /* RealmSwift */; };
+		4498EAD92E8EF60A00EBA487 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 4498EAD72E8EEF2F00EBA487 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4498EADA2E8EF60A00EBA487 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4498EAD92E8EF60A00EBA487 /* RealmSwift in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4498E9902E884B2000EBA487 /* study-HousinPlannerTCA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "study-HousinPlannerTCA.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -27,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4498EAD82E8EEF2F00EBA487 /* RealmSwift in Frameworks */,
 				4498EA162E884D2300EBA487 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -60,6 +77,7 @@
 				4498E98C2E884B2000EBA487 /* Sources */,
 				4498E98D2E884B2000EBA487 /* Frameworks */,
 				4498E98E2E884B2000EBA487 /* Resources */,
+				4498EADA2E8EF60A00EBA487 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -71,6 +89,7 @@
 			name = "study-HousinPlannerTCA";
 			packageProductDependencies = (
 				4498EA152E884D2300EBA487 /* ComposableArchitecture */,
+				4498EAD72E8EEF2F00EBA487 /* RealmSwift */,
 			);
 			productName = "study-HousinPlannerTCA";
 			productReference = 4498E9902E884B2000EBA487 /* study-HousinPlannerTCA.app */;
@@ -102,6 +121,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				4498EA142E884D2300EBA487 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				4498EAD62E8EEF2F00EBA487 /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4498E9912E884B2000EBA487 /* Products */;
@@ -345,6 +365,14 @@
 				minimumVersion = 1.22.3;
 			};
 		};
+		4498EAD62E8EEF2F00EBA487 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -352,6 +380,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4498EA142E884D2300EBA487 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
+		};
+		4498EAD72E8EEF2F00EBA487 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4498EAD62E8EEF2F00EBA487 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -1,3 +1,10 @@
+//
+//  InputSheetView.swift
+//  study-HousinPlannerTCA
+//
+//  Created by 윤범태 on 10/3/25.
+//
+
 import SwiftUI
 import ComposableArchitecture
 
@@ -36,4 +43,13 @@ struct InputSheetView: View {
       }
     }
   }
+}
+
+#Preview {
+  InputSheetView(
+    store: Store(
+      initialState: InputSheetDomain.State(),
+      reducer: { InputSheetDomain() }
+    )
+  )
 }

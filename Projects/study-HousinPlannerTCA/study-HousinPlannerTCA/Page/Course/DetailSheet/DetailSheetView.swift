@@ -37,8 +37,10 @@ extension DetailSheetView {
   @ViewBuilder private func CellCourseEffect(of effect: CourseEffect) -> some View {
     HStack {
       // TODO: - 소지 여부에 따라 텍스트 표시 결정
-      Text(Bool.random() ? "해방됨" : "")
+      let showObtained = effect.level <= store.adjustLevelState.level
+      Text(showObtained ? "해방됨" : "")
         .frame(width: 50)
+        .foregroundStyle(.pink)
       VStack {
         HStack {
           CommonFrags.RoundedLabel("Lv\(effect.level)")
@@ -76,8 +78,13 @@ extension DetailSheetView {
 #Preview {
   DetailSheetView(
     store: .init(
-      initialState: DetailSheetDomain.State(course: .samples[0]),
-      reducer: { DetailSheetDomain() }
+      initialState: DetailSheetDomain.State(
+        course: .samples[0],
+        adjustLevelState: .init(level: 1)
+      ),
+      reducer: {
+        DetailSheetDomain()
+      }
     )
   )
 }

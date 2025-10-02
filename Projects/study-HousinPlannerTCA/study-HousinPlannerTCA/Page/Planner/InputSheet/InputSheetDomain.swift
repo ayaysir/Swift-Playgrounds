@@ -1,3 +1,10 @@
+//
+//  InputSheetDomain.swift
+//  study-HousinPlannerTCA
+//
+//  Created by 윤범태 on 10/3/25.
+//
+
 import ComposableArchitecture
 import SwiftUI
 
@@ -26,7 +33,7 @@ struct InputSheetDomain {
         return .none
         
       case .didTapCancel:
-        // 취소 버튼 눌렀을 때 단순 dismiss
+        // 취소 버튼 눌렀을 때 단순 dismiss (상위 도메인 처리)
         return .none
       }
     }

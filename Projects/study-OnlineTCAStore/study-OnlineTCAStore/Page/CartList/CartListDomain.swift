@@ -32,7 +32,7 @@ struct CartListDomain {
   }
   
   enum Action: Equatable {
-    // resentationAction은 알림(alert) 등 일시적 상태를 처리할 때 쓰는 구조
+    // PresentationAction은 알림(alert) 등 일시적 상태를 처리할 때 쓰는 구조
     // SwiftUI의 .alert(...)과 연동될 수 있음
     case alert(PresentationAction<Alert>)
     case didPressCloseButton
