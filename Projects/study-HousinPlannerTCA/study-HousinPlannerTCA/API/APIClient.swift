@@ -24,6 +24,8 @@ struct APIClient {
   // @Sendable: 클로저가 안전하게 여러 스레드에서 실행될 수 있음을 보장하는 특성
   var fetchCourses: @Sendable () async throws -> [Course]
   var updateUserSetTotalCount: (UUID, Int) -> Void
+  
+  // Xcode 오류발생해서 못씀
   // var createDraft: (_ name: String) throws -> Draft
   // var fetchAllDrafts: () throws -> [Draft]
   // var deleteDraft: (_ id: UUID) throws -> Void

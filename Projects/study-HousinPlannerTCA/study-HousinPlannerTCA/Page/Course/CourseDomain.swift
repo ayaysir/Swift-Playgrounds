@@ -23,11 +23,13 @@ struct CourseDomain {
   
   enum Action {
     case adjustLevel(AdjustLevelDomain.Action)
-    case refreshPointText
+    case refreshLevelPointStatus
     case setDetailSheetView(isPresented: Bool)
     // 프레젠테이션 액션(PresentationAction) 은 시트, 네비게이션, 팝오버 같은 “뷰의 열림/닫힘” 상태를 옵셔널 상태와 액션으로 안전하게 연결하기 위한 특별한 액션 타입
     case detailSheetAct(PresentationAction<DetailSheetDomain.Action>)
     case resetAdjustLevel
+    case requestUpdateLevel
+    case requestFetchLevel
   }
   
   var body: some ReducerOf<Self> {
@@ -49,17 +51,16 @@ struct CourseDomain {
         fallthrough
         
       case .adjustLevel:
-        fallthrough
-      case .refreshPointText:
-        let currentDesc = state.course.descJa
-        if let currentEffect = state.course.effects.first(where: { state.adjustLevelState.level == $0.level }) {
-          state.effectValueText = currentDesc.replacingOccurrences(of: "xx", with: currentEffect.valueEffect.description)
-          state.requireSheetsPointText = "\(currentEffect.pointCumulative)"
-        } else {
-          state.effectValueText = currentDesc.replacingOccurrences(of: "xx", with: "0")
-          state.requireSheetsPointText = "---"
-        }
+        updateEffectValueText(state: &state)
+        return .send(.requestUpdateLevel)
+        
+      case .refreshLevelPointStatus:
+        // update Text
+        updateEffectValueText(state: &state)
+        
+        // DB update
         return .none
+        
       case .setDetailSheetView(let isPresented):
         state.detailSheetState = if isPresented {
           // 여기서 state.adjustLevelState를 전송
@@ -68,18 +69,39 @@ struct CourseDomain {
           nil
         }
         return .none
+        
       case .detailSheetAct(.presented(.dismiss)):
         state.detailSheetState = nil
         return .none
+        
       case .detailSheetAct(.dismiss):
         state.detailSheetState = nil
         return .none
+        
       case .detailSheetAct:
         return .none
+        
       case .resetAdjustLevel:
         state.adjustLevelState.level = 0
         return .none
+        
+      case .requestUpdateLevel:
+        return .none
+        
+      case .requestFetchLevel:
+        return .none
       }
+    }
+  }
+  
+  private func updateEffectValueText(state: inout Self.State) {
+    let currentDesc = state.course.descJa
+    if let currentEffect = state.course.effects.first(where: { state.adjustLevelState.level == $0.level }) {
+      state.effectValueText = currentDesc.replacingOccurrences(of: "xx", with: currentEffect.valueEffect.description)
+      state.requireSheetsPointText = "\(currentEffect.pointCumulative)"
+    } else {
+      state.effectValueText = currentDesc.replacingOccurrences(of: "xx", with: "0")
+      state.requireSheetsPointText = "---"
     }
   }
 }

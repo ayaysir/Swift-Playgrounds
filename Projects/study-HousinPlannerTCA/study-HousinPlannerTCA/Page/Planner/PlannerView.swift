@@ -13,9 +13,9 @@ struct PlannerView: View {
   
   var body: some View {
     VStack(spacing: 10) {
-      if let id = store.currentDraftID {
-        Text("currentDraft: \(id), userTotalPoint: \(RealmService.shared.fetchDraft(by: id)?.userSetTotalCount ?? -999) [\(store.userSetTotalCount)]")
-      }
+      // if let id = store.currentDraftID {
+      //   Text("currentDraft: \(id), userTotalPoint: \(RealmService.shared.fetchDraftObject(by: id)?.userSetTotalCount ?? -999) [\(store.userSetTotalCount)]")
+      // }
       
       AreaHeaderPanel
       AreaCategorySegments
@@ -139,6 +139,7 @@ extension PlannerView {
             backgroundColor: category.bgColor
           )
           .font(.system(size: 13))
+          // TODO: - DraftObject에서 불러왔을 때 모든 카테고리에 숫자 미리 반영되게
           let selectedCount = store.selectedCountByCategory[category, default: 0]
           let totalCount = store.totalEffectCountByCategory[category, default: 0]
           Text("\(selectedCount)/\(totalCount)")

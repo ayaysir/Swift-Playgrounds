@@ -55,11 +55,10 @@ struct RootDomain {
       case .plannerAct:
         return .none
       case .appStarted:
-        let drafts = RealmService.shared.fetchAllDrafts()
-        if drafts.isEmpty {
-          _ = RealmService.shared.createDraft(name: "Draft 1")
+        let draftObjects = RealmService.shared.fetchAllDraftObjects()
+        if draftObjects.isEmpty {
+          _ = RealmService.shared.createDraftObject(name: "Draft 1")
         }
-        print("AppStarted:", RealmService.shared.fetchAllDrafts())
         return .none
       }
     }

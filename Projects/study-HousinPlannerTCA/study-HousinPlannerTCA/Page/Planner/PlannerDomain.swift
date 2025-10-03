@@ -61,12 +61,14 @@ struct PlannerDomain {
       case let .categoryChanged(newCategory):
         state.category = newCategory
         return .none
+        
       case .fetchCourses:
         return .run { send in
           await send(.fetchCoursesResponse(TaskResult {
             try await self.fetchCourses()
           }))
         }
+        
       case .fetchCoursesResponse(.success(let courses)):
         state.courses = IdentifiedArrayOf(
           uniqueElements: courses.map {
@@ -75,13 +77,42 @@ struct PlannerDomain {
         )
         
         return .none
+        
       case .fetchCoursesResponse(.failure(let error)):
         print("fetchProductsResponse Error: \(error)")
         print("Error getting courses, try again later.")
         
         return .none
-      case .courseAct(_):
+        
+      case .courseAct(.element(id: let courseDomainID, action: .requestUpdateLevel)):
+        // 주의: courseDomainID는 도메인의 UUID이고 DB에 저장되는 ID는 CourseDomain.course.id(String) 임
+        // print(courseDomainID, state.courses.first(where: { $0.id == courseDomainID })?.course.id)
+        if let courseState = state.courses.first(where: { $0.id == courseDomainID }),
+           let draftID = state.currentDraftID {
+          let courseID = courseState.course.id
+          let level = courseState.adjustLevelState.level
+          RealmService.shared.updateCourseLevelState(draftID: draftID, courseID: courseID, level: level)
+        }
         return .none
+        
+      case .courseAct(.element(id: let courseDomainID, action: .requestFetchLevel)):
+        // 주의: courseDomainID는 도메인의 UUID이고 DB에 저장되는 ID는 CourseDomain.course.id(String) 임
+        // print(courseDomainID, state.courses.first(where: { $0.id == courseDomainID })?.course.id)
+        if let courseState = state.courses.first(where: { $0.id == courseDomainID }),
+           let draftID = state.currentDraftID {
+          let courseID = courseState.course.id
+          
+          if let fetchedLevel = RealmService.shared.fetchCourseLevelState(draftID: draftID, courseID: courseID)?.currentLevel {
+            // print("requestFetchLevel: \(courseID), level: \(fetchedLevel)")
+            return .send(.courseAct(.element(id: courseDomainID, action: .adjustLevel(.setInitLevel(fetchedLevel)))))
+          }
+        }
+        
+        return .none
+        
+      case .courseAct:
+        return .none
+        
       case .inputSheetAct(.presented(.didTapCancel)):
         /*
          Sheet나 Navigation 같은 “Presentation 상태”는 상위 도메인(호출한 쪽) 에서 관리합니다.
@@ -105,12 +136,14 @@ struct PlannerDomain {
         }
         state.inputSheetSt = nil
         return .none
+        
       case .inputSheetAct:
         return .none
       
       case .showInputSheet:
         state.inputSheetSt = InputSheetDomain.State()
         return .none
+        
       case .resetAllCourseLevel:
         // 작업 수행 전에 경고창 (removeAlert)을 띄워 물어보기
         /*
@@ -137,20 +170,25 @@ struct PlannerDomain {
           TextState("이 작업은 되돌릴 수 없습니다.")
         }
         return .none
+        
       case .removeAlertAct(.presented(let alertAction)):
         return switchAlertAction(state: &state, alertAction: alertAction)
+        
       case .removeAlertAct:
         return .none
+        
       case .selectDraftWithUserPoint(let id, let point):
         state.currentDraftID = id
         state.userSetTotalCount = point
         return .none
+        
       case .selectDraft(let id):
-        let point = RealmService.shared.fetchDraft(by: id)?.userSetTotalCount ?? 0
+        let point = RealmService.shared.fetchDraftObject(by: id)?.userSetTotalCount ?? 0
         return .send(.selectDraftWithUserPoint(id, point))
+        
       case .initDraft:
         // TODO: - 앱 설치 직후: 생성된 드래프트, 그 이후: 최근 작업한 드래프트를 열기
-        if let firstDraft = RealmService.shared.fetchAllDrafts().first {
+        if let firstDraft = RealmService.shared.fetchAllDraftObjects().first {
           return .send(.selectDraftWithUserPoint(firstDraft.id, firstDraft.userSetTotalCount))
         }
         return .none

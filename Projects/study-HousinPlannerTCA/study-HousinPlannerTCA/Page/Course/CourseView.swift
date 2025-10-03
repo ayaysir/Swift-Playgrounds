@@ -65,7 +65,8 @@ struct CourseView: View {
     .task {
       // 세그먼트를 옮겨도 값이 초기화되지 않도록 삭제
       // store.send(.adjustLevel(.setInitLevel(0)))
-      store.send(.refreshPointText)
+      store.send(.requestFetchLevel)
+      store.send(.refreshLevelPointStatus)
     }
     .sheet(item: $store.scope(state: \.detailSheetState, action: \.detailSheetAct)) { store in
       DetailSheetView(store: store)
