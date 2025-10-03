@@ -16,6 +16,7 @@ struct PlannerDomain {
     
     // @PresentationState는 TCA 1.3+에서 alert, sheet, fullScreenCover 같은 뷰 전환 상태를 표현하기 위한 속성 래퍼
     @Presents var inputSheetSt: InputSheetDomain.State?
+    @Presents var removeAlert: AlertState<Action.Alert>?
     
     // 저장소(DB 등)와도 연동되어야 할 값들
     var userSetTotalCount: Int = 333
@@ -32,6 +33,16 @@ struct PlannerDomain {
     case showInputSheet
     
     case resetAllCourseLevel
+    
+    // PresentationAction은 알림(alert) 등 일시적 상태를 처리할 때 쓰는 구조
+    // SwiftUI의 .alert(...)과 연동될 수 있음
+    case removeAlertAct(PresentationAction<Alert>)
+    
+    @CasePathable
+    enum Alert {
+      case didConfirmRemoveAll
+      case didCancel
+    }
   }
   
   @Dependency(\.apiClient.fetchCourses) var fetchCourses
@@ -90,16 +101,35 @@ struct PlannerDomain {
         state.inputSheetSt = InputSheetDomain.State()
         return .none
       case .resetAllCourseLevel:
-        // 모든 course에 resetAdjustLevel 액션을 안전하게 전달 (TCA 1.3+)
-        return .merge(
-          state.courses.map { course in
-            .run { send in
-              // 각 course에 resetAdjustLevel 액션 전달
-              // IdentifiedActionOf<CourseDomain>)의 .element 사용 (init 아님)
-              await send(.courseAct(.element(id: course.id, action: .resetAdjustLevel)))
-            }
+        // 작업 수행 전에 경고창 (removeAlert)을 띄워 물어보기
+        /*
+         AlertState<Action>
+          - SwiftUI의 Alert를 상태(state)로 표현한 타입
+          - 제네릭 Action을 받는데, Alert 버튼을 눌렀을 때 상위 도메인에 전달할 액션 타입을 지정합니다.
+          - 즉, Alert을 도메인 안에서 안전하게 관리할 수 있게
+         
+         TextState
+          - Alert 제목, 메시지, 버튼 라벨 등을 문자열 대신 표현하는 타입
+          - TextState("초기화") → SwiftUI의 Text("초기화") 같은 역할
+          - 로컬라이징, 다국어, 동적 변환 등을 지원하기 위해 TextState로 래핑
+         */
+        state.removeAlert = AlertState {
+          TextState("모든 사용자 설정 레벨을 초기화하시겠습니까?")
+        } actions: {
+          ButtonState(role: .destructive, action: .didConfirmRemoveAll) {
+            TextState("초기화")
           }
-        )
+          ButtonState(role: .cancel, action: .didCancel) {
+            TextState("취소")
+          }
+        } message: {
+          TextState("이 작업은 되돌릴 수 없습니다.")
+        }
+        return .none
+      case .removeAlertAct(.presented(let alertAction)):
+        return switchAlertAction(state: &state, alertAction: alertAction)
+      case .removeAlertAct:
+        return .none
       }
     }
     .forEach(\.courses, action: \.courseAct) {
@@ -108,8 +138,30 @@ struct PlannerDomain {
     .ifLet(\.$inputSheetSt, action: \.inputSheetAct) {
       InputSheetDomain()
     }
+    .ifLet(\.$removeAlert, action: \.removeAlertAct)
   }
   
+  private func switchAlertAction(
+    state: inout Self.State,
+    alertAction: Action.Alert
+  ) -> Effect<Action> {
+    switch alertAction {
+    case .didConfirmRemoveAll:
+      // 모든 course에 resetAdjustLevel 액션을 안전하게 전달
+      return .merge(
+        state.courses.map { course in
+          .run { send in
+            // 각 course에 resetAdjustLevel 액션 전달
+            // IdentifiedActionOf<CourseDomain>)의 .element 사용 (init 아님)
+            await send(.courseAct(.element(id: course.id, action: .resetAdjustLevel)))
+          }
+        }
+      )
+    case .didCancel:
+      state.removeAlert = nil
+      return .none
+    }
+  }
 }
 
 extension PlannerDomain.State {

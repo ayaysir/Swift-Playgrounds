@@ -28,6 +28,22 @@ struct PlannerView: View {
     ) { store in
         InputSheetView(store: store)
       }
+    .alert(
+      store: store.scope(
+        state: \.$removeAlert,
+        action: \.removeAlertAct
+      )
+      /*
+       $: @PresentationState에 바인딩된 상태를 참조
+         => @PresentationState var alert: AlertState<Action.Alert>?를 프로퍼티 래퍼로 감싼 채로 접근
+       
+       \.$removeAlert는 KeyPath<State, PresentationState<AlertState<...>>?>를 의미
+       * TCA에서 PresentationState를 쓸 때:
+        - View에서 .alert(store:)를 사용하려면
+        - 내부적으로 alert 상태가 presentation lifecycle과 연결되어야 하고
+        - 이를 위해 “presentation용 KeyPath”, 즉 \.$alert가 필요합니다
+       */
+    )
   }
 }
 
