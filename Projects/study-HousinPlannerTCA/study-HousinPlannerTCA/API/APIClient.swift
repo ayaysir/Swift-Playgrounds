@@ -22,10 +22,11 @@ extension DependencyValues {
 @DependencyClient
 struct APIClient {
   // @Sendable: 클로저가 안전하게 여러 스레드에서 실행될 수 있음을 보장하는 특성
-  // var fetchProducts:  @Sendable () async throws -> [Product]
-  // var sendOrder:  @Sendable ([CartItem]) async throws -> String
-  // var fetchUserProfile:  @Sendable () async throws -> UserProfile
   var fetchCourses: @Sendable () async throws -> [Course]
+  var updateUserSetTotalCount: (UUID, Int) -> Void
+  // var createDraft: (_ name: String) throws -> Draft
+  // var fetchAllDrafts: () throws -> [Draft]
+  // var deleteDraft: (_ id: UUID) throws -> Void
   
   struct Failure: Error, Equatable {}
 }
@@ -67,30 +68,18 @@ extension APIClient: DependencyKey {
         print(error)
         throw APIClient.Failure()
       }
+    },
+    updateUserSetTotalCount: { draftID, totalPoint in
+      RealmService.shared.updateUserSetTotalCount(draftID: draftID, newValue: totalPoint)
     }
-    // fetchProducts: {
-    //   let (data, _) = try await URLSession.shared
-    //     .data(from: URL(string: "https://fakestoreapi.com/products")!)
-    //   return try JSONDecoder().decode([Product].self, from: data)
+    // createDraft: { name in
+    //   RealmService.shared.createDraft(name: name)
     // },
-    // sendOrder: { cartItems in
-    //   let payload = try JSONEncoder().encode(cartItems)
-    //   var urlRequest = URLRequest(url: URL(string: "https://fakestoreapi.com/carts")!)
-    //   urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-    //   urlRequest.httpMethod = "POST"
-    //   
-    //   let (data, response) = try await URLSession.shared.upload(for: urlRequest, from: payload)
-    //   
-    //   guard let httpResponse = response as? HTTPURLResponse else {
-    //     throw Failure() // APIClient.Failure(Error,Equatable)
-    //   }
-    //   
-    //   return "Status: \(httpResponse.statusCode)"
+    // fetchAllDrafts: {
+    //   []
     // },
-    // fetchUserProfile: {
-    //   let (data, _) = try await URLSession.shared
-    //     .data(from: URL(string: "https://fakestoreapi.com/users/1")!)
-    //   return try JSONDecoder().decode(UserProfile.self, from: data)
+    // deleteDraft: { id in
+    //   RealmService.shared.deleteDraft(draftID: id)
     // }
   )
 }

@@ -32,6 +32,9 @@ struct RootView: View {
         }
         .tag(RootDomain.Tab.etc)
     }
+    .onAppear {
+      store.send(.appStarted)
+    }
   }
 }
 

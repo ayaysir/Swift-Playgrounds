@@ -32,6 +32,7 @@ struct RootDomain {
   // MARK: - Action
   
   enum Action {
+    case appStarted
     case selectTab(Tab)
     case plannerAct(PlannerDomain.Action)
   }
@@ -52,6 +53,13 @@ struct RootDomain {
         state.selectedTab = tab
         return .none
       case .plannerAct:
+        return .none
+      case .appStarted:
+        let drafts = RealmService.shared.fetchAllDrafts()
+        if drafts.isEmpty {
+          _ = RealmService.shared.createDraft(name: "Draft 1")
+        }
+        print("AppStarted:", RealmService.shared.fetchAllDrafts())
         return .none
       }
     }

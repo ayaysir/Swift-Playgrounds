@@ -5,6 +5,7 @@
 //  Created by 윤범태 on 9/30/25.
 //
 
+import Foundation
 import ComposableArchitecture
 
 @Reducer
@@ -20,6 +21,7 @@ struct PlannerDomain {
     
     // 저장소(DB 등)와도 연동되어야 할 값들
     var userSetTotalCount: Int = 333
+    var currentDraftID: UUID?
   }
 
   enum Action {
@@ -27,6 +29,10 @@ struct PlannerDomain {
     case fetchCourses
     case fetchCoursesResponse(TaskResult<[Course]>)
     case courseAct(IdentifiedActionOf<CourseDomain>)
+    
+    case selectDraftWithUserPoint(UUID, Int)
+    case selectDraft(UUID)
+    case initDraft
     
     // case setUserTotalCount(Int)
     case inputSheetAct(PresentationAction<InputSheetDomain.Action>)
@@ -46,6 +52,7 @@ struct PlannerDomain {
   }
   
   @Dependency(\.apiClient.fetchCourses) var fetchCourses
+  @Dependency(\.apiClient.updateUserSetTotalCount) var updateUserSetTotalCount
   @Dependency(\.uuid) var uuid
 
   var body: some ReducerOf<Self> {
@@ -91,6 +98,10 @@ struct PlannerDomain {
         if let text = state.inputSheetSt?.inputText,
            let value = Int(text) {
           state.userSetTotalCount = value
+          
+          if let currentDraftID = state.currentDraftID {
+            RealmService.shared.updateUserSetTotalCount(draftID: currentDraftID, newValue: value)
+          }
         }
         state.inputSheetSt = nil
         return .none
@@ -130,6 +141,19 @@ struct PlannerDomain {
         return switchAlertAction(state: &state, alertAction: alertAction)
       case .removeAlertAct:
         return .none
+      case .selectDraftWithUserPoint(let id, let point):
+        state.currentDraftID = id
+        state.userSetTotalCount = point
+        return .none
+      case .selectDraft(let id):
+        let point = RealmService.shared.fetchDraft(by: id)?.userSetTotalCount ?? 0
+        return .send(.selectDraftWithUserPoint(id, point))
+      case .initDraft:
+        // TODO: - 앱 설치 직후: 생성된 드래프트, 그 이후: 최근 작업한 드래프트를 열기
+        if let firstDraft = RealmService.shared.fetchAllDrafts().first {
+          return .send(.selectDraftWithUserPoint(firstDraft.id, firstDraft.userSetTotalCount))
+        }
+        return .none
       }
     }
     .forEach(\.courses, action: \.courseAct) {
@@ -139,6 +163,25 @@ struct PlannerDomain {
       InputSheetDomain()
     }
     .ifLet(\.$removeAlert, action: \.removeAlertAct)
+    // .onChange(of: {$0}) { oldValue, newValue in
+    //   Reduce { _, _ in
+    //     print("$0", oldValue, newValue)
+    //     return .none
+    //   } // https://maramincho.tistory.com/126
+    // }
+    // .onChange(of: \.userSetTotalCount) { oldValue, newValue in
+    //   Reduce { state, _ in
+    //     // userSetTotalCount가 변경되면 DB에 저장
+    //     
+    //     return .none
+    //   }
+    // }
+    // .onChange(of: \.courses) { oldValue, newValue in
+    //   Reduce { state, _ in
+    //     // courses가 변경되면 DB에 저장
+    //     return .none
+    //   }
+    // }
   }
   
   private func switchAlertAction(
@@ -163,6 +206,7 @@ struct PlannerDomain {
     }
   }
 }
+
 
 extension PlannerDomain.State {
   // var filteredCourses: IdentifiedArrayOf<CourseDomain.State> {

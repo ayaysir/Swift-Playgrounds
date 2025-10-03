@@ -13,12 +13,17 @@ struct PlannerView: View {
   
   var body: some View {
     VStack(spacing: 10) {
+      if let id = store.currentDraftID {
+        Text("currentDraft: \(id), userTotalPoint: \(RealmService.shared.fetchDraft(by: id)?.userSetTotalCount ?? -999) [\(store.userSetTotalCount)]")
+      }
+      
       AreaHeaderPanel
       AreaCategorySegments
       AreaCourses
     }
     .task {
       store.send(.fetchCourses)
+      store.send(.initDraft)
     }
     .sheet(
       store: store.scope(
