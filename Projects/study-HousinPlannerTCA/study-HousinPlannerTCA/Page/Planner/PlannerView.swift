@@ -25,14 +25,18 @@ struct PlannerView: View {
       store.send(.fetchCourses)
       store.send(.initDraft)
     }
-    .sheet(
-      store: store.scope(
+    .sheet(store: store.scope(
         state: \.$inputSheetSt,
-        action: \.inputSheetAct
-      )
+        action: \.inputSheetAct)
     ) { store in
         InputSheetView(store: store)
       }
+    .sheet(store: store.scope(
+      state: \.$draftListSheetSt,
+      action: \.draftListSheetAct)
+    ) { store in
+      DraftListView(store: store)
+    }
     .alert(
       store: store.scope(
         state: \.$removeAlert,
@@ -56,7 +60,7 @@ extension PlannerView {
   @ViewBuilder private var AreaHeaderPanel: some View {
     VStack(alignment: .leading) {
       HStack {
-        Text("Draft Name")
+        Text("\(store.currentDraftName)")
           .font(.title3)
           .bold()
         Spacer()
@@ -103,7 +107,9 @@ extension PlannerView {
   
   @ViewBuilder private var AreaButtons: some View {
     HStack(spacing: 2) {
-      Button(action: {}) {
+      Button(action: {
+        store.send(.showDraftListSheet)
+      }) {
         // Select a draft...
         Image(systemName: "doc.on.doc")
           .frame(width: 5)

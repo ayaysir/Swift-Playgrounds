@@ -18,10 +18,12 @@ struct PlannerDomain {
     // @PresentationState는 TCA 1.3+에서 alert, sheet, fullScreenCover 같은 뷰 전환 상태를 표현하기 위한 속성 래퍼
     @Presents var inputSheetSt: InputSheetDomain.State?
     @Presents var removeAlert: AlertState<Action.Alert>?
+    @Presents var draftListSheetSt: DraftListDomain.State?
     
     // 저장소(DB 등)와도 연동되어야 할 값들
     var userSetTotalCount: Int = 333
     var currentDraftID: UUID?
+    var currentDraftName = "Draft"
   }
 
   enum Action {
@@ -37,6 +39,9 @@ struct PlannerDomain {
     // case setUserTotalCount(Int)
     case inputSheetAct(PresentationAction<InputSheetDomain.Action>)
     case showInputSheet
+    
+    case draftListSheetAct(PresentationAction<DraftListDomain.Action>)
+    case showDraftListSheet
     
     case resetAllCourseLevel
     
@@ -56,7 +61,9 @@ struct PlannerDomain {
   @Dependency(\.uuid) var uuid
 
   var body: some ReducerOf<Self> {
-    Reduce { state, action in
+    Reduce {
+      state,
+      action in
       switch action {
       case let .categoryChanged(newCategory):
         state.category = newCategory
@@ -97,18 +104,7 @@ struct PlannerDomain {
         
       case .courseAct(.element(id: let courseDomainID, action: .requestFetchLevel)):
         // 주의: courseDomainID는 도메인의 UUID이고 DB에 저장되는 ID는 CourseDomain.course.id(String) 임
-        // print(courseDomainID, state.courses.first(where: { $0.id == courseDomainID })?.course.id)
-        if let courseState = state.courses.first(where: { $0.id == courseDomainID }),
-           let draftID = state.currentDraftID {
-          let courseID = courseState.course.id
-          
-          if let fetchedLevel = RealmService.shared.fetchCourseLevelState(draftID: draftID, courseID: courseID)?.currentLevel {
-            // print("requestFetchLevel: \(courseID), level: \(fetchedLevel)")
-            return .send(.courseAct(.element(id: courseDomainID, action: .adjustLevel(.setInitLevel(fetchedLevel)))))
-          }
-        }
-        
-        return .none
+        return fetchUserCourseLevel(&state, courseDomainID: courseDomainID)
         
       case .courseAct:
         return .none
@@ -118,13 +114,14 @@ struct PlannerDomain {
          Sheet나 Navigation 같은 “Presentation 상태”는 상위 도메인(호출한 쪽) 에서 관리합니다.
          ⸻
          원칙
-           •  @Presents var inputSheet: InputSheetDomain.State?
+         •  @Presents var inputSheet: InputSheetDomain.State?
          → 이 값이 nil이 되면 SwiftUI 시트는 닫힙니다.
-           •  따라서 “닫는다” 라는 행위는 PlannerDomain 이 inputSheet = nil 로 만들어야 합니다.
-           •  하위 도메인(InputSheetDomain)에서는 단순히 “취소 눌렀다”, “확인 눌렀다” 같은 의도만 액션으로 보냅니다.
+         •  따라서 “닫는다” 라는 행위는 PlannerDomain 이 inputSheet = nil 로 만들어야 합니다.
+         •  하위 도메인(InputSheetDomain)에서는 단순히 “취소 눌렀다”, “확인 눌렀다” 같은 의도만 액션으로 보냅니다.
          */
         state.inputSheetSt = nil
         return .none
+        
       case .inputSheetAct(.presented(.didTapConfirm)):
         if let text = state.inputSheetSt?.inputText,
            let value = Int(text) {
@@ -139,7 +136,7 @@ struct PlannerDomain {
         
       case .inputSheetAct:
         return .none
-      
+        
       case .showInputSheet:
         state.inputSheetSt = InputSheetDomain.State()
         return .none
@@ -148,14 +145,14 @@ struct PlannerDomain {
         // 작업 수행 전에 경고창 (removeAlert)을 띄워 물어보기
         /*
          AlertState<Action>
-          - SwiftUI의 Alert를 상태(state)로 표현한 타입
-          - 제네릭 Action을 받는데, Alert 버튼을 눌렀을 때 상위 도메인에 전달할 액션 타입을 지정합니다.
-          - 즉, Alert을 도메인 안에서 안전하게 관리할 수 있게
+         - SwiftUI의 Alert를 상태(state)로 표현한 타입
+         - 제네릭 Action을 받는데, Alert 버튼을 눌렀을 때 상위 도메인에 전달할 액션 타입을 지정합니다.
+         - 즉, Alert을 도메인 안에서 안전하게 관리할 수 있게
          
          TextState
-          - Alert 제목, 메시지, 버튼 라벨 등을 문자열 대신 표현하는 타입
-          - TextState("초기화") → SwiftUI의 Text("초기화") 같은 역할
-          - 로컬라이징, 다국어, 동적 변환 등을 지원하기 위해 TextState로 래핑
+         - Alert 제목, 메시지, 버튼 라벨 등을 문자열 대신 표현하는 타입
+         - TextState("초기화") → SwiftUI의 Text("초기화") 같은 역할
+         - 로컬라이징, 다국어, 동적 변환 등을 지원하기 위해 TextState로 래핑
          */
         state.removeAlert = AlertState {
           TextState("모든 사용자 설정 레벨을 초기화하시겠습니까?")
@@ -189,8 +186,27 @@ struct PlannerDomain {
       case .initDraft:
         // TODO: - 앱 설치 직후: 생성된 드래프트, 그 이후: 최근 작업한 드래프트를 열기
         if let firstDraft = RealmService.shared.fetchAllDraftObjects().first {
-          return .send(.selectDraftWithUserPoint(firstDraft.id, firstDraft.userSetTotalCount))
+          return readDraftData(&state, draftID: firstDraft.id)
         }
+        return .none
+        
+      case .showDraftListSheet:
+        state.draftListSheetSt = DraftListDomain.State()
+        // 하위 도메인 액션을 즉시 실행 (ifLet 연결되었는지 확인)
+        return .send(.draftListSheetAct(.presented(.fetchDraftList)))
+        
+      case .draftListSheetAct(.presented(.didTapClose)),
+          .draftListSheetAct(.dismiss):
+        state.draftListSheetSt = nil
+        return .none
+        
+      case .draftListSheetAct(.presented(.didSelectDraft(let draftID))):
+        if state.draftListSheetSt != nil {
+          state.draftListSheetSt = nil
+        }
+        return readDraftData(&state, draftID: draftID)
+        
+      case .draftListSheetAct:
         return .none
       }
     }
@@ -201,25 +217,31 @@ struct PlannerDomain {
       InputSheetDomain()
     }
     .ifLet(\.$removeAlert, action: \.removeAlertAct)
-    // .onChange(of: {$0}) { oldValue, newValue in
-    //   Reduce { _, _ in
-    //     print("$0", oldValue, newValue)
-    //     return .none
-    //   } // https://maramincho.tistory.com/126
-    // }
-    // .onChange(of: \.userSetTotalCount) { oldValue, newValue in
-    //   Reduce { state, _ in
-    //     // userSetTotalCount가 변경되면 DB에 저장
-    //     
-    //     return .none
-    //   }
-    // }
-    // .onChange(of: \.courses) { oldValue, newValue in
-    //   Reduce { state, _ in
-    //     // courses가 변경되면 DB에 저장
-    //     return .none
-    //   }
-    // }
+    .ifLet(\.$draftListSheetSt, action: \.draftListSheetAct) {
+      DraftListDomain()
+    }
+
+    /*
+      .onChange(of: {$0}) { oldValue, newValue in
+        Reduce { _, _ in
+          print("$0", oldValue, newValue)
+          return .none
+        } // https://maramincho.tistory.com/126
+      }
+      .onChange(of: \.userSetTotalCount) { oldValue, newValue in
+        Reduce { state, _ in
+          // userSetTotalCount가 변경되면 DB에 저장
+     
+          return .none
+        }
+      }
+      .onChange(of: \.courses) { oldValue, newValue in
+        Reduce { state, _ in
+          // courses가 변경되면 DB에 저장
+          return .none
+        }
+      }
+     */
   }
   
   private func switchAlertAction(
@@ -229,12 +251,18 @@ struct PlannerDomain {
     switch alertAction {
     case .didConfirmRemoveAll:
       // 모든 course에 resetAdjustLevel 액션을 안전하게 전달
+      let currentDraftID = state.currentDraftID
       return .merge(
         state.courses.map { course in
           .run { send in
             // 각 course에 resetAdjustLevel 액션 전달
             // IdentifiedActionOf<CourseDomain>)의 .element 사용 (init 아님)
             await send(.courseAct(.element(id: course.id, action: .resetAdjustLevel)))
+            await MainActor.run {
+              if let currentDraftID {
+                RealmService.shared.clearCourseLevelStates(draftID: currentDraftID)
+              }
+            }
           }
         }
       )
@@ -243,16 +271,65 @@ struct PlannerDomain {
       return .none
     }
   }
+  
+  private func fetchUserCourseLevel(
+    _ state: inout Self.State,
+    courseDomainID: UUID
+  ) -> Effect<Action> {
+    if let courseState = state.courses.first(where: { $0.id == courseDomainID }),
+       let draftID = state.currentDraftID,
+       let fetchedLevel = fetchUserCourseState(courseState: courseState, draftID: draftID)?.currentLevel {
+      return .send(
+        .courseAct(
+          .element(id: courseDomainID, action: .adjustLevel(.setInitLevel(fetchedLevel)))
+        )
+      )
+    }
+    
+    return .none
+  }
+  
+  private func fetchUserCourseState(courseState: CourseDomain.State, draftID: UUID) -> CourseLevelState? {
+    let courseID = courseState.course.id
+    return RealmService.shared.fetchCourseLevelState(draftID: draftID, courseID: courseID)
+  }
+  
+  private func readDraftData(_ state: inout Self.State, draftID: UUID) -> Effect<Action> {
+    // print("draft: \(draftID)")
+    
+    let draftObj = RealmService.shared.fetchDraftObject(by: draftID)
+    state.currentDraftID = draftID
+    state.userSetTotalCount = draftObj?.userSetTotalCount ?? 0
+    state.currentDraftName = draftObj?.name ?? "Unknown Draft"
+    
+    let courses = state.courses   // ✅ 값 복사
+    /*
+     코스 도메인을 순회하며
+     .courseAct(
+       .element(id: courseDomainID, action: .adjustLevel(.setInitLevel(fetchedLevel)))
+     )
+     */
+    // [Effect<PlannerDomain.Action>]
+    let mergedActions = courses.compactMap { course -> Effect<Action>? in
+      let fetchedLevel = fetchUserCourseState(courseState: course, draftID: draftID)?.currentLevel
+      
+      // 하위 도메인 CourseDomain에 액션 보내기
+      return .send(
+        .courseAct(
+          .element(
+            id: course.id,
+            action: .adjustLevel(.setInitLevel(fetchedLevel ?? 0))
+          )
+        )
+      )
+    }
+    
+    return .merge(mergedActions)
+  }
 }
 
 
 extension PlannerDomain.State {
-  // var filteredCourses: IdentifiedArrayOf<CourseDomain.State> {
-  //   courses.filter {
-  //     $0.course.category == category.rawValue
-  //   }
-  // }
-  
   // 🔑 카테고리별 총 effect 개수
   var totalEffectCountByCategory: [Category: Int] {
     Dictionary(

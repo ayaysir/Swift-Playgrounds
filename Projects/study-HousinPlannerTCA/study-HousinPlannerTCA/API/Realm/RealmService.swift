@@ -60,6 +60,23 @@ final class RealmService {
     }
   }
   
+  /// Clear all CourseLevelStates in a Draft
+  func clearCourseLevelStates(draftID: UUID) {
+    guard let draftObject = fetchDraftObject(by: draftID) else {
+      return
+    }
+    
+    do {
+      try realm.write {
+        realm.delete(draftObject.courseLevelStates)
+        draftObject.courseLevelStates.removeAll()
+        draftObject.updatedAt = Date()
+      }
+    } catch {
+      print("Realm write error: \(error)")
+    }
+  }
+  
   // MARK: - Create, Read, Delete
  
   /// Create a new Draft

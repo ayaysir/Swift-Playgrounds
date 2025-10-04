@@ -9,20 +9,21 @@ import SwiftUI
 import ComposableArchitecture
 
 struct InputSheetView: View {
-  let store: StoreOf<InputSheetDomain>
+  @Bindable var store: StoreOf<InputSheetDomain>
+  var mode: InputSheetMode = .userSetTotalCount
   
   var body: some View {
     WithViewStore(store, observe: { $0 }) { viewStore in
       NavigationStack {
         VStack(spacing: 20) {
-          Text("총 숫자를 입력하세요")
+          Text(mode.sheetTitle)
             .font(.headline)
           
-          TextField("숫자 입력", text: viewStore.binding(
+          TextField(mode.placeholder, text: viewStore.binding(
             get: \.inputText,
             send: { .textChanged($0) }
           ))
-          .keyboardType(.numberPad)
+          .keyboardType(mode.keyboardType)
           .textFieldStyle(.roundedBorder)
           .padding()
           
@@ -39,7 +40,7 @@ struct InputSheetView: View {
           }
         }
         .padding()
-        .navigationTitle("총 숫자 설정")
+        .navigationTitle(mode.sheetTitle)
       }
     }
   }
