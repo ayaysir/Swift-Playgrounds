@@ -32,9 +32,6 @@ struct CartListDomain {
   }
   
   enum Action: Equatable {
-    // PresentationAction은 알림(alert) 등 일시적 상태를 처리할 때 쓰는 구조
-    // SwiftUI의 .alert(...)과 연동될 수 있음
-    case alert(PresentationAction<Alert>)
     case didPressCloseButton
     // IdentifiedActionOf는 TCA에서 IdentifiedArray로 관리되는 하위 도메인에 대한 액션을 전달할 때 사용하는 타입입니다.
     // 배열로 관리되는 여러 개의 하위 상태 중에서 “어떤 ID를 가진 도메인의 액션인지 명시”할 수 있게 해주는 래퍼입니다.
@@ -52,6 +49,12 @@ struct CartListDomain {
     case getTotalPrice
     case didPressPayButton
     case didReceivePurchaseResponse(TaskResult<String>)
+    
+    // MARK: - Alert Action
+    
+    // PresentationAction은 알림(alert) 등 일시적 상태를 처리할 때 쓰는 구조
+    // SwiftUI의 .alert(...)과 연동될 수 있음
+    case alert(PresentationAction<Alert>)
     
     @CasePathable
     enum Alert {

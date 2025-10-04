@@ -34,8 +34,8 @@ struct PlannerView: View {
     .sheet(store: store.scope(
       state: \.$draftListSheetSt,
       action: \.draftListSheetAct)
-    ) { store in
-      DraftListView(store: store)
+    ) { scopeStore in
+      DraftListView(store: scopeStore)
     }
     .alert(
       store: store.scope(

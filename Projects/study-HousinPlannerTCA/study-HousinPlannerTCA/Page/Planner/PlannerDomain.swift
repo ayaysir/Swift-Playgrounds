@@ -191,9 +191,13 @@ struct PlannerDomain {
         return .none
         
       case .showDraftListSheet:
-        state.draftListSheetSt = DraftListDomain.State()
-        // 하위 도메인 액션을 즉시 실행 (ifLet 연결되었는지 확인)
-        return .send(.draftListSheetAct(.presented(.fetchDraftList)))
+        if let currentDraftID = state.currentDraftID {
+          state.draftListSheetSt = DraftListDomain.State(selectedDraftID: currentDraftID)
+          // 하위 도메인 액션을 즉시 실행 (ifLet 연결되었는지 확인)
+          return .send(.draftListSheetAct(.presented(.fetchDraftList)))
+        }
+        
+        return .none
         
       case .draftListSheetAct(.presented(.didTapClose)),
           .draftListSheetAct(.dismiss):
@@ -205,6 +209,22 @@ struct PlannerDomain {
           state.draftListSheetSt = nil
         }
         return readDraftData(&state, draftID: draftID)
+        
+      case .draftListSheetAct(.presented(.requestRemoveDraft(let draftID))):
+        // print("PlannerDomain rmoveRqst:", draftID)
+        // 그냥 삭제작업을 실행하려고 하면 *** Terminating app due to uncaught exception 'RLMException', reason: 'Object has been deleted or invalidated.' 에러 발생
+        // 먼저 draftList에서 삭제 대상 오브젝트를 제거 후, 시간차를 두고 삭제 작업 실행 (동시에 할 경우 여전히 에러)
+
+        if let targetIndex = state.draftListSheetSt?.draftList.firstIndex(where: { $0.id == draftID }) {
+          state.draftListSheetSt?.draftList.remove(at: targetIndex)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            // print("delete")
+            RealmService.shared.deleteDraftObject(draftID: draftID)
+          }
+        }
+        
+        // state.draftListSheetSt?.draftList = RealmService.shared.fetchAllDraftObjects()
+        return .none
         
       case .draftListSheetAct:
         return .none

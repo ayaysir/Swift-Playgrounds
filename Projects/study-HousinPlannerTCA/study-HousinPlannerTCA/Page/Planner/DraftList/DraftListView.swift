@@ -40,6 +40,9 @@ struct DraftListView: View {
             store.send(.didSelectDraft(draftObj.id))
           } label: {
             HStack {
+              if store.selectedDraftID == draftObj.id {
+                Image(systemName: "checkmark")
+              }
               Text("\(draftObj.name)")
               Spacer()
               Text("\(draftObj.createdAt.ymdhm)")
@@ -48,10 +51,13 @@ struct DraftListView: View {
             }
           }
           .swipeActions {
-            Button(role: .destructive) {
-              print("삭제: \(draftObj)")
-            } label: {
-              Label("Delete", systemImage: "trash")
+            if store.selectedDraftID != draftObj.id {
+              Button(role: .cancel) {
+                store.send(.showRemoveAlert(draftObj.id))
+              } label: {
+                Label("Delete", systemImage: "trash")
+                  .tint(Color.red)
+              }
             }
           }
         }
@@ -59,6 +65,12 @@ struct DraftListView: View {
       .listStyle(.plain)
     }
     .padding()
+    .alert(
+      store: store.scope(
+        state: \.$removeAlert,
+        action: \.removeAlertAct
+      )
+    )
     .sheet(
       store: store.scope(
         state: \.$inputSheetSt,
@@ -77,7 +89,7 @@ struct DraftListView: View {
   NavigationStack {
     DraftListView(
       store: .init(
-        initialState: DraftListDomain.State(),
+        initialState: DraftListDomain.State(selectedDraftID: UUID()),
         reducer: { DraftListDomain() }
       )
     )
