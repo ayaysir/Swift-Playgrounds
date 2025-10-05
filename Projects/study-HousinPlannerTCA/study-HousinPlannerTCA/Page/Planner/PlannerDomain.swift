@@ -14,6 +14,7 @@ struct PlannerDomain {
   struct State: Equatable {
     var category: Category = .idol
     var courses: IdentifiedArrayOf<CourseDomain.State> = []
+    var locale: PlannerLocale = .ja
     
     // @PresentationState는 TCA 1.3+에서 alert, sheet, fullScreenCover 같은 뷰 전환 상태를 표현하기 위한 속성 래퍼
     @Presents var inputSheetSt: InputSheetDomain.State?
@@ -44,6 +45,9 @@ struct PlannerDomain {
     case showDraftListSheet
     
     case resetAllCourseLevel
+    
+    case changeLocale(PlannerLocale)
+    case toggleNextLocale
     
     // PresentationAction은 알림(alert) 등 일시적 상태를 처리할 때 쓰는 구조
     // SwiftUI의 .alert(...)과 연동될 수 있음
@@ -79,7 +83,7 @@ struct PlannerDomain {
       case .fetchCoursesResponse(.success(let courses)):
         state.courses = IdentifiedArrayOf(
           uniqueElements: courses.map {
-            CourseDomain.State(id: self.uuid(), course: $0)
+            CourseDomain.State(id: self.uuid(), course: $0, locale: state.locale)
           }
         )
         
@@ -227,6 +231,26 @@ struct PlannerDomain {
         return .none
         
       case .draftListSheetAct:
+        return .none
+        
+      case .changeLocale(let locale):
+        state.locale = locale
+        // 하위 도메인의 액션(courseAct)에 있는 .receiveLocaleChanged(locale) 를 실행 (모든 하위 도메인에 적용)
+        let effects = state.courses.map { course -> Effect<Action> in
+          return .send(
+            .courseAct(
+              .element(id: course.id, action: .receiveLocaleChanged(locale))
+            )
+          )
+        }
+        return .merge(effects)
+        
+      case .toggleNextLocale:
+        let allLocales = PlannerLocale.allCases
+        if let currentIndex = allLocales.firstIndex(of: state.locale) {
+          let nextIndex = (currentIndex + 1) % allLocales.count
+          return .send(.changeLocale(allLocales[nextIndex]))
+        }
         return .none
       }
     }
@@ -380,6 +404,13 @@ extension PlannerDomain.State {
         currentLevel == $0.level
       }?.pointCumulative ?? 0
       return result + eachPoint
+    }
+  }
+  
+  var needPtText: String {
+    switch locale {
+    case .ja: "場数pt"
+    case .ko: "장수pt"
     }
   }
 }

@@ -13,21 +13,10 @@ struct DetailSheetView: View {
   
   var body: some View {
     VStack(alignment: .leading){
-      HStack {
-        Text("프로듀스 방침 효과 확인")
-          .font(.title2)
-          .bold()
-      }
+      AreaHeader
       Divider()
       AreaEffectList
-      Button {
-        store.send(.dismiss)
-      } label: {
-        Text("닫기")
-          .frame(maxWidth: .infinity)
-      }
-      // .frame(maxWidth: .infinity)
-      .buttonStyle(.bordered)
+      AreaCloseButton
     }
     .padding(10)
   }
@@ -36,18 +25,31 @@ struct DetailSheetView: View {
 extension DetailSheetView {
   @ViewBuilder private func CellCourseEffect(of effect: CourseEffect) -> some View {
     HStack {
-      // TODO: - 소지 여부에 따라 텍스트 표시 결정
       let showObtained = effect.level <= store.adjustLevelState.level
-      Text(showObtained ? "해방됨" : "")
+      let obtainedText = showObtained ? store.state.appLocaleText("obtained") : ""
+      Text(obtainedText)
         .frame(width: 50)
         .foregroundStyle(.pink)
+        .fontWeight(.semibold)
       VStack {
         HStack {
           CommonFrags.RoundedLabel("Lv\(effect.level)")
-          Text(store.course.descJa.replacingOccurrences(of: "xx", with: effect.valueEffect.description))
+          Text(
+            store.state.effectText(effect.valueEffect.description)
+          )
         }
       }
     }
+  }
+  
+  @ViewBuilder private var AreaHeader: some View {
+    HStack {
+      Text(verbatim: store.state.appLocaleText("sheetTitle"))
+        .font(.title2)
+        .bold()
+    }
+    .padding(.horizontal, 10)
+    .padding(.top, 10)
   }
   
   @ViewBuilder private var AreaEffectList: some View {
@@ -58,12 +60,12 @@ extension DetailSheetView {
           categoryString,
           backgroundColor: Category(rawValue: categoryString)?.bgColor ?? .gray
         )
-        Text(verbatim: store.course.titleJa)
+        Text(verbatim: store.courseTitleText)
           .bold()
       }
       HStack {
-        CommonFrags.RoundedLabel("효과")
-        Text(verbatim: "효과를 설명 (desc와 다름)")
+        CommonFrags.RoundedLabel(store.state.appLocaleText("effect"))
+        Text(verbatim: "레벨에 따라 다음 효과 발생")
           .font(.system(size: 13))
       }
       ForEach(store.course.effects) { effect in
@@ -72,6 +74,16 @@ extension DetailSheetView {
       }
     }
     .listStyle(.plain)
+  }
+  
+  @ViewBuilder var AreaCloseButton: some View {
+    Button {
+      store.send(.dismiss)
+    } label: {
+      Text(verbatim: store.state.appLocaleText("close"))
+        .frame(maxWidth: .infinity)
+    }
+    .buttonStyle(.bordered)
   }
 }
 

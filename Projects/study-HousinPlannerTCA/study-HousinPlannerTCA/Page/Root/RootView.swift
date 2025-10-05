@@ -42,10 +42,7 @@ struct RootView: View {
   RootView(
     store: Store(
       initialState: RootDomain.State(),
-      reducer: { RootDomain() },
-      withDependencies: { dependencyValue in
-        
-      }
+      reducer: { RootDomain() }
     )
   )
 }

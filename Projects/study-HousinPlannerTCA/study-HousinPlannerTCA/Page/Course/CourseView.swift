@@ -18,7 +18,7 @@ struct CourseView: View {
           store.course.category,
           backgroundColor: Category(rawValue: store.course.category)?.bgColor ?? .gray
         )
-        Text(verbatim: store.course.titleJa)
+        Text(verbatim: store.courseTitle)
           .font(.system(size: 16.5, weight: .bold))
       }
       .padding(.horizontal, 0)
@@ -33,7 +33,9 @@ struct CourseView: View {
       Divider()
       
       HStack {
-        CommonFrags.RoundedLabel("方針Lv")
+        CommonFrags.RoundedLabel(
+          store.state.appLocaleText("housinLv")
+        )
           .font(.system(size: 13))
         
         PlusMinusButton(
@@ -43,7 +45,9 @@ struct CourseView: View {
           )
         )
         Spacer()
-        CommonFrags.RoundedLabel("必要場数pt")
+        CommonFrags.RoundedLabel(
+          store.state.appLocaleText("needPt")
+        )
           .font(.system(size: 13))
         Text(verbatim: store.requireSheetsPointText)
           .font(.system(size: 13))
@@ -57,7 +61,9 @@ struct CourseView: View {
           totalCount: store.course.effects.count
         )
         Spacer()
-        CommonFrags.RoundedButton("詳細") {
+        CommonFrags.RoundedButton(
+          store.state.appLocaleText("detail")
+        ) {
           store.send(.setDetailSheetView(isPresented: true))
         }
       }
@@ -72,19 +78,6 @@ struct CourseView: View {
       DetailSheetView(store: store)
     }
   }
-  
-  private func parseJson() async throws {
-    do {
-      let apiClient = APIClient.liveValue
-      let courses = try await apiClient.fetchCourses()
-      
-      for course in courses {
-        print("코스: \(course.titleKo) / 효과 개수: \(course.effects.count)")
-      }
-    } catch {
-      print("❌ 실패:", error)
-    }
-  }
 }
 
 extension CourseView {  
@@ -92,12 +85,12 @@ extension CourseView {
     HStack {
       let remainingCount = totalCount - accomplishedCount
       ForEach(0..<accomplishedCount, id: \.self) { count in
-        Text("P")
+        Text(verbatim: "P")
           .foregroundStyle(.orange)
           .fontWeight(.heavy)
       }
       ForEach(0..<remainingCount, id: \.self) { count in
-        Text("P")
+        Text(verbatim: "P")
           .foregroundStyle(.black.opacity(0.5))
           .fontWeight(.heavy)
       }

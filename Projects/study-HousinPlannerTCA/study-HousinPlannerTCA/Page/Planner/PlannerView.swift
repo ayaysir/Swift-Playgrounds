@@ -13,10 +13,6 @@ struct PlannerView: View {
   
   var body: some View {
     VStack(spacing: 10) {
-      // if let id = store.currentDraftID {
-      //   Text("currentDraft: \(id), userTotalPoint: \(RealmService.shared.fetchDraftObject(by: id)?.userSetTotalCount ?? -999) [\(store.userSetTotalCount)]")
-      // }
-      
       AreaHeaderPanel
       AreaCategorySegments
       AreaCourses
@@ -65,7 +61,10 @@ extension PlannerView {
           .bold()
         Spacer()
         VStack(alignment: .trailing) {
-          CommonFrags.RoundedLabel("場数pt", verticalPadding: 0)
+          CommonFrags.RoundedLabel(
+            store.needPtText,
+            verticalPadding: 0
+          )
             .font(.system(size: 12))
           AreaPointStatus
         }
@@ -114,7 +113,9 @@ extension PlannerView {
         Image(systemName: "doc.on.doc")
           .frame(width: 5)
       }
-      Button(action: {}) {
+      Button(action: {
+        store.send(.toggleNextLocale)
+      }) {
         Image(systemName: "translate")
           .frame(width: 5)
       }
