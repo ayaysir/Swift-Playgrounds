@@ -17,15 +17,15 @@ struct CustomTranslationTriggerStartView: View {
     "And of course, we couldn’t resist a quick stop at the sky bar, where work meets a moment of relaxation.",
     "プロデュース方針は場数ptを使って設定する事ができ、自分のプレイスタイルに合わせたカスタマイズが可能です。"
   ]
-
+  
   @State private var translatedTexts = [String](repeating: "", count: 5)
   @State private var isTranslating = false
   @State private var selectedLanguageCode = "ko-KR"
   @State private var lastTranslatedLanguageCode = ""
-
+  
   // 구성 객체: 버튼으로 할당하면 translationTask에서 세션을 받음
   @State private var configuration: TranslationSession.Configuration?
-
+  
   var body: some View {
     VStack(spacing: 16) {
       HStack {
@@ -49,17 +49,18 @@ struct CustomTranslationTriggerStartView: View {
           }
         }
       }
-
+      
       if #available(iOS 18.0, *) {
         HStack {
           Button {
             let targetLanguage = Locale.Language(identifier: selectedLanguageCode)
-            // source, target 언어가 동일하면 트리거가 안됨
+            // source, target 언어가 동일하면 트리거가 안됨 => invalidate로 재트리거 가능
             // 둘 중 하나가 이전과 다르면 재 트리거됨
             configuration = TranslationSession.Configuration(
               source: nil,
               target: targetLanguage
             )
+            
           } label: {
             HStack {
               if isTranslating {
@@ -74,6 +75,9 @@ struct CustomTranslationTriggerStartView: View {
             .cornerRadius(8)
           }
           .disabled(selectedLanguageCode == lastTranslatedLanguageCode)
+          Button("invalidate configuration") {
+            configuration?.invalidate()
+          }
         }
         .padding()
         // translationTask 수식어: configuration이 설정되면 closure로 session을 받습니다.
@@ -84,7 +88,7 @@ struct CustomTranslationTriggerStartView: View {
               translatedTexts = .init(repeating: "", count: 5)
               isTranslating = true
             }
-
+            
             for i in sourceTexts.indices {
               let response = try? await session.translate(sourceTexts[i])
               translatedTexts[i] = response?.targetText ?? sourceTexts[i]
@@ -93,7 +97,9 @@ struct CustomTranslationTriggerStartView: View {
             // 번역 완료되면 상태 업데이트
             await MainActor.run {
               isTranslating = false
-              lastTranslatedLanguageCode = selectedLanguageCode
+              // lastTranslatedLanguageCode = selectedLanguageCode
+              // configuration?.invalidate()
+              configuration = nil
             }
           }
         }

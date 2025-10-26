@@ -5,7 +5,7 @@ struct MyApp: App {
   var body: some Scene {
     WindowGroup {
       TabView {
-        ContentView()
+        TranslationPresententationView()
           .tabItem {
             Label("Home", systemImage: "house")
           }
@@ -18,6 +18,11 @@ struct MyApp: App {
           CustomTranslationTriggerStartView()
             .tabItem {
               Label("Custom 2", systemImage: "folder")
+            }
+          
+          CustomTranslationAdvancedView()
+            .tabItem {
+              Label("Custom 3", systemImage: "info.circle")
             }
         }
       }

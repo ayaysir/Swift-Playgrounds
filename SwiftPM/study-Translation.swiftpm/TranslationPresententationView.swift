@@ -1,7 +1,7 @@
 import SwiftUI
 import Translation
 
-struct ContentView: View {
+struct TranslationPresententationView: View {
   @State private var textToTranslate = "Translationフレームワークは大きく二つの方式で使用できます。"
   @State private var showTranslation = false
   
