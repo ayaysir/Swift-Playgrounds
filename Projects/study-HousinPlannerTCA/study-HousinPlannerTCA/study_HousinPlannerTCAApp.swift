@@ -10,6 +10,8 @@ import ComposableArchitecture
 
 @main
 struct study_HousinPlannerTCAApp: App {
+  @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+  
   var body: some Scene {
     WindowGroup {
       RootView(

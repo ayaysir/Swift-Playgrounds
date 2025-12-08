@@ -14,7 +14,7 @@ struct RootDomain {
   
   @ObservableState
   struct State: Equatable {
-    var selectedTab: Tab = .planner
+    var selectedTab: Tab = .randomSelector
     /*
      TCA에서 scope를 사용하려면, RootDomain.State 안에 PlannerDomain.State를 포함시키고,
      RootDomain.Action에도 PlannerFeature.Action을 위임할 케이스를 추가해야 합니다.
@@ -27,6 +27,7 @@ struct RootDomain {
   enum Tab {
     case planner
     case etc
+    case randomSelector
   }
   
   // MARK: - Action

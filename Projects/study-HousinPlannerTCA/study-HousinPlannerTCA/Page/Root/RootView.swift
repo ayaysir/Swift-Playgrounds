@@ -25,12 +25,19 @@ struct RootView: View {
         Label("Planner", systemImage: "list.bullet.indent")
       }
       .tag(RootDomain.Tab.planner)
-
+      
+      RandomSelectorView()
+        .tabItem {
+          Label("RanSere", systemImage: "shippingbox.fill")
+        }
+        .tag(RootDomain.Tab.randomSelector)
+    
       Text("ETC")
         .tabItem {
           Label("etc", systemImage: "info.circle")
         }
         .tag(RootDomain.Tab.etc)
+      
     }
     .onAppear {
       store.send(.appStarted)

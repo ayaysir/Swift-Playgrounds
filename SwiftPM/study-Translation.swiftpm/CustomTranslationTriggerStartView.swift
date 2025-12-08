@@ -50,61 +50,57 @@ struct CustomTranslationTriggerStartView: View {
         }
       }
       
-      if #available(iOS 18.0, *) {
-        HStack {
-          Button {
-            let targetLanguage = Locale.Language(identifier: selectedLanguageCode)
-            // source, target 언어가 동일하면 트리거가 안됨 => invalidate로 재트리거 가능
-            // 둘 중 하나가 이전과 다르면 재 트리거됨
-            configuration = TranslationSession.Configuration(
-              source: nil,
-              target: targetLanguage
-            )
-            
-          } label: {
-            HStack {
-              if isTranslating {
-                ProgressView().scaleEffect(0.7)
-              }
-              let buttonText = selectedLanguageCode == lastTranslatedLanguageCode ? "\(lastTranslatedLanguageCode) 번역 완료" : "번역 시작"
-              Text(isTranslating ? "번역 중..." : buttonText)
+      HStack {
+        Button {
+          let targetLanguage = Locale.Language(identifier: selectedLanguageCode)
+          // source, target 언어가 동일하면 트리거가 안됨 => invalidate로 재트리거 가능
+          // 둘 중 하나가 이전과 다르면 재 트리거됨
+          configuration = TranslationSession.Configuration(
+            source: nil,
+            target: targetLanguage
+          )
+          
+        } label: {
+          HStack {
+            if isTranslating {
+              ProgressView().scaleEffect(0.7)
             }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 8)
-            .background(Color.accentColor.opacity(0.1))
-            .cornerRadius(8)
+            let buttonText = selectedLanguageCode == lastTranslatedLanguageCode ? "\(lastTranslatedLanguageCode) 번역 완료" : "번역 시작"
+            Text(isTranslating ? "번역 중..." : buttonText)
           }
-          .disabled(selectedLanguageCode == lastTranslatedLanguageCode)
-          Button("invalidate configuration") {
-            configuration?.invalidate()
+          .padding(.horizontal, 12)
+          .padding(.vertical, 8)
+          .background(Color.accentColor.opacity(0.1))
+          .cornerRadius(8)
+        }
+        .disabled(selectedLanguageCode == lastTranslatedLanguageCode)
+        Button("invalidate configuration") {
+          configuration?.invalidate()
+        }
+      }
+      .padding()
+      // translationTask 수식어: configuration이 설정되면 closure로 session을 받습니다.
+      .translationTask(configuration) { session in
+        // 세션 제공 시에 배치 번역 실행
+        Task {
+          await MainActor.run {
+            translatedTexts = .init(repeating: "", count: 5)
+            isTranslating = true
+          }
+          
+          for i in sourceTexts.indices {
+            let response = try? await session.translate(sourceTexts[i])
+            translatedTexts[i] = response?.targetText ?? sourceTexts[i]
+          }
+          
+          // 번역 완료되면 상태 업데이트
+          await MainActor.run {
+            isTranslating = false
+            // lastTranslatedLanguageCode = selectedLanguageCode
+            // configuration?.invalidate()
+            configuration = nil
           }
         }
-        .padding()
-        // translationTask 수식어: configuration이 설정되면 closure로 session을 받습니다.
-        .translationTask(configuration) { session in
-          // 세션 제공 시에 배치 번역 실행
-          Task {
-            await MainActor.run {
-              translatedTexts = .init(repeating: "", count: 5)
-              isTranslating = true
-            }
-            
-            for i in sourceTexts.indices {
-              let response = try? await session.translate(sourceTexts[i])
-              translatedTexts[i] = response?.targetText ?? sourceTexts[i]
-            }
-            
-            // 번역 완료되면 상태 업데이트
-            await MainActor.run {
-              isTranslating = false
-              // lastTranslatedLanguageCode = selectedLanguageCode
-              // configuration?.invalidate()
-              configuration = nil
-            }
-          }
-        }
-      } else {
-        Text("iOS 18 이상 필요")
       }
     }
   }

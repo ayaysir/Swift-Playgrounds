@@ -7,62 +7,70 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4498EA162E884D2300EBA487 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 4498EA152E884D2300EBA487 /* ComposableArchitecture */; };
-		4498EAD82E8EEF2F00EBA487 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4498EAD72E8EEF2F00EBA487 /* RealmSwift */; };
-		4498EAD92E8EF60A00EBA487 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 4498EAD72E8EEF2F00EBA487 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		44E9B7112EBA1E7D00251F0D /* study-WatchStandalone Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 44E9B7102EBA1E7D00251F0D /* study-WatchStandalone Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		44E9B7122EBA1E7D00251F0D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 44E9B7042EBA1E7D00251F0D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 44E9B70F2EBA1E7D00251F0D;
+			remoteInfo = "study-WatchStandalone Watch App";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
-		4498EADA2E8EF60A00EBA487 /* Embed Frameworks */ = {
+		44E9B7202EBA1E7F00251F0D /* Embed Watch Content */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
 			files = (
-				4498EAD92E8EF60A00EBA487 /* RealmSwift in Embed Frameworks */,
+				44E9B7112EBA1E7D00251F0D /* study-WatchStandalone Watch App.app in Embed Watch Content */,
 			);
-			name = "Embed Frameworks";
+			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4498E9902E884B2000EBA487 /* study-HousinPlannerTCA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "study-HousinPlannerTCA.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		44E9B70A2EBA1E7D00251F0D /* study-WatchStandalone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "study-WatchStandalone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		44E9B7102EBA1E7D00251F0D /* study-WatchStandalone Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "study-WatchStandalone Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		4498E9922E884B2000EBA487 /* study-HousinPlannerTCA */ = {
+		44E9B7142EBA1E7D00251F0D /* study-WatchStandalone Watch App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "study-HousinPlannerTCA";
+			path = "study-WatchStandalone Watch App";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		4498E98D2E884B2000EBA487 /* Frameworks */ = {
+		44E9B70D2EBA1E7D00251F0D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4498EAD82E8EEF2F00EBA487 /* RealmSwift in Frameworks */,
-				4498EA162E884D2300EBA487 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4498E9872E884B2000EBA487 = {
+		44E9B7032EBA1E7D00251F0D = {
 			isa = PBXGroup;
 			children = (
-				4498E9922E884B2000EBA487 /* study-HousinPlannerTCA */,
-				4498E9912E884B2000EBA487 /* Products */,
+				44E9B7142EBA1E7D00251F0D /* study-WatchStandalone Watch App */,
+				44E9B70B2EBA1E7D00251F0D /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		4498E9912E884B2000EBA487 /* Products */ = {
+		44E9B70B2EBA1E7D00251F0D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4498E9902E884B2000EBA487 /* study-HousinPlannerTCA.app */,
+				44E9B70A2EBA1E7D00251F0D /* study-WatchStandalone.app */,
+				44E9B7102EBA1E7D00251F0D /* study-WatchStandalone Watch App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,71 +78,94 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		4498E98F2E884B2000EBA487 /* study-HousinPlannerTCA */ = {
+		44E9B7092EBA1E7D00251F0D /* study-WatchStandalone */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4498E99B2E884B2300EBA487 /* Build configuration list for PBXNativeTarget "study-HousinPlannerTCA" */;
+			buildConfigurationList = 44E9B7212EBA1E7F00251F0D /* Build configuration list for PBXNativeTarget "study-WatchStandalone" */;
 			buildPhases = (
-				4498E98C2E884B2000EBA487 /* Sources */,
-				4498E98D2E884B2000EBA487 /* Frameworks */,
-				4498E98E2E884B2000EBA487 /* Resources */,
-				4498EADA2E8EF60A00EBA487 /* Embed Frameworks */,
+				44E9B7082EBA1E7D00251F0D /* Resources */,
+				44E9B7202EBA1E7F00251F0D /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				44E9B7132EBA1E7D00251F0D /* PBXTargetDependency */,
+			);
+			name = "study-WatchStandalone";
+			packageProductDependencies = (
+			);
+			productName = "study-WatchStandalone";
+			productReference = 44E9B70A2EBA1E7D00251F0D /* study-WatchStandalone.app */;
+			productType = "com.apple.product-type.application.watchapp2-container";
+		};
+		44E9B70F2EBA1E7D00251F0D /* study-WatchStandalone Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 44E9B71D2EBA1E7F00251F0D /* Build configuration list for PBXNativeTarget "study-WatchStandalone Watch App" */;
+			buildPhases = (
+				44E9B70C2EBA1E7D00251F0D /* Sources */,
+				44E9B70D2EBA1E7D00251F0D /* Frameworks */,
+				44E9B70E2EBA1E7D00251F0D /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				4498E9922E884B2000EBA487 /* study-HousinPlannerTCA */,
+				44E9B7142EBA1E7D00251F0D /* study-WatchStandalone Watch App */,
 			);
-			name = "study-HousinPlannerTCA";
+			name = "study-WatchStandalone Watch App";
 			packageProductDependencies = (
-				4498EA152E884D2300EBA487 /* ComposableArchitecture */,
-				4498EAD72E8EEF2F00EBA487 /* RealmSwift */,
 			);
-			productName = "study-HousinPlannerTCA";
-			productReference = 4498E9902E884B2000EBA487 /* study-HousinPlannerTCA.app */;
+			productName = "study-WatchStandalone Watch App";
+			productReference = 44E9B7102EBA1E7D00251F0D /* study-WatchStandalone Watch App.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		4498E9882E884B2000EBA487 /* Project object */ = {
+		44E9B7042EBA1E7D00251F0D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1640;
 				LastUpgradeCheck = 1640;
 				TargetAttributes = {
-					4498E98F2E884B2000EBA487 = {
+					44E9B7092EBA1E7D00251F0D = {
+						CreatedOnToolsVersion = 16.4;
+					};
+					44E9B70F2EBA1E7D00251F0D = {
 						CreatedOnToolsVersion = 16.4;
 					};
 				};
 			};
-			buildConfigurationList = 4498E98B2E884B2000EBA487 /* Build configuration list for PBXProject "study-HousinPlannerTCA" */;
+			buildConfigurationList = 44E9B7072EBA1E7D00251F0D /* Build configuration list for PBXProject "study-WatchStandalone" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = 4498E9872E884B2000EBA487;
+			mainGroup = 44E9B7032EBA1E7D00251F0D;
 			minimizedProjectReferenceProxies = 1;
-			packageReferences = (
-				4498EA142E884D2300EBA487 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
-				4498EAD62E8EEF2F00EBA487 /* XCRemoteSwiftPackageReference "realm-swift" */,
-			);
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 4498E9912E884B2000EBA487 /* Products */;
+			productRefGroup = 44E9B70B2EBA1E7D00251F0D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				4498E98F2E884B2000EBA487 /* study-HousinPlannerTCA */,
+				44E9B7092EBA1E7D00251F0D /* study-WatchStandalone */,
+				44E9B70F2EBA1E7D00251F0D /* study-WatchStandalone Watch App */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		4498E98E2E884B2000EBA487 /* Resources */ = {
+		44E9B7082EBA1E7D00251F0D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		44E9B70E2EBA1E7D00251F0D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -144,7 +175,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		4498E98C2E884B2000EBA487 /* Sources */ = {
+		44E9B70C2EBA1E7D00251F0D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -153,8 +184,16 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		44E9B7132EBA1E7D00251F0D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 44E9B70F2EBA1E7D00251F0D /* study-WatchStandalone Watch App */;
+			targetProxy = 44E9B7122EBA1E7D00251F0D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
-		4498E9992E884B2300EBA487 /* Debug */ = {
+		44E9B71B2EBA1E7F00251F0D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -207,18 +246,16 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
-		4498E99A2E884B2300EBA487 /* Release */ = {
+		44E9B71C2EBA1E7F00251F0D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -265,17 +302,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
-				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
-		4498E99C2E884B2300EBA487 /* Debug */ = {
+		44E9B71E2EBA1E7F00251F0D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -285,26 +319,26 @@
 				DEVELOPMENT_TEAM = 6S2SA26VAN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				INFOPLIST_KEY_CFBundleDisplayName = "study-WatchStandalone";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKWatchOnly = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.bgsmm.study-HousinPlannerTCA";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.bgsmm.study-WatchStandalone.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 11.5;
 			};
 			name = Debug;
 		};
-		4498E99D2E884B2300EBA487 /* Release */ = {
+		44E9B71F2EBA1E7F00251F0D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -314,79 +348,88 @@
 				DEVELOPMENT_TEAM = 6S2SA26VAN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				INFOPLIST_KEY_CFBundleDisplayName = "study-WatchStandalone";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKWatchOnly = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.bgsmm.study-HousinPlannerTCA";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.bgsmm.study-WatchStandalone.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 11.5;
+			};
+			name = Release;
+		};
+		44E9B7222EBA1E7F00251F0D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6S2SA26VAN;
+				INFOPLIST_KEY_CFBundleDisplayName = "study-WatchStandalone";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.bgsmm.study-WatchStandalone";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		44E9B7232EBA1E7F00251F0D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6S2SA26VAN;
+				INFOPLIST_KEY_CFBundleDisplayName = "study-WatchStandalone";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.bgsmm.study-WatchStandalone";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4498E98B2E884B2000EBA487 /* Build configuration list for PBXProject "study-HousinPlannerTCA" */ = {
+		44E9B7072EBA1E7D00251F0D /* Build configuration list for PBXProject "study-WatchStandalone" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				4498E9992E884B2300EBA487 /* Debug */,
-				4498E99A2E884B2300EBA487 /* Release */,
+				44E9B71B2EBA1E7F00251F0D /* Debug */,
+				44E9B71C2EBA1E7F00251F0D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4498E99B2E884B2300EBA487 /* Build configuration list for PBXNativeTarget "study-HousinPlannerTCA" */ = {
+		44E9B71D2EBA1E7F00251F0D /* Build configuration list for PBXNativeTarget "study-WatchStandalone Watch App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				4498E99C2E884B2300EBA487 /* Debug */,
-				4498E99D2E884B2300EBA487 /* Release */,
+				44E9B71E2EBA1E7F00251F0D /* Debug */,
+				44E9B71F2EBA1E7F00251F0D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		44E9B7212EBA1E7F00251F0D /* Build configuration list for PBXNativeTarget "study-WatchStandalone" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				44E9B7222EBA1E7F00251F0D /* Debug */,
+				44E9B7232EBA1E7F00251F0D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		4498EA142E884D2300EBA487 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.22.3;
-			};
-		};
-		4498EAD62E8EEF2F00EBA487 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/realm-swift.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		4498EA152E884D2300EBA487 /* ComposableArchitecture */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4498EA142E884D2300EBA487 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
-			productName = ComposableArchitecture;
-		};
-		4498EAD72E8EEF2F00EBA487 /* RealmSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4498EAD62E8EEF2F00EBA487 /* XCRemoteSwiftPackageReference "realm-swift" */;
-			productName = RealmSwift;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
-	rootObject = 4498E9882E884B2000EBA487 /* Project object */;
+	rootObject = 44E9B7042EBA1E7D00251F0D /* Project object */;
 }
