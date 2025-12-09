@@ -20,6 +20,8 @@ struct RootDomain {
      RootDomain.Action에도 PlannerFeature.Action을 위임할 케이스를 추가해야 합니다.
      */
     var plannerSt = PlannerDomain.State()
+    
+    var randomSelectorSt = RandomSelectorDomain.State()
   }
   
   // 세부 종류
@@ -36,6 +38,7 @@ struct RootDomain {
     case appStarted
     case selectTab(Tab)
     case plannerAct(PlannerDomain.Action)
+    case randomSelectorAct(RandomSelectorDomain.Action)
   }
   
    // MARK: - Reducer
@@ -48,12 +51,21 @@ struct RootDomain {
       child: { PlannerDomain() }
     )
     
+    // RandomSelectorDomain을 Scope로 연결
+    Scope(
+      state: \.randomSelectorSt,
+      action: \.randomSelectorAct,
+      child: { RandomSelectorDomain() }
+    )
+    
     Reduce { state, action in
       switch action {
       case .selectTab(let tab):
         state.selectedTab = tab
         return .none
       case .plannerAct:
+        return .none
+      case .randomSelectorAct:
         return .none
       case .appStarted:
         let draftObjects = RealmService.shared.fetchAllDraftObjects()

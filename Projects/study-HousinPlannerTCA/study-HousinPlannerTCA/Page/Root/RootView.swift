@@ -26,7 +26,12 @@ struct RootView: View {
       }
       .tag(RootDomain.Tab.planner)
       
-      RandomSelectorView()
+      RandomSelectorView(
+        store: store.scope(
+          state: \.randomSelectorSt,
+          action: \.randomSelectorAct
+        )
+      )
         .tabItem {
           Label("RanSere", systemImage: "shippingbox.fill")
         }

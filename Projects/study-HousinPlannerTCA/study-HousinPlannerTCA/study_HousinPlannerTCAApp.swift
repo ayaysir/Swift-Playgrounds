@@ -23,3 +23,11 @@ struct study_HousinPlannerTCAApp: App {
     }
   }
 }
+
+extension String {
+  static let cfgRsFilterTypeAll = "RS_CFG_filterTypeAll"
+  static let cfgRsFilterTypeCute = "RS_CFG_filterTypeCute"
+  static let cfgRsFilterTypeCool = "RS_CFG_filterTypeCool"
+  static let cfgRsFilterTypePassion = "RS_CFG_filterTypePassion"
+  static let cfgRsIsLandscape = "RS_CFG_isLandscape"
+}
