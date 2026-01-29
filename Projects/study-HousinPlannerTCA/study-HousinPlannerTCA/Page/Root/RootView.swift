@@ -37,7 +37,12 @@ struct RootView: View {
         }
         .tag(RootDomain.Tab.randomSelector)
     
-      Text("ETC")
+      EtcView(
+        store: store.scope(
+          state: \.etcSt,
+          action: \.etcAct
+        )
+      )
         .tabItem {
           Label("etc", systemImage: "info.circle")
         }
