@@ -43,7 +43,7 @@ struct RootDomain {
   
    // MARK: - Reducer
   
-  var body: some ReducerOf<Self> {
+  var body: some Reducer<State, Action> {
     // PlannerDomain 를 scope로 연결
     Scope(
       state: \.plannerSt, // RootDomain.State.plannerSt

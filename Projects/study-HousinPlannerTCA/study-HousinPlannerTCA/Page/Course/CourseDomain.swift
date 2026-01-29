@@ -34,7 +34,7 @@ struct CourseDomain {
     case receiveLocaleChanged(PlannerLocale)
   }
   
-  var body: some ReducerOf<Self> {
+  var body: some Reducer<State, Action> {
     // RootAction.addToCart(하위 액션) 구조를 자동으로 추론하여, 하위 도메인 액션을 연결
     Scope(state: \.adjustLevelState, action: \.adjustLevel) {
       AdjustLevelDomain()

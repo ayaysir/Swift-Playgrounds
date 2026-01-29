@@ -21,7 +21,7 @@ struct InputSheetDomain {
     case didTapCancel
   }
 
-  var body: some ReducerOf<Self> {
+  var body: some Reducer<State, Action> {
     Reduce { state, action in
       switch action {
       case let .textChanged(text):

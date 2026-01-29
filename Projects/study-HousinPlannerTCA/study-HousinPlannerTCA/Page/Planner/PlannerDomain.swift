@@ -64,7 +64,7 @@ struct PlannerDomain {
   @Dependency(\.apiClient.updateUserSetTotalCount) var updateUserSetTotalCount
   @Dependency(\.uuid) var uuid
 
-  var body: some ReducerOf<Self> {
+  var body: some Reducer<State, Action> {
     Reduce { (state, action) in
       switch action {
       case let .categoryChanged(newCategory):

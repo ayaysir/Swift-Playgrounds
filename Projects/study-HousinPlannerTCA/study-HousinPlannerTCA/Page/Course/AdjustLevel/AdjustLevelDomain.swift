@@ -22,7 +22,7 @@ struct AdjustLevelDomain {
     case setInitLevel(Int)
   }
   
-  var body: some ReducerOf<Self> {
+  var body: some Reducer<State, Action> {
     // some scopes...
     
     Reduce { state, action in

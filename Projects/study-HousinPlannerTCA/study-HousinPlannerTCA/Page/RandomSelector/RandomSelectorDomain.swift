@@ -69,7 +69,7 @@ struct RandomSelectorDomain {
   @Dependency(\.defaultAppStorage) var appStorage
   @Dependency(\.orientation) var orientation
   
-  var body: some ReducerOf<Self> {
+  var body: some Reducer<State, Action> {
     Reduce { state, action in
       switch action {
         // Enter cases...
