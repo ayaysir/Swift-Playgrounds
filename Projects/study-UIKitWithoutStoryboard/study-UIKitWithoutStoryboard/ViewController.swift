@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import WebKit
 
 final class ViewController: UIViewController {
 
@@ -15,13 +16,20 @@ final class ViewController: UIViewController {
     
     // 서브 뷰 추가
     view.addSubview(hStack)
+    view.addSubview(webView)
     
     // 제약 설정
     NSLayoutConstraint.activate([
       hStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
       hStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
       hStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
-      searchButton.widthAnchor.constraint(equalToConstant: 40)
+      searchButton.widthAnchor.constraint(equalToConstant: 40),
+      // webView
+      webView.topAnchor.constraint(equalTo: hStack.bottomAnchor, constant: 16),
+      webView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+      webView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+      webView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+                                      
     ])
     
     // 액션 연결
@@ -43,8 +51,37 @@ final class ViewController: UIViewController {
       return
     }
     
+    print()
+    
+    
     let dictVC = UIReferenceLibraryViewController(term: term)
     present(dictVC, animated: true)
+    moveDictPage(for: term)
+  }
+  
+  // MARK: - Methods
+  
+  private func moveDictPage(for term: String) {
+    guard let language = NaturalLanguageUtil.detectLanguage(of: term) else {
+      return
+    }
+    
+    let languageCode = NaturalLanguageUtil.languageCode(for: language)
+    
+    let dictURLString = switch languageCode {
+    case "en", "ja", "ko":
+      "https://\(languageCode).dict.naver.com/#/search?query=\(term)&range=all"
+    case "es", "fr", "de", "it", "pt", "ru", "ar":
+      "https://dict.naver.com/\(languageCode)kodict/#/search?query=\(term)"
+    case let code where code.hasPrefix("zh"):
+      "https://ja.dict.naver.com/#/search?query=\(term)&range=all"
+    default:
+      "https://dict.naver.com/dict.search?query=\(term)"
+    }
+    
+    if let dictURL = URL(string: dictURLString) {
+      webView.load(URLRequest(url: dictURL))
+    }
   }
   
   // MARK: - UI elements
@@ -53,6 +90,10 @@ final class ViewController: UIViewController {
     let textField = UITextField()
     textField.borderStyle = .roundedRect
     textField.translatesAutoresizingMaskIntoConstraints = false
+    
+    textField.autocapitalizationType = .none
+    textField.autocorrectionType = .no
+    textField.spellCheckingType = .no
     return textField
   }()
   
@@ -90,6 +131,15 @@ final class ViewController: UIViewController {
     return stack
   }()
 
+  private let webView: WKWebView = {
+    let webView = WKWebView()
+    webView.translatesAutoresizingMaskIntoConstraints = false
+    let url = URL(string: "https://dict.naver.com")!
+    webView.load(URLRequest(url: url))
+    webView.allowsBackForwardNavigationGestures = true
+
+    return webView
+  }()
 }
 
 extension ViewController: UITextFieldDelegate {
