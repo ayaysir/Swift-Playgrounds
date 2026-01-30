@@ -55,6 +55,7 @@ final class ViewController: UIViewController {
     
     
     let dictVC = UIReferenceLibraryViewController(term: term)
+    textField.resignFirstResponder() // !! 키보드 사라지게 하기
     present(dictVC, animated: true)
     moveDictPage(for: term)
   }
@@ -93,7 +94,6 @@ final class ViewController: UIViewController {
     
     textField.autocapitalizationType = .none
     textField.autocorrectionType = .no
-    textField.spellCheckingType = .no
     return textField
   }()
   
