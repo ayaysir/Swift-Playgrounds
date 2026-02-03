@@ -67,12 +67,7 @@ struct CartListDomain {
   
   @Dependency(\.apiClient.sendOrder) var sendOrder
   
-  private func verifyPayButtonVisibility(state: inout State) -> Effect<Action> {
-    state.isPayButtonDisable = state.totalPrice == 0.0
-    return .none
-  }
-  
-  var body: some ReducerOf<Self> {
+  var body: some Reducer<State, Action> {
     Reduce { state, action in
       switch action {
         // case .alert(.presented(let alertAction)): 와 동일
@@ -101,7 +96,9 @@ struct CartListDomain {
         state.totalPrice = items.reduce(0.0) { partialResult, cartItem in
           partialResult + (cartItem.product.price * Double(cartItem.quantity))
         }
-        return verifyPayButtonVisibility(state: &state)
+        
+        state.isPayButtonDisable = state.totalPrice == 0.0
+        return .none
         
       case .didPressPayButton:
         state.alert = .confirmationAlert(totalPriceString: state.totalPriceString)

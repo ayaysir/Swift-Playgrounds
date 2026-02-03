@@ -44,7 +44,7 @@ struct ProductListDomain {
   @Dependency(\.apiClient.fetchProducts) var fetchProducts
   @Dependency(\.uuid) var uuid
   
-  var body: some ReducerOf<Self> {
+  var body: some Reducer<State, Action> {
     Reduce { state, action in
       switch action {
       case .fetchProducts:
@@ -86,7 +86,8 @@ struct ProductListDomain {
         return .none
         
       case .closeCart:
-        return closeCart(state: &state)
+        state.cartState = nil
+        return .none
         
       case .resetProduct(product: let product):
         guard let index = state.productList.firstIndex(where: { $0.product.id == product.id })
@@ -138,17 +139,7 @@ struct ProductListDomain {
 }
 
 extension ProductListDomain {
-  private func closeCart(state: inout State) -> Effect<Action> {
-    state.cartState = nil
-    return .none
-  }
-  
-  private func resetProductsToZero(state: inout State) {
-    for id in state.productList.map(\.id) {
-      state.productList[id: id]?.count = 0
-    }
-  }
-  
+
   /// 장바구니 뷰에 대한 액션:
   /// - Parameter isPresented: 장바구니를 열면 `true`, 아니면 `false`
   private func setCartViewAction(
@@ -186,11 +177,15 @@ extension ProductListDomain {
   ) -> Effect<Action> {
     switch action {
     case .didPressCloseButton:
-      return closeCart(state: &state)
+      state.cartState = nil
+      return .none
     
     case .alert(.presented(.dismissSuccessAlert)):
       // .dismissSuccessAlert ('구입에 성공했습니다' 경고창이 닫혔을 때)
-      resetProductsToZero(state: &state)
+      // resetProductsToZero
+      for id in state.productList.map(\.id) {
+        state.productList[id: id]?.count = 0
+      }
     
       return .run { send in
         await send(.closeCart)

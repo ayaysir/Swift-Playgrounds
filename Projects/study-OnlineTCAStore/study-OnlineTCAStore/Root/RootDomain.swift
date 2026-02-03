@@ -12,7 +12,9 @@ import ComposableArchitecture
 struct RootDomain {
   @ObservableState
   struct State: Equatable {
+    // 탭에 대한 상태
     var selectedTab = Tab.products
+    // 각 페이지에 대한 상태
     var productListState = ProductListDomain.State()
     var profileState = ProfileDomain.State()
   }
@@ -23,12 +25,14 @@ struct RootDomain {
   }
   
   enum Action: Equatable {
+    // 탭에 대한 액션
     case tabSelected(Tab)
+    // 각 페이지에 대한 액션
     case productList(ProductListDomain.Action)
     case profile(ProfileDomain.Action)
   }
   
-  var body: some ReducerOf<Self> {
+  var body: some Reducer<State, Action> {
     Reduce { state, action in
       switch action {
       case .productList:

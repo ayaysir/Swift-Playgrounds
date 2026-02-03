@@ -14,6 +14,7 @@ struct ProductDomain {
   struct State: Equatable, Identifiable {
     let id: UUID
     let product: Product
+    // 하위 상태 (프로덕트 셀 안에 있는 카트 수량 조절기)
     var addToCartState = AddToCartDomain.State()
     
     // 예) viewStore.count += 1
@@ -31,7 +32,8 @@ struct ProductDomain {
   // ReducerOf<Self>는 Reducer<State, Action>과 같으며,
   // 자신(Self)의 상태와 액션을 처리하는 리듀서를 의미합니다.
   // 즉, 이 도메인의 리듀서 구현 본체임을 나타냅니다.
-  var body: some ReducerOf<Self> {
+  // => Xcode 최신버전 오류로 Reducer 사용
+  var body: some Reducer<State, Action> {
     /*
      * RootAction.addToCart(하위 액션) 구조를 자동으로 추론하여, 하위 도메인 액션을 연결
      * ProductDomain 리듀서 안에서 아래와 같은 방식으로 AddToCartDomain이 연결돼 있음.
