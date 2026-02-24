@@ -32,7 +32,7 @@ struct AlertExampleDomain {
       switch action {
       case .alertButtonTapped:
         state.alert = AlertState(title: {
-          TextState("경고창의 제목")
+          TextState("얼럿 제목")
         }, actions: {
           ButtonState(role: .cancel, action: .dismissAlert) {
             TextState("취소")
@@ -41,7 +41,7 @@ struct AlertExampleDomain {
             TextState("처리")
           }
         }, message: {
-          TextState("경고창의 내용입니다.")
+          TextState("물건을 구매하시겠습니까?")
         })
         return .none
         
@@ -51,7 +51,7 @@ struct AlertExampleDomain {
           state.alert = nil
           return .none
         case .confirmAlert:
-          state.alert = AlertState(title: { TextState(verbatim: "완료") })
+          state.alert = AlertState(title: { TextState("구매 완료되었습니다.") })
           return .none
         }
         

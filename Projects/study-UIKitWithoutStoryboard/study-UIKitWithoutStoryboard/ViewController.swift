@@ -18,12 +18,19 @@ final class ViewController: UIViewController {
     view.addSubview(hStack)
     view.addSubview(webView)
     
+    // 뷰 세팅
+    attachClearButtonToTextField()
+    
     // 제약 설정
     NSLayoutConstraint.activate([
+      // HStack
       hStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
       hStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
       hStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
-      searchButton.widthAnchor.constraint(equalToConstant: 40),
+      
+      // 검색 버튼
+      searchButton.widthAnchor.constraint(equalToConstant: 50),
+      
       // webView
       webView.topAnchor.constraint(equalTo: hStack.bottomAnchor, constant: 16),
       webView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
@@ -34,6 +41,7 @@ final class ViewController: UIViewController {
     
     // 액션 연결
     searchButton.addTarget(self, action: #selector(didTapSearch), for: .touchUpInside)
+    clearButtonForTextField.addTarget(self, action: #selector(didTapClear), for: .touchUpInside)
     
     // 딜리게이트
     textField.delegate = self
@@ -45,6 +53,7 @@ final class ViewController: UIViewController {
   }
   
   // MARK: - Actions
+  
   @objc func didTapSearch() {
     guard let term = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
           !term.isEmpty else {
@@ -58,6 +67,10 @@ final class ViewController: UIViewController {
     textField.resignFirstResponder() // !! 키보드 사라지게 하기
     present(dictVC, animated: true)
     moveDictPage(for: term)
+  }
+  
+  @objc func didTapClear() {
+    textField.text = ""
   }
   
   // MARK: - Methods
@@ -85,6 +98,14 @@ final class ViewController: UIViewController {
     }
   }
   
+  private func attachClearButtonToTextField() {
+    let container = UIView(frame: CGRect(x: 0, y: 0, width: 25, height: 20))
+    container.addSubview(clearButtonForTextField)
+
+    textField.rightView = container
+    textField.rightViewMode = .whileEditing
+  }
+  
   // MARK: - UI elements
 
   private let textField: UITextField = {
@@ -94,11 +115,29 @@ final class ViewController: UIViewController {
     
     textField.autocapitalizationType = .none
     textField.autocorrectionType = .no
+    
     return textField
+  }()
+  
+  private let clearButtonForTextField: UIButton = {
+    let button = UIButton(type: .custom)
+    button.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
+    button.tintColor = .systemGray
+    button.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+    return button
   }()
   
   private let searchButton: UIButton = {
     let button = UIButton(type: .system)
+    button.configuration = .filled()
+    button.configuration?.baseBackgroundColor = .systemTeal
+    button.configuration?.baseForegroundColor = .white
+    button.configuration?.cornerStyle = .medium
+    button.configuration?.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { container in
+      var container = container
+      container.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+      return container
+    }
     button.setTitle("찾기", for: .normal)
     button.translatesAutoresizingMaskIntoConstraints = false
     return button
