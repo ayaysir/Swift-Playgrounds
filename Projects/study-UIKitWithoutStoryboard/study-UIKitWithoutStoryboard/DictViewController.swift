@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  DictViewController.swift
 //  study-UIKitWithoutStoryboard
 //
 //  Created by 윤범태 on 1/24/26.
@@ -8,11 +8,18 @@
 import UIKit
 import WebKit
 
-final class ViewController: UIViewController {
+final class DictViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .systemBackground
+    
+    if #available(iOS 26, *) {
+      let interaction = UIScrollEdgeElementContainerInteraction()
+      interaction.scrollView = webView.scrollView
+      interaction.edge = .bottom
+      tabBarController?.tabBar.addInteraction(interaction)
+    }
     
     // 서브 뷰 추가
     view.addSubview(hStack)
@@ -35,9 +42,12 @@ final class ViewController: UIViewController {
       webView.topAnchor.constraint(equalTo: hStack.bottomAnchor, constant: 16),
       webView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
       webView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-      webView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+      webView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+      // webView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
                                       
     ])
+    
+    webView.scrollView.contentInsetAdjustmentBehavior = .never
     
     // 액션 연결
     searchButton.addTarget(self, action: #selector(didTapSearch), for: .touchUpInside)
@@ -49,19 +59,56 @@ final class ViewController: UIViewController {
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
-    textField.becomeFirstResponder()
+    if !ProcessInfo.isPreview {
+      textField.becomeFirstResponder()
+    }
+    
+    
+    
+    DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+      // Jekyll의 경우 ^ 꼭다리 버튼을 bottom: 4.625rem; 라는 수치를 줌
+      // => 이렇게 하면 어디서도 높이 떠 있어 보이긴 하나 탭바 위에 나타나므로 괜찮
+      // 네이버 영어사전의 경우 bottom: 16px;
+      // => 사파리에서는 동적으로 bottom이 조절되나 WKWebView 사용시 탭바에 가려지고 이걸 해결하기 위한 관련 정보를 찾기도 어려움, 김생성한테 물어봐도 잘 모름
+      let script = """
+      var style = document.createElement('style');
+      style.innerHTML = `
+      .nav_wrap {
+        bottom: calc(4.625rem + env(safe-area-inset-bottom)) !important;
+      }
+      `;
+      document.head.appendChild(style);
+      """
+      self.webView.evaluateJavaScript(script)
+    }
+  }
+  
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    
+    let bottomInset = view.safeAreaInsets.bottom
+    webView.scrollView.contentInset.bottom = bottomInset
+    webView.scrollView.scrollIndicatorInsets = UIEdgeInsets(
+      top: 0,
+      left: 0,
+      bottom: bottomInset,
+      right: 0
+    )
   }
   
   // MARK: - Actions
   
   @objc func didTapSearch() {
-    guard let term = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
-          !term.isEmpty else {
+    guard let text = textField.text, !text.isEmpty else {
+      textField.resignFirstResponder()
       return
     }
     
-    print()
+    let term = text.trimmingCharacters(in: .whitespacesAndNewlines)
     
+    guard !term.isEmpty else {
+      return
+    }
     
     let dictVC = UIReferenceLibraryViewController(term: term)
     textField.resignFirstResponder() // !! 키보드 사라지게 하기
@@ -173,7 +220,8 @@ final class ViewController: UIViewController {
   private let webView: WKWebView = {
     let webView = WKWebView()
     webView.translatesAutoresizingMaskIntoConstraints = false
-    let url = URL(string: "https://dict.naver.com")!
+    let url = URL(string: "https://en.dict.naver.com/#/entry/enko/39dceabbc43f48c1a7e0531b2ffe54e8")!
+    // let url = URL(string: "https://ayaysir.github.io")!
     webView.load(URLRequest(url: url))
     webView.allowsBackForwardNavigationGestures = true
 
@@ -181,16 +229,22 @@ final class ViewController: UIViewController {
   }()
 }
 
-extension ViewController: UITextFieldDelegate {
+extension DictViewController: UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     didTapSearch()
     return true
   }
 }
 
+class FullScreenWKWebView: WKWebView {
+  override var safeAreaInsets: UIEdgeInsets {
+    return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+  }
+}
+
 import SwiftUI
 #Preview {
   UIViewControllerPreview {
-    ViewController()
+    MainTabBarController()
   }
 }
