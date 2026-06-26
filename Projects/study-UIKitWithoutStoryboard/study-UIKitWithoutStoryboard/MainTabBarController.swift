@@ -34,7 +34,7 @@ class MainTabBarController: UITabBarController {
       self.tabBar.isTranslucent = false
     }
     
-    viewControllers = [dictVC, shortformVC, ShortformViewController(), ShortformViewController()]
+    viewControllers = [dictVC, shortformVC]
   }
 }
 

@@ -22,7 +22,7 @@ final class DictViewController: UIViewController {
     }
     
     // 서브 뷰 추가
-    view.addSubview(hStack)
+    view.addSubview(headerHStack)
     view.addSubview(webView)
     
     // 뷰 세팅
@@ -31,15 +31,15 @@ final class DictViewController: UIViewController {
     // 제약 설정
     NSLayoutConstraint.activate([
       // HStack
-      hStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-      hStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-      hStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
+      headerHStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+      headerHStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+      headerHStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
       
       // 검색 버튼
       searchButton.widthAnchor.constraint(equalToConstant: 50),
       
       // webView
-      webView.topAnchor.constraint(equalTo: hStack.bottomAnchor, constant: 16),
+      webView.topAnchor.constraint(equalTo: headerHStack.bottomAnchor, constant: 16),
       webView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
       webView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
       webView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -209,7 +209,7 @@ final class DictViewController: UIViewController {
    그래서 lazy가 필요합니다.
    */
   
-  private lazy var hStack: UIStackView = {
+  private lazy var headerHStack: UIStackView = {
     let stack = UIStackView(arrangedSubviews: [textField, searchButton])
     stack.axis = .horizontal
     stack.spacing = 8
@@ -220,11 +220,21 @@ final class DictViewController: UIViewController {
   private let webView: WKWebView = {
     let webView = WKWebView()
     webView.translatesAutoresizingMaskIntoConstraints = false
-    let url = URL(string: "https://en.dict.naver.com/#/entry/enko/39dceabbc43f48c1a7e0531b2ffe54e8")!
+    // let url = URL(string: "https://en.dict.naver.com/#/entry/enko/39dceabbc43f48c1a7e0531b2ffe54e8")!
     // let url = URL(string: "https://ayaysir.github.io")!
+    let url = URL(string: "https://en.dict.naver.com/#/search?range=example&query=\(DIFFICULT_WORDS.randomElement()!)")!
     webView.load(URLRequest(url: url))
     webView.allowsBackForwardNavigationGestures = true
 
+    let userScript = WKUserScript(
+      source: injectedScript("dict-custom"),
+      injectionTime: .atDocumentEnd,
+      forMainFrameOnly: true
+    )
+
+    webView.configuration.userContentController.addUserScript(userScript)
+    webView.isInspectable = true
+    
     return webView
   }()
 }
